@@ -10,7 +10,7 @@ import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import UI.IVistaChat;
+import front.IVistaChat;
 
 public class Cliente 
 {

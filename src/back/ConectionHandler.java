@@ -7,6 +7,8 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
 
+import front.IVistaChat;
+
 
 public class ConectionHandler extends Thread 
 {
@@ -69,4 +71,4 @@ public class ConectionHandler extends Thread
     
 }
 
-}
+
