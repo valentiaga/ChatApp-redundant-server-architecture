@@ -1,6 +1,7 @@
 package front;
 
 import java.awt.Color;
+
 import java.awt.EventQueue;
 import java.awt.Font;
 import java.awt.event.ActionEvent;
@@ -18,8 +19,8 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
 import javax.swing.border.LineBorder;
 
-import UI.IVistaChat;
-import UI.vistaChat;
+//import UI.IVistaChat;
+//import UI.vistaChat;
 import back.Cliente;
 import back.MessageManager;
 import controladores.ControladorVistaChat;
@@ -27,7 +28,7 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.FlowLayout;
 
-public class VistaChat extends JFrame implements IVistaChat{
+public class vistaChat extends JFrame implements IVistaChat{
 
 	private JPanel contentPane;
 	private JTextField txtIngreseTextoAqui;

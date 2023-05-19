@@ -1,6 +1,7 @@
 package back;
 
 import java.io.DataInputStream;
+
 import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
@@ -10,7 +11,7 @@ import java.net.SocketException;
 import java.util.HashMap;
 import java.util.Map;
 
-import UI.IVistaChat;
+//import UI.IVistaChat;
 
 public class Server extends Thread{
 	

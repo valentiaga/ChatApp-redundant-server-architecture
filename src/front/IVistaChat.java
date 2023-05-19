@@ -1,7 +1,6 @@
 package front;
 
 import java.awt.event.ActionListener;
-
 import javax.swing.JButton;
 import javax.swing.JScrollPane;
 import javax.swing.JTextArea;
