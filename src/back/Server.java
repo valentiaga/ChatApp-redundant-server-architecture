@@ -124,6 +124,7 @@ public class Server extends Thread{
 					
 					if(recibido != null && receptor != null) {
 						dos = new DataOutputStream(this.clientes.get(receptor).getSocket().getOutputStream()); 
+						dos.writeUTF(recibido);
 					}else {
 						// no hay un receptor, no hay chat
 					}
