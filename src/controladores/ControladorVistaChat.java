@@ -2,17 +2,11 @@ package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
 
+import back.Cliente;
 import front.IVistaChat;
 import front.IVistaInicial;
 import front.vistaInicial;
-import back.Cliente;
-import back.IEmisor;
-import back.IReceptor;
 
 public class ControladorVistaChat implements ActionListener {
 

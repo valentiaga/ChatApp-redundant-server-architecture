@@ -7,14 +7,10 @@ import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
 
+import back.Cliente;
 import front.IVistaChat;
 import front.IVistaInicial;
-import front.IVistaModoEscucha;
 import front.vistaChat;
-import front.vistaEspera;
-import back.Cliente;
-import back.IEmisor;
-import back.IReceptor;
 
 public class ControladorVistaInicial implements ActionListener{
 	
@@ -65,41 +61,41 @@ public class ControladorVistaInicial implements ActionListener{
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
         }
-        else if (comando.equalsIgnoreCase("MODOESCUCHA")) {
-        	if (!this.vistaInicial.getPuertoEscucha().equals("puerto")) {
-        		IVistaModoEscucha vistaEscucha = new vistaEspera();
-        		this.vistaInicial.mostrarVentana(false);
-        		
-        		vistaEscucha.mostrarVentana(true);  
-        		try {
-        			IVistaChat vistaChat = new vistaChat();
-            		conexion.setVista(vistaChat);
-					this.conexion.Conectar(Integer.parseInt(this.vistaInicial.getPuertoEscucha()));
-					vistaChat.getCont().setConexion(conexion);
-//					VENTANA EMERGENTE PARA QUE EL USUARIO CONFIRME SI QUIERE INICIAR UN CHAT
-//					if (this.conexion.getsocket().isConnected()) {
-//						JOptionPane.showMessageDialog(null, "Un usuario quiere iniciar un chat.\nDesea aceptarlo?");
-//					}
-						
-					//vistaChat.setConexion(conexion);
-					//if(this.conexion.getsocket().isConnected() == true) {
-					vistaEscucha.mostrarVentana(false);
-					vistaChat.mostrarVentana(true);
-					//}
-					
-					
-				} catch (NumberFormatException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				} catch (IOException e1) {
-					// TODO Auto-generated catch block
-					e1.printStackTrace();
-				}
-        		
-        	}
-        	else
-        		JOptionPane.showMessageDialog(null, "El puerto es invalido");
-        }
+//        else if (comando.equalsIgnoreCase("MODOESCUCHA")) {
+//        	if (!this.vistaInicial.getPuertoEscucha().equals("puerto")) {
+//        		IVistaModoEscucha vistaEscucha = new vistaEspera();
+//        		this.vistaInicial.mostrarVentana(false);
+//        		
+//        		vistaEscucha.mostrarVentana(true);  
+//        		try {
+//        			IVistaChat vistaChat = new vistaChat();
+//            		conexion.setVista(vistaChat);
+//					this.conexion.Conectar(Integer.parseInt(this.vistaInicial.getPuertoEscucha()));
+//					vistaChat.getCont().setConexion(conexion);
+////					VENTANA EMERGENTE PARA QUE EL USUARIO CONFIRME SI QUIERE INICIAR UN CHAT
+////					if (this.conexion.getsocket().isConnected()) {
+////						JOptionPane.showMessageDialog(null, "Un usuario quiere iniciar un chat.\nDesea aceptarlo?");
+////					}
+//						
+//					//vistaChat.setConexion(conexion);
+//					//if(this.conexion.getsocket().isConnected() == true) {
+//					vistaEscucha.mostrarVentana(false);
+//					vistaChat.mostrarVentana(true);
+//					//}
+//					
+//					
+//				} catch (NumberFormatException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				} catch (IOException e1) {
+//					// TODO Auto-generated catch block
+//					e1.printStackTrace();
+//				}
+//        		
+//        	}
+//        	else
+//        		JOptionPane.showMessageDialog(null, "El puerto es invalido");
+//        }
         
 		
 	}
