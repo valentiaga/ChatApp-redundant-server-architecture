@@ -23,7 +23,7 @@ public class Prueba {
 			DataInputStream dis = new DataInputStream(s.getInputStream());
 	        DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 	        dos.writeUTF("tuvieja");
-	        server.Conectar();
+	        server.Registrar();		//modo escucha del server
 	        
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
@@ -40,7 +40,7 @@ public class Prueba {
 	            DataInputStream dis2 = new DataInputStream(s2.getInputStream());
 	            DataOutputStream dos2 = new DataOutputStream(s2.getOutputStream());
 	            dos2.writeUTF("miviejaahr");
-	            server.Conectar();
+	            server.Registrar();
 
 	        } catch (UnknownHostException e) {
 	            // TODO Auto-generated catch block

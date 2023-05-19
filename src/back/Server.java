@@ -22,7 +22,7 @@ public class Server extends Thread{
     private DataOutputStream dos;
 	//hasmap de nickname con socket
     //final Socket s;
-	private HashMap<String,Socket> clientes = new HashMap<>();
+	private HashMap<String,Conexion> clientes = new HashMap<>();
 	private HashMap<String,String> chats = new HashMap<>();
 	private ArrayList<Conexion> lista = new ArrayList<Conexion>(); 
 	
@@ -37,16 +37,17 @@ public class Server extends Thread{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		this.start();
+		//this.start();
 	}
 	
-	public void Conectar() throws IOException {
+	public void Registrar() throws IOException {
 		
 		 	//this.serverSocket = new ServerSocket(puerto);
 
 	            Socket s = null;
 	            String nickname;
 	            String nicknameReceptor;
+	            Conexion conexion;
 	            try 
 	            {
 	                s = serverSocket.accept();
@@ -57,9 +58,10 @@ public class Server extends Thread{
 	                DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 	                
 	                nickname = dis.readUTF();
-	                this.clientes.put(nickname,s);
+	                conexion = new Conexion(s,nickname);
+	                this.clientes.put(nickname,conexion);
 	                
-	                this.lista.add(new Conexion(s,nickname));
+	                this.lista.add(conexion);
 	                
 	                System.out.println(this.clientes);
 	                //nicknameReceptor = dis.readUTF();
@@ -100,6 +102,7 @@ public class Server extends Thread{
 		String recibido;
 		super.run();
 		String mensaje = "Socket closed";
+		String name,receptor;
 		int i;
 		Socket socket;
 		DataInputStream dis;
@@ -108,18 +111,29 @@ public class Server extends Thread{
 		//while(this.terminar == false && this.s.isClosed() != true) {
 		while(this.terminar == false) {
 			
-//			i=0;
-//			while(i < this.lista.size()) {
-//				socket = this.lista.get(i).getSocket();
-//				try {
-//					dis = new DataInputStream(socket.getInputStream());
-//					dos = new DataOutputStream(socket.getOutputStream());
-//				} catch (IOException e) {
-//					// TODO Auto-generated catch block
-//					e.printStackTrace();
-//				}
-//				
-//			}
+			i=0;
+			while(i < this.lista.size()) {
+				socket = this.lista.get(i).getSocket();
+				name = this.lista.get(i).getNickname();
+				receptor = this.lista.get(i).getNicknameReceptor();
+				
+				try {
+					dis = new DataInputStream(socket.getInputStream());
+					//dos = new DataOutputStream(socket.getOutputStream());
+					recibido = dis.readUTF();
+					
+					if(recibido != null && receptor != null) {
+						dos = new DataOutputStream(this.clientes.get(receptor).getSocket().getOutputStream()); 
+					}else {
+						// no hay un receptor, no hay chat
+					}
+					
+				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				
+			}
 			
 //			try {
 //				recibido = dis.readUTF();
