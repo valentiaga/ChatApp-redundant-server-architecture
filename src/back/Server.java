@@ -8,6 +8,7 @@ import java.io.IOException;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
+import java.util.ArrayList;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -22,6 +23,8 @@ public class Server extends Thread{
 	//hasmap de nickname con socket
     //final Socket s;
 	private HashMap<String,Socket> clientes = new HashMap<>();
+	private HashMap<String,String> chats = new HashMap<>();
+	private ArrayList<Conexion> lista = new ArrayList<Conexion>(); 
 	
     private boolean terminar = false;		// creo que el servidor no tiene que cortar
     
@@ -43,6 +46,7 @@ public class Server extends Thread{
 
 	            Socket s = null;
 	            String nickname;
+	            String nicknameReceptor;
 	            try 
 	            {
 	                s = serverSocket.accept();
@@ -54,7 +58,15 @@ public class Server extends Thread{
 	                
 	                nickname = dis.readUTF();
 	                this.clientes.put(nickname,s);
-	                System.out.println(nickname);
+	                
+	                this.lista.add(new Conexion(s,nickname));
+	                
+	                System.out.println(this.clientes);
+	                //nicknameReceptor = dis.readUTF();
+	                //this.chats.put(nickname, dis.readUTF());
+	                
+	                
+	                //System.out.println(nickname);
 	                
 	                //dis.readUTF();
 	                //this.socket = s;
@@ -72,17 +84,43 @@ public class Server extends Thread{
 	       
 	    }
     
+	//nickname del usuario con el que se va a conectar
+	public void creaChat(String nickname,String nicknameReceptor) {
+		
+		if(this.clientes.containsKey(nicknameReceptor))
+			this.chats.put(nickname, nicknameReceptor);
+		else {
+			// no se pudo crear el chat porque el nickname no esta registrado
+		}
+	}
 	
 
-//	public void run() {
-//
-//		String recibido;
-//		super.run();
-//		String mensaje = "Socket closed";
-//		
-//		//while(this.terminar == false && this.s.isClosed() != true) {
-//		while(this.terminar == false) {
-//			
+	public void run() {
+
+		String recibido;
+		super.run();
+		String mensaje = "Socket closed";
+		int i;
+		Socket socket;
+		DataInputStream dis;
+        DataOutputStream dos;
+        
+		//while(this.terminar == false && this.s.isClosed() != true) {
+		while(this.terminar == false) {
+			
+//			i=0;
+//			while(i < this.lista.size()) {
+//				socket = this.lista.get(i).getSocket();
+//				try {
+//					dis = new DataInputStream(socket.getInputStream());
+//					dos = new DataOutputStream(socket.getOutputStream());
+//				} catch (IOException e) {
+//					// TODO Auto-generated catch block
+//					e.printStackTrace();
+//				}
+//				
+//			}
+			
 //			try {
 //				recibido = dis.readUTF();
 //				// enviar al cliente
@@ -99,10 +137,10 @@ public class Server extends Thread{
 //			catch (IOException e2) {
 //				e2.printStackTrace();
 //			}
-//		}
-//	}
-//	
-//	
+	}
+	}
+	
+	
 //	public void terminarRecibirMensajes() {
 //		//String mensaje = "El otro usuario se desconecto.\n";
 //		this.terminar = true;

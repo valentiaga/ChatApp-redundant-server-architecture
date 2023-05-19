@@ -37,13 +37,23 @@ public class Cliente
 		this.iP = iP;
 	}
 	
+	
 //	public Conexion(IVistaChat vistaChat) {
 //		super();
 //		this.vistaChat = vistaChat;
 //	}
 
+	public void conectarServer(String IP, int puerto) throws UnknownHostException, IOException {
+		
+		Socket s = new Socket(IP,puerto);
+		DataInputStream dis = new DataInputStream(s.getInputStream());
+        DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+		
+        dos.writeUTF(this.nickname);
+		this.messageManager  = new MessageManager(s,dis,dos,this.vistaChat);
+	}
 	
-	
+//------------------------------------------------------------------------------------------------------
 		public void Conectar(final int puerto) throws IOException {
 			
 			 ServerSocket ss = new ServerSocket(puerto);
@@ -91,15 +101,7 @@ public class Cliente
             this.conectionHandler.start();
 		}
 		
-		public void conectarServer(String IP, int puerto) throws UnknownHostException, IOException {
-			
-			Socket s = new Socket(IP,puerto);
-			DataInputStream dis = new DataInputStream(s.getInputStream());
-            DataOutputStream dos = new DataOutputStream(s.getOutputStream());
-			
-            dos.writeUTF(this.nickname);
-			this.messageManager  = new MessageManager(s,dis,dos,this.vistaChat);
-		}
+		
 		
 		
 		public MessageManager getMessageManager() {
@@ -118,5 +120,5 @@ public class Cliente
 			return conectionHandler;
 		}
 		
-		
+//------------------------------------------------------------------------------------------------------
 }

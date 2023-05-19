@@ -32,6 +32,24 @@ public class Prueba {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
+		
+		 Socket s2;
+	        try {
+	            s2 = new Socket(IP,1234);
+
+	            DataInputStream dis2 = new DataInputStream(s2.getInputStream());
+	            DataOutputStream dos2 = new DataOutputStream(s2.getOutputStream());
+	            dos2.writeUTF("miviejaahr");
+	            server.Conectar();
+
+	        } catch (UnknownHostException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        } catch (IOException e) {
+	            // TODO Auto-generated catch block
+	            e.printStackTrace();
+	        }
+	        
 
 	}
 
