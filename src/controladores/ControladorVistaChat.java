@@ -9,7 +9,7 @@ import java.net.Socket;
 
 import front.IVistaChat;
 import front.IVistaInicial;
-import front.vistaInicial;
+import front.VistaInicial;
 import back.Cliente;
 import back.IEmisor;
 import back.IReceptor;
@@ -35,7 +35,7 @@ public class ControladorVistaChat implements ActionListener {
         	this.conexion.getMessageManager().enviaMensaje("El otro usuario se desconecto.\n");
         	this.conexion.getConectionHandler().terminarRecibirMensajes();
         	this.vistaChat.mostrarVentana(false);
-        	IVistaInicial vistaInicial = new vistaInicial();
+        	IVistaInicial vistaInicial = new VistaInicial();
         	vistaInicial.mostrarVentana(true);
         }
         else {
