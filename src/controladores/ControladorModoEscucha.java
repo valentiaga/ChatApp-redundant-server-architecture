@@ -4,7 +4,7 @@ package controladores;
 
 import front.IVistaInicial;
 import front.IVistaModoEscucha;
-import front.vistaInicial;
+import front.VistaInicial;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
@@ -28,7 +28,7 @@ public class ControladorModoEscucha implements ActionListener {
 		
         if (comando.equalsIgnoreCase("VOLVER")) {
         	this.vistaModoEscucha.mostrarVentana(false);
-        	IVistaInicial vistaInicial = new vistaInicial();
+        	IVistaInicial vistaInicial = new VistaInicial();
         	vistaInicial.mostrarVentana(true);
         }
         	

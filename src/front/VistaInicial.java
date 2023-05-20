@@ -18,7 +18,7 @@ import controladores.ControladorVistaInicial;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
 
-public class vistaInicial extends JFrame implements IVistaInicial{
+public class VistaInicial extends JFrame implements IVistaInicial{
 
 	private JPanel contentPane;
 	private JTextField txtPuerto;
@@ -34,7 +34,7 @@ public class vistaInicial extends JFrame implements IVistaInicial{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					vistaInicial frame = new vistaInicial();
+					VistaInicial frame = new VistaInicial();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -44,7 +44,7 @@ public class vistaInicial extends JFrame implements IVistaInicial{
 	}
 
 	
-	public vistaInicial() {
+	public VistaInicial() {
 		setTitle("BIENVENIDO!");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

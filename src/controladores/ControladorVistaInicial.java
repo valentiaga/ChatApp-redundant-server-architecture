@@ -10,8 +10,8 @@ import javax.swing.JOptionPane;
 import front.IVistaChat;
 import front.IVistaInicial;
 import front.IVistaModoEscucha;
-import front.vistaChat;
-import front.vistaEspera;
+import front.VistaChat;
+import front.VistaEspera;
 import back.Cliente;
 import back.IEmisor;
 import back.IReceptor;
@@ -41,7 +41,7 @@ public class ControladorVistaInicial implements ActionListener{
             	else {
             		System.out.println("Conexion exitosa\n");
             		
-            		IVistaChat vistaChat = new vistaChat();
+            		IVistaChat vistaChat = new VistaChat();
             		conexion.setVista(vistaChat);
             		
             		this.conexion.conectarServer(this.vistaInicial.getIP(), Integer.parseInt(this.vistaInicial.getPuerto()));
@@ -67,12 +67,12 @@ public class ControladorVistaInicial implements ActionListener{
         }
         else if (comando.equalsIgnoreCase("MODOESCUCHA")) {
         	if (!this.vistaInicial.getPuertoEscucha().equals("puerto")) {
-        		IVistaModoEscucha vistaEscucha = new vistaEspera();
+        		IVistaModoEscucha vistaEscucha = new VistaEspera();
         		this.vistaInicial.mostrarVentana(false);
         		
         		vistaEscucha.mostrarVentana(true);  
         		try {
-        			IVistaChat vistaChat = new vistaChat();
+        			IVistaChat vistaChat = new VistaChat();
             		conexion.setVista(vistaChat);
 					this.conexion.Conectar(Integer.parseInt(this.vistaInicial.getPuertoEscucha()));
 					vistaChat.getCont().setConexion(conexion);
