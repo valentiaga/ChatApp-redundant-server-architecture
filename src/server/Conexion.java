@@ -8,6 +8,12 @@ public class Conexion {
 	private String nickname;
 	private String nicknameReceptor;
 	
+	public Conexion(Socket socket, String nickname,String nicknameReceptor) {
+		super();
+		this.socket = socket;
+		this.nickname = nickname;
+		this.nicknameReceptor = nicknameReceptor;
+	}
 	public Conexion(Socket socket, String nickname) {
 		super();
 		this.socket = socket;

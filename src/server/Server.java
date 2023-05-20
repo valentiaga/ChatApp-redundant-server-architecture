@@ -5,6 +5,8 @@ import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
+import java.io.ObjectInputStream;
+import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
@@ -18,8 +20,8 @@ public class Server extends Thread{
 	
 	private ServerSocket serverSocket;
 	private int puerto = 1234;
-	private DataInputStream dis;
-    private DataOutputStream dos;
+//	private DataInputStream dis;
+//    private DataOutputStream dos;
 	//hasmap de nickname con socket
     //final Socket s;
 	private HashMap<String,Conexion> clientes = new HashMap<>();
@@ -57,10 +59,14 @@ public class Server extends Thread{
 		                
 	 	               // System.out.println(s.isConnected());
 	 	                 
-	 	                DataInputStream dis = new DataInputStream(s.getInputStream());
-	 	                DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+//	 	                DataInputStream dis = new DataInputStream(s.getInputStream());
+//	 	                DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+	 	               ObjectInputStream dis = new ObjectInputStream(s.getInputStream());
+	 	               //ObjectOutputStream dos = new ObjectOutputStream(s.getOutputStream());
 	 	                
 	 	                nickname = dis.readUTF();
+	 	                //nicknameReceptor = dis.readUTF();
+	 	               
 	 	                conexion = new Conexion(s,nickname);
 	 	                this.clientes.put(nickname,conexion);
 	 	                
@@ -96,10 +102,14 @@ public class Server extends Thread{
 	//nickname del usuario con el que se va a conectar
 	public void creaChat(String nickname,String nicknameReceptor) {
 		
-		if(this.clientes.containsKey(nicknameReceptor))
+		if(this.clientes.containsKey(nicknameReceptor)) {
 			this.chats.put(nickname, nicknameReceptor);
+			this.chats.put(nicknameReceptor, nickname);
+			System.out.println("Crea chat");
+		}
 		else {
 			// no se pudo crear el chat porque el nickname no esta registrado
+			System.out.println("nombre no registrado");			// deberiamos mandar por el socket una exception a la ventana
 		}
 	}
 	
@@ -108,12 +118,14 @@ public class Server extends Thread{
 
 		String recibido;
 		super.run();
-		String mensaje = "Socket closed";
+		//String mensaje = "Socket closed";
 		String name,receptor;
 		int i;
 		Socket socket;
-		DataInputStream dis;
-        DataOutputStream dos;
+//		DataInputStream dis;
+//        DataOutputStream dos;
+        ObjectInputStream dis;
+        ObjectOutputStream dos;
         
 		//while(this.terminar == false && this.s.isClosed() != true) {
 		while(this.terminar == false) {
@@ -125,16 +137,23 @@ public class Server extends Thread{
 				receptor = this.lista.get(i).getNicknameReceptor();
 				
 				try {
-					dis = new DataInputStream(socket.getInputStream());
+					//dis = new DataInputStream(socket.getInputStream());
+					dis = new ObjectInputStream(socket.getInputStream());
 					//dos = new DataOutputStream(socket.getOutputStream());
 					recibido = dis.readUTF();
 					
-					if(recibido != null && receptor != null) {
-						dos = new DataOutputStream(this.clientes.get(receptor).getSocket().getOutputStream()); 
-						dos.writeUTF(recibido);
-					}else {
-						// no hay un receptor, no hay chat
-					}
+					if(recibido != null){ 
+						if(receptor != null){
+							
+							//dos = new DataOutputStream(this.clientes.get(receptor).getSocket().getOutputStream()); 
+							dos = new ObjectOutputStream(this.clientes.get(receptor).getSocket().getOutputStream()); 
+							dos.writeUTF(recibido);
+							
+						}else {					// no hay receptor, hay que iniciar el chat
+							this.creaChat(name, receptor);
+							//this.creaChat(receptor, name);
+						}
+					}else {}
 					
 				} catch (IOException e) {
 					// TODO Auto-generated catch block
@@ -159,7 +178,7 @@ public class Server extends Thread{
 //			catch (IOException e2) {
 //				e2.printStackTrace();
 //			}
-	}
+		}
 	}
 	
 	private void enviarAlReceptor() {

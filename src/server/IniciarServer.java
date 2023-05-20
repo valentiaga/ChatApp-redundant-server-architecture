@@ -8,13 +8,14 @@ public class IniciarServer {
 		// TODO Auto-generated method stub
 		Server server = new Server();
 		
+		server.start();
 		try {
-			server.Registrar();
+			server.Registrar();			// el hilo se va a quedar aca
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		server.start();
+		
 	}
 
 }
