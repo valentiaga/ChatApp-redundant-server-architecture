@@ -8,6 +8,7 @@ import java.io.ObjectOutputStream;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
+import back.Cliente;
 import server.Server;
 
 public class Prueba {
@@ -17,45 +18,73 @@ public class Prueba {
 		
 		
 		String IP = "localhost";
+		int puerto = 141;
 		Socket s;
+		Socket s2;
+		
+		Cliente cliente = new Cliente("Juancho",123,"1321");
+		ObjectOutputStream dos = null;
+		ObjectOutputStream dos2;
+		
+		String name = "tuvieja";
+		String name2 = "mivieja";
+		
 		try {
-			s = new Socket(IP,1234);
+			s = new Socket(IP,puerto);
 			
 //			DataInputStream dis = new DataInputStream(s.getInputStream());
 //	        DataOutputStream dos = new DataOutputStream(s.getOutputStream());
-	        
+			
+			
 	        //ObjectInputStream dis = new ObjectInputStream(s.getInputStream());
-            ObjectOutputStream dos = new ObjectOutputStream(s.getOutputStream());
-	        dos.writeUTF("tuvieja");
+            dos = new ObjectOutputStream(s.getOutputStream());
+            
+            
+            dos.writeObject(name);
+	        //dos.writeUTF("tuvieja");
 	     
 		} catch (UnknownHostException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			
 			e.printStackTrace();
 		}
 		
-//		 Socket s2;
-//	        try {
-//	            s2 = new Socket(IP,1234);
-//
-////	            DataInputStream dis2 = new DataInputStream(s2.getInputStream());
-////	            DataOutputStream dos2 = new DataOutputStream(s2.getOutputStream());
-//	            
-//	            ObjectInputStream dis2 = new ObjectInputStream(s2.getInputStream());
-//	            ObjectOutputStream dos2 = new ObjectOutputStream(s2.getOutputStream());
-//	            dos2.writeUTF("miviejaahr");
-//	           
-//
-//	        } catch (UnknownHostException e) {
-//	            // TODO Auto-generated catch block
-//	            e.printStackTrace();
-//	        } catch (IOException e) {
-//	            // TODO Auto-generated catch block
-//	            e.printStackTrace();
-//	        }
-	        
+		 
+		 
+		 
+			try {
+				s2 = new Socket(IP,puerto);
+				
+//				DataInputStream dis = new DataInputStream(s.getInputStream());
+//		        DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+				
+				
+		        //ObjectInputStream dis = new ObjectInputStream(s.getInputStream());
+	            dos2 = new ObjectOutputStream(s2.getOutputStream());
+	            
+	            
+	            dos2.writeObject(name2);
+		        //dos.writeUTF("tuvieja");
+		     
+			} catch (UnknownHostException e) {
+				// TODO Auto-generated catch block
+				//System.out.println("Exception");
+				e.printStackTrace();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				
+				e.printStackTrace();
+			}
+
+	        try {
+				dos.writeObject(name2);
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 
 	}
 

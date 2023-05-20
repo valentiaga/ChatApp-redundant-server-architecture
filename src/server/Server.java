@@ -19,7 +19,7 @@ import java.util.Map;
 public class Server extends Thread{
 	
 	private ServerSocket serverSocket;
-	private int puerto = 1234;
+	private int puerto = 141;
 //	private DataInputStream dis;
 //    private DataOutputStream dos;
 	//hasmap de nickname con socket
@@ -37,6 +37,7 @@ public class Server extends Thread{
 			this.serverSocket = new ServerSocket(this.puerto);
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
+			System.out.println("Constructor");
 			e.printStackTrace();
 		}
 		//this.start();
@@ -50,7 +51,7 @@ public class Server extends Thread{
 	            String nickname;
 	            String nicknameReceptor;
 	            Conexion conexion;
-	            
+	            Object object;
 	            
 	            try 
 	            {
@@ -62,19 +63,23 @@ public class Server extends Thread{
 //	 	                DataInputStream dis = new DataInputStream(s.getInputStream());
 //	 	                DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 	 	               ObjectInputStream dis = new ObjectInputStream(s.getInputStream());
-	 	               //ObjectOutputStream dos = new ObjectOutputStream(s.getOutputStream());
+	 	               ObjectOutputStream dos = new ObjectOutputStream(s.getOutputStream());
 	 	                
-	 	                nickname = dis.readUTF();
+	 	                //nickname = dis.readUTF();
 	 	                //nicknameReceptor = dis.readUTF();
+	 	               
+	 	               object = dis.readObject();
+	 	              
+	 	               System.out.println(object);
+	 	               nickname = (String) object;
 	 	               
 	 	                conexion = new Conexion(s,nickname);
 	 	                this.clientes.put(nickname,conexion);
 	 	                
 	 	                this.lista.add(conexion);
 	 	                
-	 	                //this.enviarAlReceptor();    // esto porque se tiene que chequear con el thread si hay que enviar algo
 	 	                
-	 	                System.out.println(this.clientes);
+	 	                //System.out.println(this.clientes);
 	 	                //nicknameReceptor = dis.readUTF();
 	 	                //this.chats.put(nickname, dis.readUTF());
 	 	                
@@ -89,13 +94,14 @@ public class Server extends Thread{
 	 	                //this.conectionHandler.start();
 	 	                  
 	            	}
-	            		
+	            	
 	            }
 	            catch (Exception e){
-	                s.close();
 	                serverSocket.close();
 	                e.printStackTrace();
 	            }
+	            if(s != null)
+	            	s.close();
 	          
 	    }
     
@@ -113,7 +119,6 @@ public class Server extends Thread{
 		}
 	}
 	
-
 	public void run() {
 
 		String recibido;
@@ -127,27 +132,32 @@ public class Server extends Thread{
         ObjectInputStream dis;
         ObjectOutputStream dos;
         
+         
 		//while(this.terminar == false && this.s.isClosed() != true) {
 		while(this.terminar == false) {
-			
+			//System.out.println("entro");
 			i=0;
+			System.out.println(this.lista);
 			while(i < this.lista.size()) {
 				socket = this.lista.get(i).getSocket();
 				name = this.lista.get(i).getNickname();
 				receptor = this.lista.get(i).getNicknameReceptor();
+				System.out.println(socket);
 				
 				try {
 					//dis = new DataInputStream(socket.getInputStream());
 					dis = new ObjectInputStream(socket.getInputStream());
-					//dos = new DataOutputStream(socket.getOutputStream());
-					recibido = dis.readUTF();
+					
+					//recibido = dis.readUTF();
+					recibido = (String) dis.readObject();
 					
 					if(recibido != null){ 
 						if(receptor != null){
 							
-							//dos = new DataOutputStream(this.clientes.get(receptor).getSocket().getOutputStream()); 
+//							dos = new DataOutputStream(this.clientes.get(receptor).getSocket().getOutputStream()); 
+							//dos.writeUTF(recibido);
 							dos = new ObjectOutputStream(this.clientes.get(receptor).getSocket().getOutputStream()); 
-							dos.writeUTF(recibido);
+							dos.writeObject(recibido);
 							
 						}else {					// no hay receptor, hay que iniciar el chat
 							this.creaChat(name, receptor);
@@ -156,6 +166,9 @@ public class Server extends Thread{
 					}else {}
 					
 				} catch (IOException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				} catch (ClassNotFoundException e) {
 					// TODO Auto-generated catch block
 					e.printStackTrace();
 				}
