@@ -15,7 +15,7 @@ import javax.swing.border.EmptyBorder;
 
 import controladores.ControladorModoEscucha;
 
-public class vistaEspera extends JFrame implements IVistaModoEscucha, ActionListener {
+public class VistaEspera extends JFrame implements IVistaModoEscucha, ActionListener {
 
 	private JPanel contentPane;
 	private ActionListener actionListener =null;
@@ -28,7 +28,7 @@ public class vistaEspera extends JFrame implements IVistaModoEscucha, ActionList
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					vistaEspera frame = new vistaEspera();
+					VistaEspera frame = new VistaEspera();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -40,7 +40,7 @@ public class vistaEspera extends JFrame implements IVistaModoEscucha, ActionList
 	/**
 	 * Create the frame.
 	 */
-	public vistaEspera() {
+	public VistaEspera() {
 		setTitle("MODO ESCUCHA");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);

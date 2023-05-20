@@ -10,7 +10,7 @@ import javax.swing.JOptionPane;
 import back.Cliente;
 import front.IVistaChat;
 import front.IVistaInicial;
-import front.vistaChat;
+import front.VistaChat;
 
 public class ControladorVistaInicial implements ActionListener{
 	
@@ -37,7 +37,7 @@ public class ControladorVistaInicial implements ActionListener{
             	else {
             		System.out.println("Conexion exitosa\n");
             		
-            		IVistaChat vistaChat = new vistaChat();
+            		IVistaChat vistaChat = new VistaChat();
             		conexion.setVista(vistaChat);
             		
             		this.conexion.conectarServer(this.vistaInicial.getIP(), Integer.parseInt(this.vistaInicial.getPuerto()));
