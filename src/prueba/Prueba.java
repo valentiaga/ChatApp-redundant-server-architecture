@@ -6,7 +6,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.UnknownHostException;
 
-import back.Server;
+import server.Server;
 
 public class Prueba {
 

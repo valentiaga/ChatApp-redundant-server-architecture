@@ -1,4 +1,4 @@
-package back;
+package server;
 
 import java.io.DataInputStream;
 
@@ -48,42 +48,49 @@ public class Server extends Thread{
 	            String nickname;
 	            String nicknameReceptor;
 	            Conexion conexion;
+	            
+	            
 	            try 
 	            {
-	                s = serverSocket.accept();
-	                
-	               // System.out.println(s.isConnected());
-	                 
-	                DataInputStream dis = new DataInputStream(s.getInputStream());
-	                DataOutputStream dos = new DataOutputStream(s.getOutputStream());
-	                
-	                nickname = dis.readUTF();
-	                conexion = new Conexion(s,nickname);
-	                this.clientes.put(nickname,conexion);
-	                
-	                this.lista.add(conexion);
-	                
-	                System.out.println(this.clientes);
-	                //nicknameReceptor = dis.readUTF();
-	                //this.chats.put(nickname, dis.readUTF());
-	                
-	                
-	                //System.out.println(nickname);
-	                
-	                //dis.readUTF();
-	                //this.socket = s;
-//	                this.messageManager = new MessageManager(s, dis, dos,this.vistaChat);
-//	                this.conectionHandler = new ConectionHandler(s, dis, dos,this.vistaChat);
-	                
-	                //this.conectionHandler.start();
-	                  
+	            	while(true) {
+	            		s = serverSocket.accept();
+		                
+	 	               // System.out.println(s.isConnected());
+	 	                 
+	 	                DataInputStream dis = new DataInputStream(s.getInputStream());
+	 	                DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+	 	                
+	 	                nickname = dis.readUTF();
+	 	                conexion = new Conexion(s,nickname);
+	 	                this.clientes.put(nickname,conexion);
+	 	                
+	 	                this.lista.add(conexion);
+	 	                
+	 	                //this.enviarAlReceptor();    // esto porque se tiene que chequear con el thread si hay que enviar algo
+	 	                
+	 	                System.out.println(this.clientes);
+	 	                //nicknameReceptor = dis.readUTF();
+	 	                //this.chats.put(nickname, dis.readUTF());
+	 	                
+	 	                
+	 	                //System.out.println(nickname);
+	 	                
+	 	                //dis.readUTF();
+	 	                //this.socket = s;
+//	 	                this.messageManager = new MessageManager(s, dis, dos,this.vistaChat);
+//	 	                this.conectionHandler = new ConectionHandler(s, dis, dos,this.vistaChat);
+	 	                
+	 	                //this.conectionHandler.start();
+	 	                  
+	            	}
+	            		
 	            }
 	            catch (Exception e){
 	                s.close();
 	                serverSocket.close();
 	                e.printStackTrace();
 	            }
-	       
+	          
 	    }
     
 	//nickname del usuario con el que se va a conectar
@@ -155,6 +162,41 @@ public class Server extends Thread{
 	}
 	}
 	
+	private void enviarAlReceptor() {
+		
+		String recibido;
+		super.run();
+		String mensaje = "Socket closed";
+		String name,receptor;
+		int i;
+		Socket socket;
+		DataInputStream dis;
+        DataOutputStream dos;
+        
+        i=0;
+		while(i < this.lista.size()) {
+			socket = this.lista.get(i).getSocket();
+			name = this.lista.get(i).getNickname();
+			receptor = this.lista.get(i).getNicknameReceptor();
+			
+			try {
+				dis = new DataInputStream(socket.getInputStream());
+				//dos = new DataOutputStream(socket.getOutputStream());
+				recibido = dis.readUTF();
+				
+				if(recibido != null && receptor != null) {
+					dos = new DataOutputStream(this.clientes.get(receptor).getSocket().getOutputStream()); 
+					dos.writeUTF(recibido);
+				}else {
+					// no hay un receptor, no hay chat
+				}
+				
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+		}
+	}
 	
 //	public void terminarRecibirMensajes() {
 //		//String mensaje = "El otro usuario se desconecto.\n";
