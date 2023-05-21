@@ -8,7 +8,7 @@ public class IniciarServer {
 		// TODO Auto-generated method stub
 		Server server = new Server();
 		
-		server.start();
+		//server.start();
 		try {
 			server.Registrar();			// el hilo se va a quedar aca
 		} catch (IOException e) {
