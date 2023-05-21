@@ -49,40 +49,40 @@ public class Cliente
 		DataInputStream dis = new DataInputStream(s.getInputStream());
         DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 		
-        dos.writeUTF(this.nickname);
+        dos.writeUTF("0"+this.nickname);
 		this.messageManager  = new MessageManager(s,dis,dos,this.vistaChat);
 	}
 	
 //------------------------------------------------------------------------------------------------------
-		public void Conectar(final int puerto) throws IOException {
-			
-			 ServerSocket ss = new ServerSocket(puerto);
-
-		            Socket s = null;
-		              
-		            try 
-		            {
-		                s = ss.accept();
-		                
-		               // System.out.println(s.isConnected());
-		                 
-		                DataInputStream dis = new DataInputStream(s.getInputStream());
-		                DataOutputStream dos = new DataOutputStream(s.getOutputStream());
-		                  
-		                this.socket = s;
-		                this.messageManager = new MessageManager(s, dis, dos,this.vistaChat);
-		                this.conectionHandler = new ConectionHandler(s, dis, dos,this.vistaChat);
-		                
-		                this.conectionHandler.start();
-		                  
-		            }
-		            catch (Exception e){
-		                s.close();
-		                ss.close();
-		                e.printStackTrace();
-		            }
-		       
-		    }
+//		public void Conectar(final int puerto) throws IOException {
+//			
+//			 ServerSocket ss = new ServerSocket(puerto);
+//
+//		            Socket s = null;
+//		              
+//		            try 
+//		            {
+//		                s = ss.accept();
+//		                
+//		               // System.out.println(s.isConnected());
+//		                 
+//		                DataInputStream dis = new DataInputStream(s.getInputStream());
+//		                DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+//		                  
+//		                this.socket = s;
+//		                this.messageManager = new MessageManager(s, dis, dos,this.vistaChat);
+//		                this.conectionHandler = new ConectionHandler(s, dis, dos,this.vistaChat);
+//		                
+//		                this.conectionHandler.start();
+//		                  
+//		            }
+//		            catch (Exception e){
+//		                s.close();
+//		                ss.close();
+//		                e.printStackTrace();
+//		            }
+//		       
+//		    }
 
 	
 		public void recibirMensajes() {

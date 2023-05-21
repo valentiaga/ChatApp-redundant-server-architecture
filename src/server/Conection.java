@@ -52,6 +52,7 @@ public class Conection extends Thread {
 
 	//	String recibido;
 		super.run();
+		String comando;
 		String mensaje;
 		char bandera;
 		
@@ -71,20 +72,29 @@ public class Conection extends Thread {
 			         
 			        if(bandera == '0') {
 			        	if(this.conexion.getNicknameReceptor() != null) {
-							this.clientes.get(this.conexion.getNicknameReceptor()).getDos().writeUTF(mensaje);
+							this.clientes.get(this.conexion.getNicknameReceptor()).getDos().writeUTF("0"+mensaje);
 						}else {
 							if(this.clientes.containsKey(mensaje)) {
 								System.out.println("Chat");
 								this.conexion.setNicknameReceptor(mensaje);
 								this.clientes.get(mensaje).setNicknameReceptor(this.conexion.getNickname());
 								// INICIAR LOS CHATS EN LOS CLIENTES
+								comando = "1INICIARCHAT";
+								this.conexion.getDos().writeUTF(comando);
+								this.clientes.get(mensaje).getDos().writeUTF(comando);
+								
 							}else { 
 								// no esta registrado ese nickname de receptor
+								comando = "1NOREGISTRADO";
+								this.conexion.getDos().writeUTF(comando);
 							}
 						}
 					} else {
 						if (bandera == '1') {	// comando para el servidor
 							
+							if(mensaje == "FINALIZARCHAT") {
+								this.clientes.get(mensaje).getDos().writeUTF("1"+mensaje);
+							}
 						}
 					}
 				}

@@ -27,17 +27,42 @@ public class ConectionHandler extends Thread
 	}
 
 	public void run() {
-
-		String recibido;
+		
+		String INICIARCHAT = "INICIARCHAT";
+		String NOREGISTRADO = "NOREGISTRADO";
+		String FINALIZACHAT = "FINALIZACHAT";
+		
+		String mensaje;
+		char comando;
 		super.run();
-		String mensaje = "Socket closed";
+		
 		
 		//while(this.terminar == false && this.s.isClosed() != true) {
 		while(this.terminar == false) {
 			
 			try {
-				recibido = dis.readUTF();
-				this.vista.getTextArea().setText(this.vista.getTextArea().getText()+"\n"+recibido);
+				  mensaje = dis.readUTF();
+	              comando = mensaje.charAt(0);
+	              mensaje = mensaje.substring(1);
+	            
+	            if(comando == '0') {	// mensaje
+	            	this.vista.getTextArea().setText(this.vista.getTextArea().getText()+"\n"+mensaje);
+	            }else {
+	            	if(comando == '1') {
+	            		switch (mensaje) {
+	            		case "INICIARCHAT":
+	            			
+	            		break;
+	            		case "NOREGISTRADO":
+	            			
+		            		break;
+	            		case "FINALIZACHAT":
+	            			
+		            		break;
+	            		}
+	            	}
+	            }
+				
 			} 
 			catch (EOFException e) {
 				//e.printStackTrace();
