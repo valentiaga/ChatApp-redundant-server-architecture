@@ -14,8 +14,8 @@ import front.IVistaChat;
 
 public class Conection extends Thread {
 	
-	Conexion conexion;
-	private HashMap<String,Conexion> clientes;
+	DataCliente dataCliente;
+	private HashMap<String,DataCliente> clientes;
 	
 	final DataInputStream dis;
 	final DataOutputStream dos;
@@ -30,21 +30,21 @@ public class Conection extends Thread {
 		this.socket = s;
 	}
 
-	public Conection(Socket s,Conexion conexion,HashMap<String,Conexion> clientes) throws IOException {
+	public Conection(Socket s,DataCliente conexion,HashMap<String,DataCliente> clientes) throws IOException {
 		super();
 		this.dis = new DataInputStream(s.getInputStream());
 		this.dos = new DataOutputStream(s.getOutputStream());
 		this.socket = s;
-		this.conexion = conexion;
+		this.dataCliente = conexion;
 		this.clientes = clientes;
 	}
 	
-	public Conection(Socket s,Conexion conexion,HashMap<String,Conexion> clientes,DataInputStream dis,DataOutputStream dos) throws IOException {
+	public Conection(Socket s,DataCliente conexion,HashMap<String,DataCliente> clientes,DataInputStream dis,DataOutputStream dos) throws IOException {
 		super();
 		this.dis = dis;
 		this.dos = dos;
 		this.socket = s;
-		this.conexion = conexion;
+		this.dataCliente = conexion;
 		this.clientes = clientes;
 	}
 	
@@ -71,22 +71,22 @@ public class Conection extends Thread {
 			         System.out.println(mensaje);
 			         
 			        if(bandera == '0') {
-			        	if(this.conexion.getNicknameReceptor() != null) {
-							this.clientes.get(this.conexion.getNicknameReceptor()).getDos().writeUTF("0"+mensaje);
+			        	if(this.dataCliente.getNicknameReceptor() != null) {
+							this.clientes.get(this.dataCliente.getNicknameReceptor()).getDos().writeUTF("0"+mensaje);
 						}else {
 							if(this.clientes.containsKey(mensaje)) {
 								System.out.println("Chat");
-								this.conexion.setNicknameReceptor(mensaje);
-								this.clientes.get(mensaje).setNicknameReceptor(this.conexion.getNickname());
+								this.dataCliente.setNicknameReceptor(mensaje);
+								this.clientes.get(mensaje).setNicknameReceptor(this.dataCliente.getNickname());
 								// INICIAR LOS CHATS EN LOS CLIENTES
 								comando = "1INICIARCHAT";
-								this.conexion.getDos().writeUTF(comando);
+								this.dataCliente.getDos().writeUTF(comando);
 								this.clientes.get(mensaje).getDos().writeUTF(comando);
 								
 							}else { 
 								// no esta registrado ese nickname de receptor
-								comando = "1NOREGISTRADO";
-								this.conexion.getDos().writeUTF(comando);
+								comando = "2NOREGISTRADO";
+								this.dataCliente.getDos().writeUTF(comando);
 							}
 						}
 					} else {

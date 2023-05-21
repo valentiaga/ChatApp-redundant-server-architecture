@@ -8,19 +8,20 @@ import java.net.UnknownHostException;
 import javax.swing.JOptionPane;
 
 import back.Cliente;
-import front.IVistaChat;
+import exception.IniciarException;
+import front.IVistaConecta;
 import front.IVistaInicial;
 import front.vistaChat;
+import front.vistaConecta;
 
 public class ControladorVistaInicial implements ActionListener {
 
 	private IVistaInicial vistaInicial = null;
-	private Cliente conexion = null;
+	private Cliente cliente = null;
 
 	public ControladorVistaInicial(IVistaInicial vista) {
 		this.vistaInicial = vista;
 		this.vistaInicial.addActionListener(this);
-		this.conexion = new Cliente();
 	}
 
 	public void actionPerformed(ActionEvent e) {
@@ -30,29 +31,27 @@ public class ControladorVistaInicial implements ActionListener {
 			boolean condition = !this.vistaInicial.getPuerto().equals("puerto")
 					&& this.vistaInicial.getIP().length() > 5 && !this.vistaInicial.getUser().equals("user");
 
-			try {
+			try { 
 
 				if (condition == false)
 					JOptionPane.showMessageDialog(null, "Algún campo es inválido");
 				else {
 					System.out.println("Conexion exitosa\n");
 
-					IVistaChat vistaChat = new vistaChat();
-					conexion.setVista(vistaChat);
-
-					//IVistaConecta vistaConecta = new VistaConecta();
+					this.cliente = new Cliente( this.vistaInicial.getUser(), Integer.parseInt(this.vistaInicial.getPuerto()), this.vistaInicial.getIP());
+					try {
+						this.cliente.conectarServer();
+					} catch (IniciarException e1) {
+						JOptionPane.showMessageDialog(null, e1.getMessage());
+					}
 					
-					this.conexion.conectarServer(this.vistaInicial.getIP(),
-							Integer.parseInt(this.vistaInicial.getPuerto()));
-
-//            		IVistaChat vistaChat = new vistaChat();
-//            		conexion.setVista(vistaChat);
-					this.vistaInicial.mostrarVentana(false);
-
-					// vistaChat.setConexion(conexion);
-					vistaChat.getCont().setConexion(conexion);
-					vistaChat.mostrarVentana(true);
-					conexion.recibirMensajes(); // crea un thread para poder recibir mensajes por el socket
+					IVistaConecta vistaConecta = new vistaConecta();
+					vistaConecta.setCliente(cliente);
+					System.out.println(cliente);
+					this.vistaInicial.mostrarVentana(false);  
+			
+					vistaConecta.mostrarVentana(true);
+					
 				}
 
 			} catch (NumberFormatException e1) {

@@ -14,6 +14,7 @@ import javax.swing.JPanel;
 import javax.swing.JTextField;
 import javax.swing.border.EmptyBorder;
 
+import back.Cliente;
 import controladores.ControladorVistaConecta;
 
 import javax.swing.JLabel;
@@ -23,11 +24,12 @@ import javax.swing.LayoutStyle.ComponentPlacement;
 public class vistaConecta  extends JFrame implements IVistaConecta{
 	
 	private JPanel contentPane;
-	private JTextField txtPuerto;
+	private JTextField txtUser;
 	private ActionListener actionListenr; 
 	public JButton btnConectar;
 	private ControladorVistaConecta cont = null;
 	private JLabel lblNewLabel;
+	private Cliente cliente;
 	
 	
 	public static void main(String[] args) {
@@ -50,7 +52,7 @@ public class vistaConecta  extends JFrame implements IVistaConecta{
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
-		this.setVisible(true);
+		//this.setVisible(true);
 		
 		
 
@@ -63,12 +65,12 @@ public class vistaConecta  extends JFrame implements IVistaConecta{
 		btnConectar.setActionCommand("CONECTAR");
 		btnConectar.setBackground(new Color(245, 255, 246));
 		
-		txtPuerto = new JTextField();
-		txtPuerto.setForeground(new Color(169, 169, 169));
-		txtPuerto.setText("user");
-		txtPuerto.setToolTipText("puerto");
-		txtPuerto.setBackground(new Color(255, 255, 255));
-		txtPuerto.setColumns(10);
+		txtUser = new JTextField();
+		txtUser.setForeground(new Color(169, 169, 169));
+		txtUser.setText("user");
+		txtUser.setToolTipText("puerto");
+		txtUser.setBackground(new Color(255, 255, 255));
+		txtUser.setColumns(10);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
@@ -81,7 +83,7 @@ public class vistaConecta  extends JFrame implements IVistaConecta{
 							.addGap(157)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 								.addComponent(btnConectar)
-								.addComponent(txtPuerto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+								.addComponent(txtUser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
 					.addContainerGap(113, Short.MAX_VALUE))
 		);
 		gl_contentPane.setVerticalGroup(
@@ -90,7 +92,7 @@ public class vistaConecta  extends JFrame implements IVistaConecta{
 					.addGap(23)
 					.addComponent(lblNewLabel)
 					.addGap(71)
-					.addComponent(txtPuerto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+					.addComponent(txtUser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
 					.addComponent(btnConectar)
 					.addGap(39))
@@ -107,24 +109,34 @@ public class vistaConecta  extends JFrame implements IVistaConecta{
 	
 	
 
-
-
 	@Override
 	public void addActionListener(ActionListener actionListener) {
-		// TODO Auto-generated method stub
-		
+		this.actionListenr=actionListener;
+		this.btnConectar.addActionListener(actionListener);
 	}
 
 	@Override
 	public void mostrarVentana(boolean cond) {
-		// TODO Auto-generated method stub
+		this.setVisible(cond);
 		
 	}
 
 	@Override
-	public String getNickname() {
-		// TODO Auto-generated method stub
-		return null;
+	public String getNicknameReceptor() {
+		
+		return this.txtUser.getText();
 	}
+
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
+	}
+	
+	
 
 }

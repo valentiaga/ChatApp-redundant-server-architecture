@@ -47,7 +47,7 @@ public class vistaChat extends JFrame implements IVistaChat{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					vistaChat frame = new vistaChat();
+					vistaChat frame = new vistaChat(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,8 +59,8 @@ public class vistaChat extends JFrame implements IVistaChat{
 	/**
 	 * Create the frame.
 	 */
-	public vistaChat() { 
-		setTitle("CHAT EN TIEMPO REAL");
+	public vistaChat(String nicknameReceptor) { 
+		setTitle(nicknameReceptor);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -82,7 +82,7 @@ public class vistaChat extends JFrame implements IVistaChat{
 		btnAbandonar.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		
 		txtIngreseTextoAqui = new JTextField();
-		txtIngreseTextoAqui.setText("Ingrese texto aquí");
+		txtIngreseTextoAqui.setText("Ingrese texto aqu\u00ED");
 		txtIngreseTextoAqui.setFont(new Font("Lucida Grande", Font.PLAIN, 10));
 		txtIngreseTextoAqui.setForeground(new Color(127, 127, 127));
 		txtIngreseTextoAqui.setColumns(10);
@@ -93,34 +93,37 @@ public class vistaChat extends JFrame implements IVistaChat{
 		jScrollPane1 = new JScrollPane();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
-			gl_contentPane.createParallelGroup(Alignment.TRAILING)
-				.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-					.addGap(14)
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING, false)
-						.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 400, GroupLayout.PREFERRED_SIZE)
+			gl_contentPane.createParallelGroup(Alignment.LEADING)
+				.addGroup(gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(142)
-							.addComponent(lblNewLabel)
-							.addGap(29)
-							.addComponent(btnAbandonar))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addComponent(txtIngreseTextoAqui)
-							.addGap(18)
-							.addComponent(btnEnviar)))
-					.addContainerGap())
+							.addGap(14)
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(142)
+									.addComponent(lblNewLabel))
+								.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 385, GroupLayout.PREFERRED_SIZE)
+								.addGroup(Alignment.TRAILING, gl_contentPane.createSequentialGroup()
+									.addComponent(txtIngreseTextoAqui, GroupLayout.DEFAULT_SIZE, 295, Short.MAX_VALUE)
+									.addGap(18)
+									.addComponent(btnEnviar)
+									.addPreferredGap(ComponentPlacement.RELATED))))
+						.addComponent(btnAbandonar))
+					.addContainerGap(31, GroupLayout.PREFERRED_SIZE))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addComponent(btnAbandonar)
-						.addComponent(lblNewLabel))
-					.addGap(18)
-					.addComponent(jScrollPane1, GroupLayout.DEFAULT_SIZE, 180, Short.MAX_VALUE)
+					.addComponent(lblNewLabel)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(jScrollPane1, GroupLayout.PREFERRED_SIZE, 180, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-						.addComponent(txtIngreseTextoAqui, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-						.addComponent(btnEnviar)))
+						.addComponent(txtIngreseTextoAqui, GroupLayout.PREFERRED_SIZE, 26, GroupLayout.PREFERRED_SIZE)
+						.addComponent(btnEnviar))
+					.addPreferredGap(ComponentPlacement.RELATED, 9, Short.MAX_VALUE)
+					.addComponent(btnAbandonar)
+					.addContainerGap())
 		);
 		
 		textArea = new JTextArea();

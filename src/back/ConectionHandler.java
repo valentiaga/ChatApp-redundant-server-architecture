@@ -7,6 +7,7 @@ import java.io.IOException;
 import java.net.Socket;
 import java.net.SocketException;
 
+import exception.UserNotAvailableException;
 import front.IVistaChat;
 
 
@@ -26,7 +27,7 @@ public class ConectionHandler extends Thread
 		this.s = s;
 	}
 
-	public void run() {
+	public void run(){
 		
 		String INICIARCHAT = "INICIARCHAT";
 		String NOREGISTRADO = "NOREGISTRADO";
@@ -39,27 +40,29 @@ public class ConectionHandler extends Thread
 		
 		//while(this.terminar == false && this.s.isClosed() != true) {
 		while(this.terminar == false) {
-			
 			try {
 				  mensaje = dis.readUTF();
-	              comando = mensaje.charAt(0);
+	              comando = mensaje.charAt(0); 
 	              mensaje = mensaje.substring(1);
 	            
+	              System.out.println("CONECTIONHANDLERRRRR");
+	              
 	            if(comando == '0') {	// mensaje
 	            	this.vista.getTextArea().setText(this.vista.getTextArea().getText()+"\n"+mensaje);
 	            }else {
 	            	if(comando == '1') {
-	            		switch (mensaje) {
-	            		case "INICIARCHAT":
-	            			
-	            		break;
-	            		case "NOREGISTRADO":
-	            			
-		            		break;
-	            		case "FINALIZACHAT":
-	            			
-		            		break;
-	            		}
+//	            		switch (mensaje) {
+//	            		case "INICIARCHAT":
+//	            			
+//	            		break;
+//	            		case "NOREGISTRADO":
+//	            			
+//		            	break;
+//	            		case "FINALIZACHAT":
+//	            			
+//		            		break;
+//	            		}
+	 
 	            	}
 	            }
 				
@@ -74,7 +77,7 @@ public class ConectionHandler extends Thread
 			}
 			catch (IOException e2) {
 				e2.printStackTrace();
-			}
+			} 
 		}
 	}
 	

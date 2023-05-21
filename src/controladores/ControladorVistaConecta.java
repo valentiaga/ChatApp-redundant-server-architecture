@@ -3,40 +3,41 @@ package controladores;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.IOException;
-import java.net.UnknownHostException;
 
 import javax.swing.JOptionPane;
 
 import back.Cliente;
+import exception.CreaChatException;
+import exception.UserNotAvailableException;
 import front.IVistaChat;
 import front.IVistaConecta;
-import front.IVistaInicial;
 import front.vistaChat;
 
 public class ControladorVistaConecta implements ActionListener {
 
-    private IVistaConecta vistaConecta = null;
-    private Cliente conexion = null;
+	private IVistaConecta vistaConecta = null;
+	private Cliente cliente = null;
 
-    public ControladorVistaConecta(IVistaConecta vista) {
-        this.vistaConecta = vista;
-        this.vistaConecta.addActionListener(this);
-        this.conexion = new Cliente();
-    }
+	public ControladorVistaConecta(IVistaConecta vista) {
+		this.vistaConecta = vista;
+		this.vistaConecta.addActionListener(this);
+	}
 
-    public void actionPerformed(ActionEvent e) {
-        String comando = e.getActionCommand();
+	public void actionPerformed(ActionEvent e) {
+		String comando = e.getActionCommand();
 
-        if (comando.equalsIgnoreCase("CONECTAR")) {
-            boolean condition = !this.vistaConecta.getNickname().equals("user");
+		if (comando.equalsIgnoreCase("CONECTAR")) {
+			boolean condition = !this.vistaConecta.getNicknameReceptor().equals("user");
 
-
-            try {
-
-                if (condition == false)
-                    JOptionPane.showMessageDialog(null, "Ingrese un nickname");
-                else {
-////                    System.out.println("Conexion exitosa\n");
+			try {
+				if (condition == false)
+					JOptionPane.showMessageDialog(null, "Ingrese un usuario válido");
+				else {
+						
+					this.cliente=this.vistaConecta.getCliente();
+					this.cliente.conectarReceptor(this.vistaConecta.getNicknameReceptor());
+					
+////                   System.out.println("Conexion exitosa\n");
 //
 //                    IVistaChat vistaChat = new vistaChat();
 //                    conexion.setVista(vistaChat);
@@ -50,14 +51,25 @@ public class ControladorVistaConecta implements ActionListener {
 //                    vistaChat.getCont().setConexion(conexion);
 //                    vistaChat.mostrarVentana(true);
 //                    conexion.recibirMensajes(); // crea un thread para poder recibir mensajes por el socket
-                }
+				}
 
-            } catch (NumberFormatException e1) {
-                System.out.println("e1");
-            } 
+				
+			} catch (UserNotAvailableException e1) {
+				JOptionPane.showMessageDialog(null, e1.getMessage());
+			}
+			catch (NumberFormatException e1) {
+				System.out.println("e1");
+			} catch (IOException e1) {
+				// TODO Auto-generated catch block
+				e1.printStackTrace();
+			} catch (CreaChatException e1) {
+				IVistaChat vistaChat = new vistaChat(this.vistaConecta.getNicknameReceptor());
+				this.vistaConecta.mostrarVentana(false);
+				vistaChat.mostrarVentana(true);
+			} 
 
-        }
+		}
 
-    }
+	}
 
 }

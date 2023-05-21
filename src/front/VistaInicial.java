@@ -126,11 +126,10 @@ public class VistaInicial extends JFrame implements IVistaInicial{
 
 	public String getPuerto() {
 		return this.txtPuerto.getText();
-	}
+	} 
 
 	public String getIP() {
-		// TODO Auto-generated method stub
-		return this.txtIp.getText();
+		return this.txtIp.getText(); 
 	}
 
 	public void addActionListener(ActionListener actionListener) {
@@ -138,17 +137,6 @@ public class VistaInicial extends JFrame implements IVistaInicial{
 		this.actionListenr = actionListener;
 	}
 
-
-	public void mostrarVentana() {
-		// TODO Auto-generated method stub
-		
-	}
-
-	
-//	public void keyReleased(KeyEvent e) {
-//        boolean condition = this.getPuerto()> 1000 && this.getIP().length()>0;
-//        this.btnConectar.setEnabled(condition);
-//    }
 	
 	public void mostrarVentana(boolean cond) {
 		this.setVisible(cond);

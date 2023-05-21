@@ -24,7 +24,7 @@ public class MessageManager {
 		this.dos = dos;
 		this.s = s;
 	}
-    
+     
     public void enviaMensaje(String mensaje) {
     	
     	if(this.s.isClosed() != true) {

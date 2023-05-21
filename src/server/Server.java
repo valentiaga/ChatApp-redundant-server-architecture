@@ -19,14 +19,14 @@ import java.util.Map;
 public class Server extends Thread{
 	
 	private ServerSocket serverSocket;
-	private int puerto = 2003;
+	private int puerto = 1006;
 //	private DataInputStream dis;
 //    private DataOutputStream dos;
 	//hasmap de nickname con socket
     //final Socket s;
-	private HashMap<String,Conexion> clientes = new HashMap<>();
+	private HashMap<String,DataCliente> clientes = new HashMap<>();
 	private HashMap<String,String> chats = new HashMap<>();
-	private ArrayList<Conexion> lista = new ArrayList<Conexion>(); 
+	private ArrayList<DataCliente> lista = new ArrayList<DataCliente>(); 
 	
     private boolean terminar = false;		// creo que el servidor no tiene que cortar
     
@@ -50,7 +50,7 @@ public class Server extends Thread{
 	            Socket s = null;
 	            String nickname;
 	            String nicknameReceptor;
-	            Conexion conexion;
+	            DataCliente conexion;
 	            Object object;
 	            char bandera;
 	            
@@ -64,9 +64,6 @@ public class Server extends Thread{
 	 	                DataInputStream dis = new DataInputStream(s.getInputStream());
 	 	                DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 	            		
-//	 	               ObjectInputStream dis = new ObjectInputStream(s.getInputStream());
-//	 	               ObjectOutputStream dos = new ObjectOutputStream(s.getOutputStream());
-	 	                
 	 	                
 	 	              nickname = dis.readUTF();
 	 	              bandera = nickname.charAt(0);
@@ -74,20 +71,18 @@ public class Server extends Thread{
 	 	              
 	 	              System.out.println(nickname);
 	 	              
-	 	                //nicknameReceptor = dis.readUTF();
-	 	               
-	 	              // object = dis.readObject();
-//	 	               System.out.println(object);
-//	 	               nickname = (String) object;
 	 	               
 	 	              	if(this.clientes.containsKey(nickname) == false) {
-	 	              		conexion = new Conexion(s,nickname,dis,dos);
+	 	              		conexion = new DataCliente(s,nickname,dis,dos);
 		 	                this.clientes.put(nickname,conexion);
 		 	                this.lista.add(conexion);
 		 	                Conection conection = new Conection(s,conexion,this.clientes,dis,dos);
 		 	                conection.start();						// capaz podriamos poner en una coleccion los hilos, no se pa que
 		 	                
 		 	                System.out.println(this.clientes);
+	 	              	}
+	 	              	else {
+	 	              		dos.writeUTF("2Ingrese un nombre de usuario que no esté registrado en el sistema.");
 	 	              	}
 	 	                
 	 	                

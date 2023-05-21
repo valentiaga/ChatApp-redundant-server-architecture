@@ -7,7 +7,7 @@ import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
 import java.net.Socket;
 
-public class Conexion {
+public class DataCliente {
 	
 	private Socket socket;
 	private String nickname;
@@ -15,7 +15,7 @@ public class Conexion {
 	final DataInputStream dis;
 	final DataOutputStream dos;
 	
-	public Conexion(Socket socket, String nickname,String nicknameReceptor) throws IOException {
+	public DataCliente(Socket socket, String nickname,String nicknameReceptor) throws IOException {
 		super();
 		this.socket = socket;
 		this.nickname = nickname;
@@ -24,7 +24,7 @@ public class Conexion {
 		this.dos = new DataOutputStream(socket.getOutputStream());
 	}
 	
-	public Conexion(Socket socket, String nickname) throws IOException {
+	public DataCliente(Socket socket, String nickname) throws IOException {
 		super();
 		this.socket = socket;
 		this.nickname = nickname;
@@ -32,7 +32,7 @@ public class Conexion {
 		this.dis = new DataInputStream(socket.getInputStream());
 		this.dos = new DataOutputStream(socket.getOutputStream());
 	}
-	public Conexion(Socket socket, String nickname,DataInputStream dis,DataOutputStream dos) throws IOException {
+	public DataCliente(Socket socket, String nickname,DataInputStream dis,DataOutputStream dos) throws IOException {
 		super();
 		this.socket = socket;
 		this.nickname = nickname;
@@ -62,7 +62,7 @@ public class Conexion {
 	}
 
 	public DataOutputStream getDos() {
-		return dos;
+		return this.dos;
 	}
 	
 	
