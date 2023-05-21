@@ -26,20 +26,22 @@ public class ControladorVistaInicial implements ActionListener {
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
 
-		if (comando.equalsIgnoreCase("CONECTAR")) {
+		if (comando.equalsIgnoreCase("INICIAR")) {
 			boolean condition = !this.vistaInicial.getPuerto().equals("puerto")
-					&& this.vistaInicial.getIP().length() > 5;
+					&& this.vistaInicial.getIP().length() > 5 && !this.vistaInicial.getUser().equals("user");
 
 			try {
 
 				if (condition == false)
-					JOptionPane.showMessageDialog(null, "El puerto o el IP son invalidos");
+					JOptionPane.showMessageDialog(null, "Algún campo es inválido");
 				else {
 					System.out.println("Conexion exitosa\n");
 
 					IVistaChat vistaChat = new vistaChat();
 					conexion.setVista(vistaChat);
 
+					//IVistaConecta vistaConecta = new VistaConecta();
+					
 					this.conexion.conectarServer(this.vistaInicial.getIP(),
 							Integer.parseInt(this.vistaInicial.getPuerto()));
 

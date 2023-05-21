@@ -10,5 +10,6 @@ public interface IVistaInicial
     String getIP();
     void addActionListener(ActionListener actionListener);
     void mostrarVentana(boolean cond);
+	String getUser();
 	
 }

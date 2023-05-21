@@ -25,10 +25,12 @@ public class VistaInicial extends JFrame implements IVistaInicial{
 	private JPanel contentPane;
 	private JTextField txtPuerto;
 	private JTextField txtIp;
+	private JTextField txtUser;
+	
 	private ActionListener actionListenr; 
 	public JButton btnConectar;
 	private ControladorVistaInicial cont = null;
-	private JTextField txtUser;
+	
 	
 	
 	public static void main(String[] args) {
@@ -75,7 +77,7 @@ public class VistaInicial extends JFrame implements IVistaInicial{
 		
 		btnConectar = new JButton("INICIAR");
 		
-		btnConectar.setActionCommand("CONECTAR");
+		btnConectar.setActionCommand("INICIAR");
 		btnConectar.setBackground(new Color(245, 255, 246));
 		
 		txtUser = new JTextField();
@@ -151,6 +153,11 @@ public class VistaInicial extends JFrame implements IVistaInicial{
 	public void mostrarVentana(boolean cond) {
 		this.setVisible(cond);
 		
+	}
+
+
+	public String getUser() {
+		return this.txtUser.getText();
 	}
 
 }
