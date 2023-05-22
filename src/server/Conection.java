@@ -73,6 +73,7 @@ public class Conection extends Thread {
 			         
 			         if(bandera == '0') { 
 	                        if(this.dataCliente.getNicknameReceptor() != null) {
+	                        	System.out.println("Envia mensaje");
 	                            this.clientes.get(this.dataCliente.getNicknameReceptor()).getDos().writeUTF("0"+mensaje);
 	                            this.clientes.get(this.dataCliente.getNicknameReceptor()).getDos().flush();
 	                        }else {
@@ -107,8 +108,11 @@ public class Conection extends Thread {
 	                        	
 	                        	
 	                            if(mensaje.equals("FINALIZARCHAT") == true ) {
-	                            	System.out.println(this.dataCliente.getNicknameReceptor());
+	                            	
 	                                this.clientes.get(this.dataCliente.getNicknameReceptor()).getDos().writeUTF("1"+mensaje);
+	                                this.clientes.get(this.dataCliente.getNicknameReceptor()).setNicknameReceptor(null);
+	                                this.dataCliente.setNicknameReceptor(null);
+	                                
 	                                
 	                            }
 	                        }

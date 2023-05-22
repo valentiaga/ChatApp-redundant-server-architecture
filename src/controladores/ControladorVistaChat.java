@@ -26,8 +26,7 @@ public class ControladorVistaChat implements ActionListener {
 		String comando = e.getActionCommand();
 		
         if (comando.equalsIgnoreCase("ABANDONAR")) {
-        	
-        	
+
         	//this.cliente.getMessageManager().enviaMensaje("El otro usuario se desconecto.\n");
         	this.cliente.getMessageManager().enviaComando("FINALIZARCHAT");
         	//this.cliente.getConectionHandler().terminarRecibirMensajes();
@@ -42,13 +41,12 @@ public class ControladorVistaChat implements ActionListener {
 //			this.cliente.setContConecta(cont);
 //			vistaConecta.setCont(cont);
 //        	vistaConecta.mostrarVentana(true);
-        	
         }
         else {
         	if (comando.equalsIgnoreCase("ENVIAR")) {
         		
         		this.cliente.getMessageManager().enviaMensaje(this.cliente.getNickname()+": "+this.vistaChat.getTxtIngreseTextoAqui().getText());
-        		this.vistaChat.getTextArea().setText(this.vistaChat.getTextArea().getText()+"\n\t\t\t\t"+this.cliente.getNickname()+": "+  this.vistaChat.getTxtIngreseTextoAqui().getText()+"\n");
+        		this.vistaChat.getTextArea().setText(this.vistaChat.getTextArea().getText()+"\n\t\t\t"+this.cliente.getNickname()+": "+  this.vistaChat.getTxtIngreseTextoAqui().getText()+"\n");
         		
         		this.vistaChat.getTxtIngreseTextoAqui().setText("");
         	 
