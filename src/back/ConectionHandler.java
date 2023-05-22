@@ -50,11 +50,7 @@ public class ConectionHandler extends Thread
 	            if(comando == '0') {	// mensaje
 	            	this.contChat.appendTextArea(mensaje);
 	            }else {
-	            	if (comando=='2') {
-	            		receptor=mensaje;
-	        
-	            	}
-	            	else if(comando == '1') {
+	            	 if(comando == '1') {
 	            		switch (mensaje) {  
 	            		case "INICIARCHAT":
 	            			this.contConecta.iniciaChat(receptor);

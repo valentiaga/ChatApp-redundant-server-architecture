@@ -85,7 +85,7 @@ public class Conection extends Thread {
 	                               
 	                                
 	                                
-	                                this.dataCliente.getDos().writeUTF("2"+this.dataCliente.getNicknameReceptor());
+	                                //this.dataCliente.getDos().writeUTF("2"+this.dataCliente.getNicknameReceptor());
 	                                comando = "1INICIARCHAT";
 	                                this.dataCliente.getDos().writeUTF(comando);
 	                                this.dataCliente.getDos().flush();

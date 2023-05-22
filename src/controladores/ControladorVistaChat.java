@@ -2,17 +2,13 @@ package controladores;
 
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
-import java.io.BufferedReader;
-import java.io.InputStreamReader;
-import java.io.PrintWriter;
-import java.net.Socket;
 
+import back.Cliente;
 import front.IVistaChat;
+import front.IVistaConecta;
 import front.IVistaInicial;
 import front.VistaInicial;
-import back.Cliente;
-import back.IEmisor;
-import back.IReceptor;
+import front.vistaConecta;
 
 public class ControladorVistaChat implements ActionListener {
 
@@ -31,17 +27,25 @@ public class ControladorVistaChat implements ActionListener {
 		
         if (comando.equalsIgnoreCase("ABANDONAR")) {
         	
-        	//this.vistaChat.getTextArea().setText(this.vistaChat.getTextArea().getText()+"\n"+"El otro usuario se desconecto.\n");
+        	
         	this.cliente.getMessageManager().enviaMensaje("El otro usuario se desconecto.\n");
-        	this.cliente.getConectionHandler().terminarRecibirMensajes();
+        	//this.cliente.getConectionHandler().terminarRecibirMensajes();
         	this.vistaChat.mostrarVentana(false);
-        	IVistaInicial vistaInicial = new VistaInicial();
-        	vistaInicial.mostrarVentana(true);
+        	IVistaConecta vistaConecta =new vistaConecta(this.cliente.getNickname());
+        	ControladorVistaConecta cont = new ControladorVistaConecta(vistaConecta);
+			cont.setVistaConecta(vistaConecta);
+			cont.setCliente(this.cliente);
+			
+			this.cliente.setContConecta(cont);
+			vistaConecta.setCont(cont);
+        	vistaConecta.mostrarVentana(true);
+        	
         }
         else {
         	if (comando.equalsIgnoreCase("ENVIAR")) {
-        		this.cliente.getMessageManager().enviaMensaje(this.vistaChat.getTxtIngreseTextoAqui().getText());
-        		this.vistaChat.getTextArea().setText(this.vistaChat.getTextArea().getText()+"\n\t\t\t" +this.vistaChat.getTxtIngreseTextoAqui().getText()+"\n");
+        		
+        		this.cliente.getMessageManager().enviaMensaje(this.cliente.getNickname()+": "+this.vistaChat.getTxtIngreseTextoAqui().getText());
+        		this.vistaChat.getTextArea().setText(this.vistaChat.getTextArea().getText()+"\n\t\t\t\t"+this.cliente.getNickname()+": "+  this.vistaChat.getTxtIngreseTextoAqui().getText()+"\n");
         		
         		this.vistaChat.getTxtIngreseTextoAqui().setText("");
         	 
