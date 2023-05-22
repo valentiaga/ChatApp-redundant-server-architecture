@@ -19,7 +19,7 @@ import java.util.Map;
 public class Server extends Thread{
 	
 	private ServerSocket serverSocket;
-	private int puerto = 115; 
+	private int puerto = 111; 
 //	private DataInputStream dis;
 //    private DataOutputStream dos;
 	//hasmap de nickname con socket
@@ -80,7 +80,7 @@ public class Server extends Thread{
 	 	              	}
 	 	              	else {
 	 	              		System.out.println("Aca si entre");
-	 	              		dos.writeUTF("2Ingrese un nombre de usuario que no esté registrado en el sistema.");
+	 	              		dos.writeUTF("1USERREGISTRADO");
 	 	              	}
 	 	                
 	 	                

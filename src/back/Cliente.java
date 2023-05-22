@@ -123,16 +123,16 @@ public class Cliente {
 			throws IOException, UserNotAvailableException, CreaChatException {
 
 		this.messageManager.enviaMensaje("0" + nickNameReceptor);
-		error = dis.readUTF();
-		comando = error.charAt(0);
-		error = error.substring(1);
+//		error = dis.readUTF();
+//		comando = error.charAt(0);
+//		error = error.substring(1);
 
-		if (comando == '2') {
-			throw new UserNotAvailableException(
-					"El usuario con el que desea comunicarse no está registrado en el sistema.");
-		} else if (comando == '1') {
-			throw new CreaChatException();
-		}
+//		if (comando == '2') {
+//			throw new UserNotAvailableException(
+//					"El usuario con el que desea comunicarse no está registrado en el sistema.");
+//		} else if (comando == '1') {
+//			throw new CreaChatException();
+//		}
 	}
 
 	public MessageManager getMessageManager() {

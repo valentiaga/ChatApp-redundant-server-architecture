@@ -53,13 +53,16 @@ public class ConectionHandler extends Thread
 	            			this.contConecta.iniciaChat();
 	            		break;
 	            		case "NOREGISTRADO":
-	            			this.contConecta.noRegistrado(mensaje);
+	            			this.contConecta.ventanaEmergente("El usuario no se encuentra reistrado en el sistema.");
 		            	break;
 	            		case "FINALIZACHAT":
 	            			
-		            		break;
+		            	break;
+	            		case "USERREGISTRADO":
+	            			this.contConecta.ventanaEmergente("El usuario ya se encuentra registrado en el sistema.");
+	            		break;
 	            		}
-	 
+	
 	            	}
 	            }
 				

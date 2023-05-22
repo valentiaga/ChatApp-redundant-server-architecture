@@ -92,8 +92,8 @@ public class ControladorVistaConecta implements ActionListener {
 		this.cliente = cliente;
 	}
 	
-	public void noRegistrado(String user) {
-		JOptionPane.showMessageDialog(null, user+" no se encuentra reistrado en el sistema.");
+	public void ventanaEmergente(String mensaje) {
+		JOptionPane.showMessageDialog(null, mensaje);
 	}
 	
 	
