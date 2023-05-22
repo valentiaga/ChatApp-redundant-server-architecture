@@ -36,7 +36,7 @@ public class vistaConecta  extends JFrame implements IVistaConecta{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					vistaConecta frame = new vistaConecta();
+					vistaConecta frame = new vistaConecta(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -46,8 +46,8 @@ public class vistaConecta  extends JFrame implements IVistaConecta{
 	}
 
 	
-	public vistaConecta() {
-		setTitle("INICIE UNA CONVERSACION!");
+	public vistaConecta(String user) {
+		setTitle(user+"! INICIA UNA CONVERSACION!");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

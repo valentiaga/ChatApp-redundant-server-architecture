@@ -64,15 +64,14 @@ public class ControladorVistaConecta implements ActionListener {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (CreaChatException e1) {
-				iniciaChat();
+				iniciaChat(this.vistaConecta.getNicknameReceptor());
 			} 
-
 		}
 
 	}
 	
-	public void iniciaChat() {
-		IVistaChat vistaChat = new vistaChat();
+	public void iniciaChat(String userReceptor) {
+		IVistaChat vistaChat = new vistaChat(userReceptor);
 		ControladorVistaChat cont = new ControladorVistaChat(vistaChat);
 		cont.setVistaChat(vistaChat);
 		cont.setCliente(this.cliente);
@@ -95,6 +94,9 @@ public class ControladorVistaConecta implements ActionListener {
 	public void ventanaEmergente(String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje);
 	}
+
+	
+	
 	
 	
 

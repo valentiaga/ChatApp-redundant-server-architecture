@@ -167,6 +167,12 @@ public class Cliente {
 		this.conectionHandler = conectionHandler;
 	}
 
+	public String getNickname() {
+		return nickname;
+	}
+	
+	
+
 	
 //------------------------------------------------------------------------------------------------------
 }

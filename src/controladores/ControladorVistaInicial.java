@@ -43,7 +43,7 @@ public class ControladorVistaInicial implements ActionListener {
 						System.out.println("Antes de conectar");
 						this.cliente.conectarServer();
 						System.out.println("despues de conectar");
-						IVistaConecta vistaConecta = new vistaConecta();
+						IVistaConecta vistaConecta = new vistaConecta(this.cliente.getNickname());
 						//vistaConecta.setCliente(cliente);
 						
 						//creo controlador conecta

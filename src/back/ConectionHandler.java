@@ -19,6 +19,7 @@ public class ConectionHandler extends Thread
     final DataOutputStream dos;
     final Socket s;
     private boolean terminar = false;
+    String receptor="";
     
 	public ConectionHandler(Socket s,DataInputStream dis, DataOutputStream dos) {
 		super();
@@ -35,6 +36,7 @@ public class ConectionHandler extends Thread
 		super.run();
 		
 		
+		
 		//while(this.terminar == false && this.s.isClosed() != true) {
 		while(this.terminar == false) {
 			try {
@@ -42,15 +44,20 @@ public class ConectionHandler extends Thread
 	              comando = mensaje.charAt(0); 
 	              mensaje = mensaje.substring(1);
 	            
-	              System.out.println("CONECTIONHANDLERRRRR");
+	              System.out.println(comando+" " +mensaje);
+	              System.out.println("CONECTIONHANDLERRRRR");  
 	              
 	            if(comando == '0') {	// mensaje
 	            	this.contChat.appendTextArea(mensaje);
 	            }else {
-	            	if(comando == '1') {
-	            		switch (mensaje) {
+	            	if (comando=='2') {
+	            		receptor=mensaje;
+	        
+	            	}
+	            	else if(comando == '1') {
+	            		switch (mensaje) {  
 	            		case "INICIARCHAT":
-	            			this.contConecta.iniciaChat();
+	            			this.contConecta.iniciaChat(receptor);
 	            		break;
 	            		case "NOREGISTRADO":
 	            			this.contConecta.ventanaEmergente("El usuario no se encuentra reistrado en el sistema.");

@@ -19,7 +19,7 @@ import java.util.Map;
 public class Server extends Thread{
 	
 	private ServerSocket serverSocket;
-	private int puerto = 118; 
+	private int puerto = 1112; 
 //	private DataInputStream dis;
 //    private DataOutputStream dos;
 	//hasmap de nickname con socket

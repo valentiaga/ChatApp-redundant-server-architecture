@@ -41,10 +41,10 @@ public class ControladorVistaChat implements ActionListener {
         else {
         	if (comando.equalsIgnoreCase("ENVIAR")) {
         		this.cliente.getMessageManager().enviaMensaje(this.vistaChat.getTxtIngreseTextoAqui().getText());
-        		this.vistaChat.getTextArea().setText(this.vistaChat.getTextArea().getText()+"\n\t\t\t\t" +this.vistaChat.getTxtIngreseTextoAqui().getText()+"\n");
+        		this.vistaChat.getTextArea().setText(this.vistaChat.getTextArea().getText()+"\n\t\t\t" +this.vistaChat.getTxtIngreseTextoAqui().getText()+"\n");
         		
         		this.vistaChat.getTxtIngreseTextoAqui().setText("");
-        	
+        	 
         	}
         }
 

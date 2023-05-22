@@ -47,20 +47,20 @@ public class vistaChat extends JFrame implements IVistaChat{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					vistaChat frame = new vistaChat();
+					vistaChat frame = new vistaChat(null);
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
 				}
 			}
-		});
+		});   
 	}
 
 	/**
 	 * Create the frame.
 	 */
-	public vistaChat() { 
-		setTitle("CHAT");
+	public vistaChat(String nickname) { 
+		setTitle(nickname);
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();

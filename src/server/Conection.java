@@ -61,7 +61,7 @@ public class Conection extends Thread {
 			
 			//System.out.println("Hilo");
 			try {
-				if(dis.available()> 0) {
+				if(dis.available()> 0) { 
 					//recibido = (String) dis.readObject();
 					 mensaje = dis.readUTF();
 			         bandera = mensaje.charAt(0);
@@ -81,9 +81,16 @@ public class Conection extends Thread {
 	                                this.dataCliente.setNicknameReceptor(mensaje);
 	                                this.clientes.get(mensaje).setNicknameReceptor(this.dataCliente.getNickname());
 	                                // INICIAR LOS CHATS EN LOS CLIENTES
+	                                
+	                               
+	                                
+	                                
+	                                this.dataCliente.getDos().writeUTF("2"+this.dataCliente.getNicknameReceptor());
 	                                comando = "1INICIARCHAT";
 	                                this.dataCliente.getDos().writeUTF(comando);
 	                                this.dataCliente.getDos().flush();
+	                                //comando = this.dataCliente.getNickname();
+//	                                this.dataCliente.getDos().writeUTF(comando);
 
 	                                this.clientes.get(mensaje).getDos().writeUTF(comando);
 	                                this.clientes.get(mensaje).getDos().flush();
