@@ -58,8 +58,10 @@ public class ConectionHandler extends Thread
 	            		case "NOREGISTRADO":
 	            			this.contConecta.ventanaEmergente("El usuario no se encuentra reistrado en el sistema.");
 		            	break;
-	            		case "FINALIZACHAT":
-	            			
+	            		case "FINALIZARCHAT":
+	            			//System.out.println("Finalizame el chat te lo pido por favor");
+	            			this.contConecta.ventanaEmergente("El chat fue finalizado por el otro usuario");
+	            			this.contChat.abandonarChat();
 		            	break;
 	            		case "USERREGISTRADO":
 	            			this.contConecta.ventanaEmergente("El usuario ya se encuentra registrado en el sistema.");

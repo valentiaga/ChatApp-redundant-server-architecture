@@ -37,6 +37,17 @@ public class MessageManager {
     	
     }
     
+    public void enviaComando(String mensaje) {
+    	
+    	if(this.s.isClosed() != true) {
+    		try {
+    			this.dos.writeUTF("1"+mensaje);
+    		} catch (IOException e) { 
+    			e.printStackTrace();
+    		}
+    	}
+    }
+    
     Socket getSocket() {
     	return this.s;
     }

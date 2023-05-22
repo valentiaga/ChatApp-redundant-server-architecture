@@ -28,17 +28,20 @@ public class ControladorVistaChat implements ActionListener {
         if (comando.equalsIgnoreCase("ABANDONAR")) {
         	
         	
-        	this.cliente.getMessageManager().enviaMensaje("El otro usuario se desconecto.\n");
+        	//this.cliente.getMessageManager().enviaMensaje("El otro usuario se desconecto.\n");
+        	this.cliente.getMessageManager().enviaComando("FINALIZARCHAT");
         	//this.cliente.getConectionHandler().terminarRecibirMensajes();
-        	this.vistaChat.mostrarVentana(false);
-        	IVistaConecta vistaConecta =new vistaConecta(this.cliente.getNickname());
-        	ControladorVistaConecta cont = new ControladorVistaConecta(vistaConecta);
-			cont.setVistaConecta(vistaConecta);
-			cont.setCliente(this.cliente);
-			
-			this.cliente.setContConecta(cont);
-			vistaConecta.setCont(cont);
-        	vistaConecta.mostrarVentana(true);
+        	
+        	this.abandonarChat();
+//        	this.vistaChat.mostrarVentana(false);
+//        	IVistaConecta vistaConecta =new vistaConecta(this.cliente.getNickname());
+//        	ControladorVistaConecta cont = new ControladorVistaConecta(vistaConecta);
+//			cont.setVistaConecta(vistaConecta);
+//			cont.setCliente(this.cliente);
+//			
+//			this.cliente.setContConecta(cont);
+//			vistaConecta.setCont(cont);
+//        	vistaConecta.mostrarVentana(true);
         	
         }
         else {
@@ -74,6 +77,18 @@ public class ControladorVistaChat implements ActionListener {
 	public void setCliente(Cliente cliente) {
 		this.cliente=cliente;
 		
+	}
+	
+	public void abandonarChat() {
+		this.vistaChat.mostrarVentana(false);
+    	IVistaConecta vistaConecta =new vistaConecta(this.cliente.getNickname());
+    	ControladorVistaConecta cont = new ControladorVistaConecta(vistaConecta);
+		cont.setVistaConecta(vistaConecta);
+		cont.setCliente(this.cliente);
+		
+		this.cliente.setContConecta(cont);
+		vistaConecta.setCont(cont);
+    	vistaConecta.mostrarVentana(true);
 	}
 	
 }

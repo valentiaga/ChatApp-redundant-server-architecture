@@ -104,10 +104,12 @@ public class Conection extends Thread {
 	                        }
 	                    } else {
 	                        if (bandera == '1') {    // comando para el servidor
-
-	                            if(mensaje == "FINALIZARCHAT") {
-	                                this.clientes.get(mensaje).getDos().writeUTF("1"+mensaje);
-	                                this.clientes.get(mensaje).getDos().flush();
+	                        	
+	                        	
+	                            if(mensaje.equals("FINALIZARCHAT") == true ) {
+	                            	System.out.println(this.dataCliente.getNicknameReceptor());
+	                                this.clientes.get(this.dataCliente.getNicknameReceptor()).getDos().writeUTF("1"+mensaje);
+	                                
 	                            }
 	                        }
 	                    }		         
