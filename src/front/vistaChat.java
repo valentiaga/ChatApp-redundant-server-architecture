@@ -47,7 +47,7 @@ public class vistaChat extends JFrame implements IVistaChat{
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					vistaChat frame = new vistaChat(null);
+					vistaChat frame = new vistaChat();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,8 +59,8 @@ public class vistaChat extends JFrame implements IVistaChat{
 	/**
 	 * Create the frame.
 	 */
-	public vistaChat(String nicknameReceptor) { 
-		setTitle(nicknameReceptor);
+	public vistaChat() { 
+		setTitle("CHAT");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -178,6 +178,12 @@ public class vistaChat extends JFrame implements IVistaChat{
 
 	public JButton getBtnEnviar() {
 		return btnEnviar;
+	}
+
+	@Override
+	public void setCont(ControladorVistaChat cont) {
+		this.cont=cont;
+		
 	}
 	
 	

@@ -69,7 +69,7 @@ public class VistaInicial extends JFrame implements IVistaInicial{
 		txtPuerto.setToolTipText("puerto");
 		txtPuerto.setBackground(new Color(255, 255, 255));
 		txtPuerto.setColumns(10);
-		
+		 
 		txtIp = new JTextField();
 		txtIp.setForeground(new Color(169, 169, 169));
 		txtIp.setText("IP");

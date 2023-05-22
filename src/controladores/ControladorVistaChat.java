@@ -17,7 +17,7 @@ import back.IReceptor;
 public class ControladorVistaChat implements ActionListener {
 
 	private IVistaChat vistaChat = null;
-    private Cliente conexion= null;
+    private Cliente cliente= null;
     //private Conexion conexionReceptor = null;
     
     public ControladorVistaChat(IVistaChat vista) {
@@ -32,15 +32,15 @@ public class ControladorVistaChat implements ActionListener {
         if (comando.equalsIgnoreCase("ABANDONAR")) {
         	
         	//this.vistaChat.getTextArea().setText(this.vistaChat.getTextArea().getText()+"\n"+"El otro usuario se desconecto.\n");
-        	this.conexion.getMessageManager().enviaMensaje("El otro usuario se desconecto.\n");
-        	this.conexion.getConectionHandler().terminarRecibirMensajes();
+        	this.cliente.getMessageManager().enviaMensaje("El otro usuario se desconecto.\n");
+        	this.cliente.getConectionHandler().terminarRecibirMensajes();
         	this.vistaChat.mostrarVentana(false);
         	IVistaInicial vistaInicial = new VistaInicial();
         	vistaInicial.mostrarVentana(true);
         }
         else {
         	if (comando.equalsIgnoreCase("ENVIAR")) {
-        		this.conexion.getMessageManager().enviaMensaje(this.vistaChat.getTxtIngreseTextoAqui().getText());
+        		this.cliente.getMessageManager().enviaMensaje(this.vistaChat.getTxtIngreseTextoAqui().getText());
         		this.vistaChat.getTextArea().setText(this.vistaChat.getTextArea().getText()+"\n\t\t\t\t" +this.vistaChat.getTxtIngreseTextoAqui().getText()+"\n");
         		
         		this.vistaChat.getTxtIngreseTextoAqui().setText("");
@@ -51,11 +51,21 @@ public class ControladorVistaChat implements ActionListener {
 	}
 
 	public Cliente getConexion() {
-		return conexion;
+		return cliente;
 	}
 
 	public void setConexion(Cliente conexion) {
-		this.conexion = conexion;
+		this.cliente = conexion;
+	}
+
+	public void setVistaChat(IVistaChat vistaChat) {
+		this.vistaChat=vistaChat;
+		
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente=cliente;
+		
 	}
 	
 }

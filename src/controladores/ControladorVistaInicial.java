@@ -36,22 +36,31 @@ public class ControladorVistaInicial implements ActionListener {
 				if (condition == false)
 					JOptionPane.showMessageDialog(null, "Algún campo es inválido");
 				else {
-					System.out.println("Conexion exitosa\n");
+					//System.out.println("Conexion exitosa\n");
 
 					this.cliente = new Cliente( this.vistaInicial.getUser(), Integer.parseInt(this.vistaInicial.getPuerto()), this.vistaInicial.getIP());
-					try {
+					try { 
+						System.out.println("Antes de conectar");
 						this.cliente.conectarServer();
+						System.out.println("despues de conectar");
+						IVistaConecta vistaConecta = new vistaConecta();
+						//vistaConecta.setCliente(cliente);
+						
+						//creo controlador conecta
+						ControladorVistaConecta cont = new ControladorVistaConecta(vistaConecta);
+						cont.setVistaConecta(vistaConecta);
+						cont.setCliente(this.cliente);
+						
+						this.cliente.setContConecta(cont);
+						vistaConecta.setCont(cont);
+						
+						System.out.println(cliente);
+						this.vistaInicial.mostrarVentana(false);   
+			 			
+						vistaConecta.mostrarVentana(true);
 					} catch (IniciarException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMessage());
 					}
-					
-					IVistaConecta vistaConecta = new vistaConecta();
-					vistaConecta.setCliente(cliente);
-					System.out.println(cliente);
-					this.vistaInicial.mostrarVentana(false);  
-			
-					vistaConecta.mostrarVentana(true);
-					
 				}
 
 			} catch (NumberFormatException e1) {

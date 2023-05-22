@@ -19,7 +19,7 @@ import java.util.Map;
 public class Server extends Thread{
 	
 	private ServerSocket serverSocket;
-	private int puerto = 1006;
+	private int puerto = 115; 
 //	private DataInputStream dis;
 //    private DataOutputStream dos;
 	//hasmap de nickname con socket
@@ -40,20 +40,17 @@ public class Server extends Thread{
 			System.out.println("Constructor");
 			e.printStackTrace();
 		}
-		//this.start();
 	}
-	
+	 
 	public void Registrar() throws IOException {
 		
-		 	//this.serverSocket = new ServerSocket(puerto);
-
 	            Socket s = null;
-	            String nickname;
+	            String nickname; 
 	            String nicknameReceptor;
 	            DataCliente conexion;
 	            Object object;
 	            char bandera;
-	            
+	             
 	            try 
 	            {
 	            	while(true) {
@@ -69,7 +66,7 @@ public class Server extends Thread{
 	 	              bandera = nickname.charAt(0);
 	 	              nickname = nickname.substring(1);
 	 	              
-	 	              System.out.println(nickname);
+	 	              //System.out.println(nickname);
 	 	              
 	 	               
 	 	              	if(this.clientes.containsKey(nickname) == false) {
@@ -79,9 +76,10 @@ public class Server extends Thread{
 		 	                Conection conection = new Conection(s,conexion,this.clientes,dis,dos);
 		 	                conection.start();						// capaz podriamos poner en una coleccion los hilos, no se pa que
 		 	                
-		 	                System.out.println(this.clientes);
+		 	                System.out.println("Clientes en Server" +this.clientes);
 	 	              	}
 	 	              	else {
+	 	              		System.out.println("Aca si entre");
 	 	              		dos.writeUTF("2Ingrese un nombre de usuario que no esté registrado en el sistema.");
 	 	              	}
 	 	                

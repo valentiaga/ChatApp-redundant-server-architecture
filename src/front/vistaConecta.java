@@ -61,7 +61,7 @@ public class vistaConecta  extends JFrame implements IVistaConecta{
 		lblNewLabel = new JLabel("Ingrese un usuario para contactar o espere");
 		
 		btnConectar = new JButton("CONECTAR");
-		
+		 
 		btnConectar.setActionCommand("CONECTAR");
 		btnConectar.setBackground(new Color(245, 255, 246));
 		
@@ -95,7 +95,7 @@ public class vistaConecta  extends JFrame implements IVistaConecta{
 					.addComponent(txtUser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED, 61, Short.MAX_VALUE)
 					.addComponent(btnConectar)
-					.addGap(39))
+					.addGap(39)) 
 		);
 		contentPane.setLayout(gl_contentPane);
 		btnConectar.addActionListener(new ActionListener() {
@@ -104,16 +104,16 @@ public class vistaConecta  extends JFrame implements IVistaConecta{
 		});
 		//JOptionPane.showMessageDialog(null, "Estableciendo conexión...");
 		//JOptionPane.showMessageDialog(null, "El usuario con puerto 5678 e IP: 192.228.17.57 no se encuentra en modo escucha. Inténtelo más tarde");
-		this.cont = new ControladorVistaConecta(this);
+		//this.cont = new ControladorVistaConecta(this);
 	}
 	
 	
 
 	@Override
-	public void addActionListener(ActionListener actionListener) {
+	public void addActionListener(ActionListener actionListener) { 
 		this.actionListenr=actionListener;
 		this.btnConectar.addActionListener(actionListener);
-	}
+	} 
 
 	@Override
 	public void mostrarVentana(boolean cond) {
@@ -135,6 +135,11 @@ public class vistaConecta  extends JFrame implements IVistaConecta{
 
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
+	}
+
+
+	public void setCont(ControladorVistaConecta cont) {
+		this.cont = cont;
 	}
 	
 	

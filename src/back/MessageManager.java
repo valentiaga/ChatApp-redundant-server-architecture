@@ -22,7 +22,7 @@ public class MessageManager {
 		this.vista = vista;
 		this.dis = dis;
 		this.dos = dos;
-		this.s = s;
+		this.s = s; 
 	}
      
     public void enviaMensaje(String mensaje) {
@@ -30,7 +30,7 @@ public class MessageManager {
     	if(this.s.isClosed() != true) {
     		try {
     			this.dos.writeUTF(mensaje);
-    		} catch (IOException e) {
+    		} catch (IOException e) { 
     			e.printStackTrace();
     		}
     	}

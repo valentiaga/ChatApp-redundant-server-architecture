@@ -37,7 +37,7 @@ public class Conection extends Thread {
 		this.socket = s;
 		this.dataCliente = conexion;
 		this.clientes = clientes;
-	}
+	} 
 	
 	public Conection(Socket s,DataCliente conexion,HashMap<String,DataCliente> clientes,DataInputStream dis,DataOutputStream dos) throws IOException {
 		super();
@@ -52,7 +52,7 @@ public class Conection extends Thread {
 
 	//	String recibido;
 		super.run();
-		String comando;
+		String comando; 
 		String mensaje;
 		char bandera;
 		
@@ -70,11 +70,12 @@ public class Conection extends Thread {
 			         System.out.println(bandera);
 			         System.out.println(mensaje);
 			         
-			        if(bandera == '0') {
+			        if(bandera == '0') { 
 			        	if(this.dataCliente.getNicknameReceptor() != null) {
 							this.clientes.get(this.dataCliente.getNicknameReceptor()).getDos().writeUTF("0"+mensaje);
 						}else {
-							if(this.clientes.containsKey(mensaje)) {
+							
+							if((mensaje.equals(this.dataCliente.getNickname()))==false &&  this.clientes.containsKey(mensaje)){
 								System.out.println("Chat");
 								this.dataCliente.setNicknameReceptor(mensaje);
 								this.clientes.get(mensaje).setNicknameReceptor(this.dataCliente.getNickname());
@@ -85,7 +86,7 @@ public class Conection extends Thread {
 								
 							}else { 
 								// no esta registrado ese nickname de receptor
-								comando = "2NOREGISTRADO";
+								comando = "1NOREGISTRADO";
 								this.dataCliente.getDos().writeUTF(comando);
 							}
 						}

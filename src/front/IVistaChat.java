@@ -20,4 +20,5 @@ public interface IVistaChat
 	void setText(String text);
 	ControladorVistaChat getCont();
 	JButton getBtnEnviar() ;
+	void setCont(ControladorVistaChat cont);
 }

@@ -3,6 +3,7 @@ package front;
 import java.awt.event.ActionListener;
 
 import back.Cliente;
+import controladores.ControladorVistaConecta;
 
 public interface IVistaConecta {
     String getNicknameReceptor();
@@ -10,4 +11,5 @@ public interface IVistaConecta {
     void mostrarVentana(boolean cond);
     public Cliente getCliente();
 	public void setCliente(Cliente cliente);
+	public void setCont(ControladorVistaConecta cont);
 }
