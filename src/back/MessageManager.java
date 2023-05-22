@@ -14,8 +14,6 @@ public class MessageManager {
 	final DataInputStream dis;
     final DataOutputStream dos;
     final Socket s;
-    //podemos tener aca el nickname del usuario al que le debe llegar el mensaje
-    //mejor si esta en el server
     
 	public MessageManager(Socket s,DataInputStream dis, DataOutputStream dos,IVistaChat vista) {
 		super();

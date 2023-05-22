@@ -32,53 +32,32 @@ public class ControladorVistaConecta implements ActionListener {
 			try {
 				if (condition == false)
 					JOptionPane.showMessageDialog(null, "Ingrese un usuario válido");
-				else {
-						
-					//this.cliente=this.vistaConecta.getCliente();
-					
+				else
 					this.cliente.conectarReceptor(this.vistaConecta.getNicknameReceptor());
-					 
-////                   System.out.println("Conexion exitosa\n");
-//
-//                    IVistaChat vistaChat = new vistaChat();
-//                    conexion.setVista(vistaChat);
-//
-//                    this.conexion.conectarServer(this.vistaConecta.getIP(),
-//                            Integer.parseInt(this.vistaConecta.getPuerto()));
-//
-//
-//                    this.vistaInicial.mostrarVentana(false);
-//
-//                    vistaChat.getCont().setConexion(conexion);
-//                    vistaChat.mostrarVentana(true);
-//                    conexion.recibirMensajes(); // crea un thread para poder recibir mensajes por el socket
-				}  
 
-				
 			} catch (UserNotAvailableException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
-			}
-			catch (NumberFormatException e1) {
+			} catch (NumberFormatException e1) {
 				System.out.println("e1");
 			} catch (IOException e1) {
 				// TODO Auto-generated catch block
 				e1.printStackTrace();
 			} catch (CreaChatException e1) {
 				iniciaChat();
-			} 
+			}
 		}
 
 	}
-	
+
 	public void iniciaChat() {
 		IVistaChat vistaChat = new vistaChat();
 		ControladorVistaChat cont = new ControladorVistaChat(vistaChat);
 		cont.setVistaChat(vistaChat);
 		cont.setCliente(this.cliente);
-		
+
 		this.cliente.setContChat(cont);
 		vistaChat.setCont(cont);
-		
+
 		this.vistaConecta.mostrarVentana(false);
 		vistaChat.mostrarVentana(true);
 	}
@@ -90,14 +69,9 @@ public class ControladorVistaConecta implements ActionListener {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
+
 	public void ventanaEmergente(String mensaje) {
 		JOptionPane.showMessageDialog(null, mensaje);
 	}
-
-	
-	
-	
-	
 
 }

@@ -10,87 +10,74 @@ import java.net.SocketException;
 import controladores.ControladorVistaChat;
 import controladores.ControladorVistaConecta;
 
-
-public class ConectionHandler extends Thread 
-{
-	ControladorVistaChat contChat=null;
-	ControladorVistaConecta contConecta=null;
+public class ConectionHandler extends Thread {
+	ControladorVistaChat contChat = null;
+	ControladorVistaConecta contConecta = null;
 	final DataInputStream dis;
-    final DataOutputStream dos;
-    final Socket s;
-    private boolean terminar = false;
-    String receptor="";
-    
-	public ConectionHandler(Socket s,DataInputStream dis, DataOutputStream dos) {
+	final DataOutputStream dos;
+	final Socket s;
+	private boolean terminar = false;
+	String receptor = "";
+
+	public ConectionHandler(Socket s, DataInputStream dis, DataOutputStream dos) {
 		super();
 		this.dis = dis;
 		this.dos = dos;
-		this.s = s; 
+		this.s = s;
 	}
 
-	public void run(){ 
-		
-		
+	public void run() {
+
 		String mensaje;
 		char comando;
 		super.run();
-		
-		
-		
-		//while(this.terminar == false && this.s.isClosed() != true) {
-		while(this.terminar == false) {
+
+		while (this.terminar == false) {
 			try {
-				  mensaje = dis.readUTF();
-	              comando = mensaje.charAt(0); 
-	              mensaje = mensaje.substring(1);
-	            
-	              System.out.println(comando+" " +mensaje);
-	              System.out.println("CONECTIONHANDLERRRRR");  
-	              
-	            if(comando == '0') {	// mensaje
-	            	this.contChat.appendTextArea(mensaje);
-	            }else {
-	            	 if(comando == '1') {
-	            		switch (mensaje) {  
-	            		case "INICIARCHAT":
-	            			this.contConecta.iniciaChat();
-	            		break;
-	            		case "NOREGISTRADO":
-	            			this.contConecta.ventanaEmergente("El usuario no se encuentra reistrado en el sistema.");
-		            	break;
-	            		case "FINALIZARCHAT":
-	            			//System.out.println("Finalizame el chat te lo pido por favor");
-	            			this.contConecta.ventanaEmergente("El chat fue finalizado por el otro usuario");
-	            			this.contChat.abandonarChat();
-		            	break;
-	            		case "USERREGISTRADO":
-	            			this.contConecta.ventanaEmergente("El usuario ya se encuentra registrado en el sistema.");
-	            		break;
-	            		}
-	
-	            	}
-	            }
-				
-			} 
-			catch (EOFException e) {
-				//e.printStackTrace();
+				mensaje = dis.readUTF();
+				comando = mensaje.charAt(0);
+				mensaje = mensaje.substring(1);
+
+				// System.out.println(comando+" " +mensaje);
+
+				if (comando == '0') { // mensaje
+					this.contChat.appendTextArea(mensaje);
+				} else {
+					if (comando == '1') {
+						switch (mensaje) {
+						case "INICIARCHAT":
+							this.contConecta.iniciaChat();
+							break;
+						case "NOREGISTRADO":
+							this.contConecta.ventanaEmergente("El usuario no se encuentra reistrado en el sistema.");
+							break;
+						case "FINALIZARCHAT":
+
+							this.contConecta.ventanaEmergente("El chat fue finalizado por el otro usuario");
+							this.contChat.abandonarChat();
+							break;
+						case "USERREGISTRADO":
+							this.contConecta.ventanaEmergente("El usuario ya se encuentra registrado en el sistema.");
+							break;
+						}
+
+					}
+				}
+
+			} catch (EOFException e) {
 				this.terminarRecibirMensajes();
-			}
-			catch (SocketException e1) {
+			} catch (SocketException e1) {
 				this.terminarRecibirMensajes();
-				//e1.printStackTrace();
-			}
-			catch (IOException e2) {
+			} catch (IOException e2) {
 				e2.printStackTrace();
-			} 
+			}
 		}
 	}
-	
+
 	public void terminarRecibirMensajes() {
-		//String mensaje = "El otro usuario se desconecto.\n";
+
 		this.terminar = true;
-		
-		//this.vista.getTextArea().setText(this.vista.getTextArea().getText()+"\n"+mensaje);
+
 		try {
 			this.dis.close();
 			this.dos.close();
@@ -98,7 +85,7 @@ public class ConectionHandler extends Thread
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
-		
+
 	}
 
 	public ControladorVistaChat getContChat() {
@@ -116,10 +103,5 @@ public class ConectionHandler extends Thread
 	public void setContConecta(ControladorVistaConecta contConecta) {
 		this.contConecta = contConecta;
 	}
-	
-	
-	
-    
+
 }
-
-

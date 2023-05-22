@@ -20,19 +20,17 @@ import java.awt.event.KeyEvent;
 import java.awt.FlowLayout;
 import javax.swing.LayoutStyle.ComponentPlacement;
 
-public class VistaInicial extends JFrame implements IVistaInicial{
+public class VistaInicial extends JFrame implements IVistaInicial {
 
 	private JPanel contentPane;
 	private JTextField txtPuerto;
 	private JTextField txtIp;
 	private JTextField txtUser;
-	
-	private ActionListener actionListenr; 
+
+	private ActionListener actionListenr;
 	public JButton btnConectar;
 	private ControladorVistaInicial cont = null;
-	
-	
-	
+
 	public static void main(String[] args) {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
@@ -46,7 +44,6 @@ public class VistaInicial extends JFrame implements IVistaInicial{
 		});
 	}
 
-	
 	public VistaInicial() {
 		setTitle("BIENVENIDO!");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -54,82 +51,71 @@ public class VistaInicial extends JFrame implements IVistaInicial{
 		contentPane = new JPanel();
 		contentPane.setBorder(new EmptyBorder(5, 5, 5, 5));
 		this.setVisible(true);
-		
-		
 
 		setContentPane(contentPane);
 		contentPane.setLayout(new FlowLayout(FlowLayout.CENTER, 5, 5));
-		
+
 		JPanel panel = new JPanel();
 		contentPane.add(panel);
-		
+
 		txtPuerto = new JTextField();
 		txtPuerto.setForeground(new Color(169, 169, 169));
 		txtPuerto.setText("puerto");
 		txtPuerto.setToolTipText("puerto");
 		txtPuerto.setBackground(new Color(255, 255, 255));
 		txtPuerto.setColumns(10);
-		 
+
 		txtIp = new JTextField();
 		txtIp.setForeground(new Color(169, 169, 169));
 		txtIp.setText("IP");
 		txtIp.setColumns(10);
-		
+
 		btnConectar = new JButton("INICIAR");
-		
+
 		btnConectar.setActionCommand("INICIAR");
 		btnConectar.setBackground(new Color(245, 255, 246));
-		
+
 		txtUser = new JTextField();
 		txtUser.setForeground(new Color(169, 169, 169));
 		txtUser.setText("user");
 		txtUser.setColumns(10);
 		GroupLayout gl_panel = new GroupLayout(panel);
-		gl_panel.setHorizontalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
+		gl_panel.setHorizontalGroup(gl_panel.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_panel.createSequentialGroup()
-					.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(57)
-							.addComponent(btnConectar))
-						.addGroup(gl_panel.createSequentialGroup()
-							.addGap(45)
-							.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
-								.addComponent(txtPuerto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtIp, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-								.addComponent(txtUser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
-					.addContainerGap(45, Short.MAX_VALUE))
-		);
-		gl_panel.setVerticalGroup(
-			gl_panel.createParallelGroup(Alignment.LEADING)
-				.addGroup(gl_panel.createSequentialGroup()
-					.addGap(39)
-					.addComponent(txtUser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(txtPuerto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(txtIp, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
-					.addComponent(btnConectar)
-					.addGap(62))
-		);
+						.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+								.addGroup(gl_panel.createSequentialGroup().addGap(57).addComponent(btnConectar))
+								.addGroup(gl_panel.createSequentialGroup().addGap(45)
+										.addGroup(gl_panel.createParallelGroup(Alignment.LEADING)
+												.addComponent(txtPuerto, GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+												.addComponent(txtIp, GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+												.addComponent(txtUser, GroupLayout.PREFERRED_SIZE,
+														GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE))))
+						.addContainerGap(45, Short.MAX_VALUE)));
+		gl_panel.setVerticalGroup(gl_panel.createParallelGroup(Alignment.LEADING).addGroup(gl_panel
+				.createSequentialGroup().addGap(39)
+				.addComponent(txtUser, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				.addGap(18)
+				.addComponent(txtPuerto, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE,
+						GroupLayout.PREFERRED_SIZE)
+				.addGap(18)
+				.addComponent(txtIp, GroupLayout.PREFERRED_SIZE, GroupLayout.DEFAULT_SIZE, GroupLayout.PREFERRED_SIZE)
+				.addGap(18).addComponent(btnConectar).addGap(62)));
 		panel.setLayout(gl_panel);
 		btnConectar.addActionListener(new ActionListener() {
 			public void actionPerformed(ActionEvent e) {
 			}
 		});
-		//JOptionPane.showMessageDialog(null, "Estableciendo conexión...");
-		//JOptionPane.showMessageDialog(null, "El usuario con puerto 5678 e IP: 192.228.17.57 no se encuentra en modo escucha. Inténtelo más tarde");
 		this.cont = new ControladorVistaInicial(this);
 	}
 
-
 	public String getPuerto() {
 		return this.txtPuerto.getText();
-	} 
+	}
 
 	public String getIP() {
-		return this.txtIp.getText(); 
+		return this.txtIp.getText();
 	}
 
 	public void addActionListener(ActionListener actionListener) {
@@ -137,12 +123,10 @@ public class VistaInicial extends JFrame implements IVistaInicial{
 		this.actionListenr = actionListener;
 	}
 
-	
 	public void mostrarVentana(boolean cond) {
 		this.setVisible(cond);
-		
-	}
 
+	}
 
 	public String getUser() {
 		return this.txtUser.getText();

@@ -31,32 +31,31 @@ public class ControladorVistaInicial implements ActionListener {
 			boolean condition = !this.vistaInicial.getPuerto().equals("puerto")
 					&& this.vistaInicial.getIP().length() > 5 && !this.vistaInicial.getUser().equals("user");
 
-			try { 
+			try {
 
 				if (condition == false)
 					JOptionPane.showMessageDialog(null, "Algún campo es inválido");
 				else {
-					//System.out.println("Conexion exitosa\n");
 
-					this.cliente = new Cliente( this.vistaInicial.getUser(), Integer.parseInt(this.vistaInicial.getPuerto()), this.vistaInicial.getIP());
-					try { 
+					this.cliente = new Cliente(this.vistaInicial.getUser(),
+							Integer.parseInt(this.vistaInicial.getPuerto()), this.vistaInicial.getIP());
+					try {
 						System.out.println("Antes de conectar");
 						this.cliente.conectarServer();
 						System.out.println("despues de conectar");
 						IVistaConecta vistaConecta = new vistaConecta(this.cliente.getNickname());
-						//vistaConecta.setCliente(cliente);
-						
-						//creo controlador conecta
+
+						// creo controlador conecta
 						ControladorVistaConecta cont = new ControladorVistaConecta(vistaConecta);
 						cont.setVistaConecta(vistaConecta);
 						cont.setCliente(this.cliente);
-						
+
 						this.cliente.setContConecta(cont);
 						vistaConecta.setCont(cont);
-						
+
 						System.out.println(cliente);
-						this.vistaInicial.mostrarVentana(false);   
-			 			
+						this.vistaInicial.mostrarVentana(false);
+
 						vistaConecta.mostrarVentana(true);
 					} catch (IniciarException e1) {
 						JOptionPane.showMessageDialog(null, e1.getMessage());
@@ -68,8 +67,6 @@ public class ControladorVistaInicial implements ActionListener {
 			} catch (UnknownHostException e1) {
 
 			} catch (IOException e1) {
-				// JOptionPane.showMessageDialog(null, "Lo siento. El receptor no se encuentra
-				// en modo escucha.");
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 		}
