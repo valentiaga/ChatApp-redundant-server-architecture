@@ -131,7 +131,7 @@ public class vistaChat extends JFrame implements IVistaChat{
 		jScrollPane1.setViewportView(textArea);
 		contentPane.setLayout(gl_contentPane);
 		//JOptionPane.showInternalMessageDialog(null, "Uno de los participantes ha abandonado el chat. Ha sido desconectado.");
-		cont = new ControladorVistaChat(this);
+		//cont = new ControladorVistaChat(this);
 	}
 
 

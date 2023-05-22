@@ -50,7 +50,7 @@ public class ControladorVistaChat implements ActionListener {
 
 	}
 
-	public Cliente getConexion() {
+	public Cliente getCliente() {
 		return cliente;
 	}
 
@@ -63,6 +63,10 @@ public class ControladorVistaChat implements ActionListener {
 		
 	}
 
+	public void appendTextArea(String text) {
+		this.vistaChat.getTextArea().setText(this.vistaChat.getTextArea().getText()+"\n"+text);
+	}
+	
 	public void setCliente(Cliente cliente) {
 		this.cliente=cliente;
 		

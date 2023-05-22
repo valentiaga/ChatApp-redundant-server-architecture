@@ -53,8 +53,9 @@ public class Cliente {
 		dis = new DataInputStream(s.getInputStream());
 		dos = new DataOutputStream(s.getOutputStream());
 
-		dos.writeUTF("0" + this.nickname);
-
+		dos.writeUTF("2" + this.nickname);
+		dos.flush();
+		
 //		System.out.println("hasta aca"); 
 //		
 //		if (dis.available() > 0) {
@@ -122,7 +123,7 @@ public class Cliente {
 	public void conectarReceptor(String nickNameReceptor)
 			throws IOException, UserNotAvailableException, CreaChatException {
 
-		this.messageManager.enviaMensaje("0" + nickNameReceptor);
+		this.messageManager.enviaMensaje(nickNameReceptor);
 //		error = dis.readUTF();
 //		comando = error.charAt(0);
 //		error = error.substring(1);

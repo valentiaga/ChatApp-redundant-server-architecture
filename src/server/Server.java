@@ -19,7 +19,7 @@ import java.util.Map;
 public class Server extends Thread{
 	
 	private ServerSocket serverSocket;
-	private int puerto = 111; 
+	private int puerto = 118; 
 //	private DataInputStream dis;
 //    private DataOutputStream dos;
 	//hasmap de nickname con socket
@@ -47,7 +47,7 @@ public class Server extends Thread{
 	            Socket s = null;
 	            String nickname; 
 	            String nicknameReceptor;
-	            DataCliente conexion;
+	            DataCliente dataCliente;
 	            Object object;
 	            char bandera;
 	             
@@ -70,16 +70,17 @@ public class Server extends Thread{
 	 	              
 	 	               
 	 	              	if(this.clientes.containsKey(nickname) == false) {
-	 	              		conexion = new DataCliente(s,nickname,dis,dos);
-		 	                this.clientes.put(nickname,conexion);
-		 	                this.lista.add(conexion);
-		 	                Conection conection = new Conection(s,conexion,this.clientes,dis,dos);
+	 	              		dataCliente = new DataCliente(s,nickname,dis,dos);
+		 	                this.clientes.put(nickname,dataCliente);
+		 	                this.lista.add(dataCliente);
+		 	                Conection conection = new Conection(s,dataCliente,this.clientes,dis,dos);
 		 	                conection.start();						// capaz podriamos poner en una coleccion los hilos, no se pa que
 		 	                
 		 	                System.out.println("Clientes en Server" +this.clientes);
 	 	              	}
 	 	              	else {
-	 	              		System.out.println("Aca si entre");
+	 	              		System.out.println("Usuario ya registrado"+nickname);
+	 	              		System.out.println("Clientes en Server" +this.clientes);
 	 	              		dos.writeUTF("1USERREGISTRADO");
 	 	              	}
 	 	                

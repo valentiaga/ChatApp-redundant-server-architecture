@@ -29,7 +29,7 @@ public class MessageManager {
     	
     	if(this.s.isClosed() != true) {
     		try {
-    			this.dos.writeUTF(mensaje);
+    			this.dos.writeUTF("0"+mensaje);
     		} catch (IOException e) { 
     			e.printStackTrace();
     		}

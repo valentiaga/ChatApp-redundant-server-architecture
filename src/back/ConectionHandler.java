@@ -45,7 +45,7 @@ public class ConectionHandler extends Thread
 	              System.out.println("CONECTIONHANDLERRRRR");
 	              
 	            if(comando == '0') {	// mensaje
-	            	//this.vista.getTextArea().setText(this.vista.getTextArea().getText()+"\n"+mensaje);
+	            	this.contChat.appendTextArea(mensaje);
 	            }else {
 	            	if(comando == '1') {
 	            		switch (mensaje) {

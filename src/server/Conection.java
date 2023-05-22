@@ -70,34 +70,79 @@ public class Conection extends Thread {
 			         System.out.println(bandera);
 			         System.out.println(mensaje);
 			         
-			        if(bandera == '0') { 
-			        	if(this.dataCliente.getNicknameReceptor() != null) {
-							this.clientes.get(this.dataCliente.getNicknameReceptor()).getDos().writeUTF("0"+mensaje);
-						}else {
-							
-							if((mensaje.equals(this.dataCliente.getNickname()))==false &&  this.clientes.containsKey(mensaje)){
-								System.out.println("Chat");
-								this.dataCliente.setNicknameReceptor(mensaje);
-								this.clientes.get(mensaje).setNicknameReceptor(this.dataCliente.getNickname());
-								// INICIAR LOS CHATS EN LOS CLIENTES
-								comando = "1INICIARCHAT";
-								this.dataCliente.getDos().writeUTF(comando);
-								this.clientes.get(mensaje).getDos().writeUTF(comando);
-								
-							}else { 
-								// no esta registrado ese nickname de receptor
-								comando = "1NOREGISTRADO";
-								this.dataCliente.getDos().writeUTF(comando);
-							}
-						}
-					} else {
-						if (bandera == '1') {	// comando para el servidor
-							
-							if(mensaje == "FINALIZARCHAT") {
-								this.clientes.get(mensaje).getDos().writeUTF("1"+mensaje);
-							}
-						}
-					}
+			         
+			         if(bandera == '0') { 
+	                        if(this.dataCliente.getNicknameReceptor() != null) {
+	                            this.clientes.get(this.dataCliente.getNicknameReceptor()).getDos().writeUTF("0"+mensaje);
+	                            this.clientes.get(this.dataCliente.getNicknameReceptor()).getDos().flush();
+	                        }else {
+	                            if((mensaje.equals(this.dataCliente.getNickname()))==false &&  this.clientes.containsKey(mensaje)){
+	                                System.out.println(this.clientes);
+	                                this.dataCliente.setNicknameReceptor(mensaje);
+	                                this.clientes.get(mensaje).setNicknameReceptor(this.dataCliente.getNickname());
+	                                // INICIAR LOS CHATS EN LOS CLIENTES
+	                                comando = "1INICIARCHAT";
+	                                this.dataCliente.getDos().writeUTF(comando);
+	                                this.dataCliente.getDos().flush();
+
+	                                this.clientes.get(mensaje).getDos().writeUTF(comando);
+	                                this.clientes.get(mensaje).getDos().flush();
+
+	                            }else { 
+	                                // no esta registrado ese nickname de receptor
+	                                comando = "1NOREGISTRADO";
+	                                this.dataCliente.getDos().writeUTF(comando);
+	                                this.dataCliente.getDos().flush();
+	                            }
+	                        }
+	                    } else {
+	                        if (bandera == '1') {    // comando para el servidor
+
+	                            if(mensaje == "FINALIZARCHAT") {
+	                                this.clientes.get(mensaje).getDos().writeUTF("1"+mensaje);
+	                                this.clientes.get(mensaje).getDos().flush();
+	                            }
+	                        }
+	                    }		         
+			       
+//			        if(bandera == '0') { 
+//			        	this.clientes.get(this.dataCliente.getNicknameReceptor()).getDos().writeUTF("0"+mensaje);
+//			        }
+//			        else {
+//			        	if(bandera == '2') {
+//			        		if((mensaje.equals(this.dataCliente.getNickname()))==false &&  this.clientes.containsKey(mensaje)) {
+//			        			this.dataCliente.setNicknameReceptor(mensaje);
+//								this.clientes.get(mensaje).setNicknameReceptor(this.dataCliente.getNickname());
+//								
+//								// INICIAR LOS CHATS EN LOS CLIENTES
+//								comando = "1INICIARCHAT";
+//								this.dataCliente.getDos().writeUTF(comando);
+//								this.dataCliente.getDos().flush();
+//								this.clientes.get(mensaje).setNicknameReceptor(this.dataCliente.getNickname());
+//								this.clientes.get(mensaje).getDos().writeUTF(comando);
+//								this.clientes.get(mensaje).getDos().flush();
+//			        		}
+//			        	}
+//			        	else { 
+//							// no esta registrado ese nickname de receptor
+//							comando = "1NOREGISTRADO";
+//							this.dataCliente.getDos().writeUTF(comando);
+//							this.dataCliente.getDos().flush();
+//						}
+//			        }
+					
+//					} else {
+//						if (bandera == '1') {	// comando para el servidor
+//							
+//							if(mensaje == "FINALIZARCHAT") {
+//								this.clientes.get(mensaje).getDos().writeUTF("1"+mensaje);
+//								this.clientes.get(mensaje).getDos().flush();
+//							}
+//						}
+//					}
+			        
+			        
+			        //------------------
 				}
 				
 			} 
