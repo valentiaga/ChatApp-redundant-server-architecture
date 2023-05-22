@@ -53,7 +53,7 @@ public class ConectionHandler extends Thread
 	            	 if(comando == '1') {
 	            		switch (mensaje) {  
 	            		case "INICIARCHAT":
-	            			this.contConecta.iniciaChat(receptor);
+	            			this.contConecta.iniciaChat();
 	            		break;
 	            		case "NOREGISTRADO":
 	            			this.contConecta.ventanaEmergente("El usuario no se encuentra reistrado en el sistema.");

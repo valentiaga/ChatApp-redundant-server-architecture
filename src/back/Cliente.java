@@ -46,30 +46,29 @@ public class Cliente {
 		this.iP = iP;
 	}
 
-
 	public void conectarServer() throws UnknownHostException, IOException, IniciarException {
 
 		Socket s = new Socket(this.iP, this.puerto);
 		dis = new DataInputStream(s.getInputStream());
 		dos = new DataOutputStream(s.getOutputStream());
 
-		dos.writeUTF("2" + this.nickname);
-		dos.flush();
 		
-//		System.out.println("hasta aca"); 
-//		
+		
+		
+		dos.writeUTF("1" + this.nickname);
+
 //		if (dis.available() > 0) {
 //			System.out.println("Entre a comando=2");
 //			error = dis.readUTF();
 //			comando = error.charAt(0);
 //			error = error.substring(1);
-//			if (comando == '2') {
+//			if (comando == '1') {
 //				throw new IniciarException(error);
 //			}
-
-		//}
-	this.messageManager = new MessageManager(s, dis, dos, this.vistaChat);
-	this.recibirMensajes();
+//
+//		}
+		this.messageManager = new MessageManager(s, dis, dos, this.vistaChat);
+		this.recibirMensajes();
 	}
 
 //------------------------------------------------------------------------------------------------------
@@ -158,9 +157,9 @@ public class Cliente {
 	}
 
 	public void setContChat(ControladorVistaChat cont) {
-		this.contChat=contChat;
+		this.contChat = contChat;
 		this.conectionHandler.setContChat(cont);
-		
+
 	}
 
 	public void setConectionHandler(ConectionHandler conectionHandler) {
@@ -170,9 +169,6 @@ public class Cliente {
 	public String getNickname() {
 		return nickname;
 	}
-	
-	
 
-	
 //------------------------------------------------------------------------------------------------------
 }

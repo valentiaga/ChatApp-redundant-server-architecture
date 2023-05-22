@@ -100,7 +100,7 @@ public class Conection extends Thread {
 	                                // no esta registrado ese nickname de receptor
 	                                comando = "1NOREGISTRADO";
 	                                this.dataCliente.getDos().writeUTF(comando);
-	                                this.dataCliente.getDos().flush();
+	                              
 	                            }
 	                        }
 	                    } else {
