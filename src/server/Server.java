@@ -17,7 +17,7 @@ import java.util.Map;
 public class Server extends Thread {
 
 	private ServerSocket serverSocket;
-	private int puerto = 207;
+	private int puerto = 210;
 
 	private HashMap<String, DataCliente> clientes = new HashMap<>();
 	private HashMap<String, String> chats = new HashMap<>();
@@ -61,7 +61,7 @@ public class Server extends Thread {
 
 					Conection conection = new Conection(s, dataCliente, this.clientes, dis, dos);
 					conection.start();
-
+					dos.writeUTF("1REGISTRADOCORRECTAMENTE");
 				} else {
 
 					dos.writeUTF("1USERREGISTRADO");

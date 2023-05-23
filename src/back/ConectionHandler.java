@@ -62,6 +62,10 @@ public class ConectionHandler extends Thread {
 						case "USERREGISTRADO":
 							this.contInicial.ventanaEmergente("El usuario ya se encuentra registrado en el sistema.");
 							// evitar que se habra la ventana de conecta
+							this.contInicial.setRegistrado(false);
+							break;
+						case "REGISTRADOCORRECTAMENTE":
+							this.contInicial.vistaSiguiente();
 							break;
 						}
 
