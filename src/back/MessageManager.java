@@ -1,5 +1,6 @@
 package back;
 
+import java.io.ByteArrayOutputStream;
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
 import java.io.IOException;
@@ -24,27 +25,55 @@ public class MessageManager {
 	}
      
     public void enviaMensaje(String mensaje) {
-    	
+
     	if(this.s.isClosed() != true) {
     		try {
-    			this.dos.writeUTF("0"+mensaje);
+    			
+    			this.dos.writeUTF("0"+Cifrado.encriptar(mensaje));
+
     		} catch (IOException e) { 
     			e.printStackTrace();
-    		}
+    		} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     	}
     	
     }
     
     public void enviaComando(String mensaje) {
+    	//byte[] texto;
     	
     	if(this.s.isClosed() != true) {
     		try {
+//    			mensaje = "1"+mensaje;
+//    			texto = mensaje.getBytes();
+//    			this.dos.write(texto);
     			this.dos.writeUTF("1"+mensaje);
     		} catch (IOException e) { 
     			e.printStackTrace();
-    		}
+    		} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
     	}
     }
+    
+    public void enviaNickName(String mensaje) {
+   
+    	if(this.s.isClosed() != true) {
+    		try {
+
+    			this.dos.writeUTF("2"+mensaje);
+    		} catch (IOException e) { 
+    			e.printStackTrace();
+    		} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
+    	}
+    }
+    
     
     Socket getSocket() {
     	return this.s;

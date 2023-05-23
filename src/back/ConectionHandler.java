@@ -41,7 +41,8 @@ public class ConectionHandler extends Thread {
 				// System.out.println(comando+" " +mensaje);
 
 				if (comando == '0') { // mensaje
-					this.contChat.appendTextArea(mensaje);
+					
+					this.contChat.appendTextArea(Cifrado.desencriptar(mensaje));
 				} else {
 					if (comando == '1') {
 						switch (mensaje) {
@@ -70,6 +71,9 @@ public class ConectionHandler extends Thread {
 				this.terminarRecibirMensajes();
 			} catch (IOException e2) {
 				e2.printStackTrace();
+			} catch (Exception e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
 			}
 		}
 	}

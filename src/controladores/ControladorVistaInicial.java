@@ -39,33 +39,27 @@ public class ControladorVistaInicial implements ActionListener {
 
 					this.cliente = new Cliente(this.vistaInicial.getUser(),
 							Integer.parseInt(this.vistaInicial.getPuerto()), this.vistaInicial.getIP());
-					try {
-						System.out.println("Antes de conectar");
-						this.cliente.conectarServer();
-						System.out.println("despues de conectar");
-						IVistaConecta vistaConecta = new vistaConecta(this.cliente.getNickname());
+					System.out.println("Antes de conectar");
+					this.cliente.conectarServer();
+					System.out.println("despues de conectar");
+					IVistaConecta vistaConecta = new vistaConecta(this.cliente.getNickname());
 
-						// creo controlador conecta
-						ControladorVistaConecta cont = new ControladorVistaConecta(vistaConecta);
-						cont.setVistaConecta(vistaConecta);
-						cont.setCliente(this.cliente);
+					// creo controlador conecta
+					ControladorVistaConecta cont = new ControladorVistaConecta(vistaConecta);
+					cont.setVistaConecta(vistaConecta);
+					cont.setCliente(this.cliente);
 
-						this.cliente.setContConecta(cont);
-						vistaConecta.setCont(cont);
+					this.cliente.setContConecta(cont);
+					vistaConecta.setCont(cont);
 
-						System.out.println(cliente);
-						this.vistaInicial.mostrarVentana(false);
+					System.out.println(cliente);
+					this.vistaInicial.mostrarVentana(false);
 
-						vistaConecta.mostrarVentana(true);
-					} catch (IniciarException e1) {
-						JOptionPane.showMessageDialog(null, e1.getMessage());
-					}
+					vistaConecta.mostrarVentana(true);
 				}
 
 			} catch (NumberFormatException e1) {
 				System.out.println("e1");
-			} catch (UnknownHostException e1) {
-
 			} catch (IOException e1) {
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}

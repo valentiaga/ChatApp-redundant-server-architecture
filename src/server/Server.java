@@ -17,7 +17,7 @@ import java.util.Map;
 public class Server extends Thread {
 
 	private ServerSocket serverSocket;
-	private int puerto = 201;
+	private int puerto = 202;
 
 	private HashMap<String, DataCliente> clientes = new HashMap<>();
 	private HashMap<String, String> chats = new HashMap<>();
