@@ -52,20 +52,8 @@ public class Cliente {
 
 	public void conectarServer() throws IOException{
 
-//		Socket s = new Socket(this.iP, this.puerto);
-//		dis = new DataInputStream(s.getInputStream());
-//		dos = new DataOutputStream(s.getOutputStream());
-
 		dos.writeUTF("1" + this.nickname);
-	
-//		byte[] texto;
-//		String mensaje;
-//		mensaje = "1" + this.nickname;
-//		texto = mensaje.getBytes();
-//    	dos.write(texto);
-    	
-//		this.messageManager = new MessageManager(s, dis, dos, this.vistaChat);
-//		this.recibirMensajes();
+
 	}
 
 

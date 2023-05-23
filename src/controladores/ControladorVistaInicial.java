@@ -42,27 +42,11 @@ public class ControladorVistaInicial implements ActionListener {
 					this.cliente = new Cliente(this.vistaInicial.getUser(),
 							Integer.parseInt(this.vistaInicial.getPuerto()), this.vistaInicial.getIP());
 
-					// this.cliente.conectarServer();
 					this.cliente.creaConectionHandler();
 					this.cliente.setContInicial(this);
-					// IVistaConecta vistaConecta = new vistaConecta(this.cliente.getNickname());
-
-					this.setRegistrado(true);
-					// creo controlador conecta
-//					vistaConecta = new vistaConecta(this.cliente.getNickname());
-//					ControladorVistaConecta cont = new ControladorVistaConecta(vistaConecta);
-//					cont.setVistaConecta(vistaConecta);
-//					cont.setCliente(this.cliente);
-//
-//					this.cliente.setContConecta(cont);
-//					vistaConecta.setCont(cont);
 
 					this.cliente.conectarServer();
 
-//					this.vistaInicial.mostrarVentana(false);
-//					vistaConecta.mostrarVentana(true);
-//					if (this.isRegistrado() == true)
-//						this.vistaSiguiente();
 				}
 
 			} catch (NumberFormatException e1) {

@@ -34,7 +34,7 @@ public class MessageManager {
     		} catch (IOException e) { 
     			e.printStackTrace();
     		} catch (Exception e) {
-				// TODO Auto-generated catch block
+				
 				e.printStackTrace();
 			}
     	}
@@ -42,18 +42,14 @@ public class MessageManager {
     }
     
     public void enviaComando(String mensaje) {
-    	//byte[] texto;
+    	
     	
     	if(this.s.isClosed() != true) {
     		try {
-//    			mensaje = "1"+mensaje;
-//    			texto = mensaje.getBytes();
-//    			this.dos.write(texto);
     			this.dos.writeUTF("1"+mensaje);
     		} catch (IOException e) { 
     			e.printStackTrace();
     		} catch (Exception e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
     	}
@@ -63,7 +59,6 @@ public class MessageManager {
    
     	if(this.s.isClosed() != true) {
     		try {
-
     			this.dos.writeUTF("2"+mensaje);
     		} catch (IOException e) { 
     			e.printStackTrace();
