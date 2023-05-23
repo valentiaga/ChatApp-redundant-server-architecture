@@ -5,15 +5,10 @@ import java.awt.event.ActionListener;
 
 import back.Cliente;
 import front.IVistaChat;
-<<<<<<< HEAD
 import front.IVistaConecta;
 import front.IVistaInicial;
 import front.VistaInicial;
 import front.vistaConecta;
-=======
-import front.IVistaInicial;
-import front.VistaInicial;
->>>>>>> main
 
 public class ControladorVistaChat implements ActionListener {
 
@@ -28,28 +23,6 @@ public class ControladorVistaChat implements ActionListener {
 
 	public void actionPerformed(ActionEvent e) {
 		String comando = e.getActionCommand();
-<<<<<<< HEAD
-=======
-		
-        if (comando.equalsIgnoreCase("ABANDONAR")) {
-        	
-        	//this.vistaChat.getTextArea().setText(this.vistaChat.getTextArea().getText()+"\n"+"El otro usuario se desconecto.\n");
-        	this.conexion.getMessageManager().enviaMensaje("El otro usuario se desconecto.\n");
-        	this.conexion.getConectionHandler().terminarRecibirMensajes();
-        	this.vistaChat.mostrarVentana(false);
-        	IVistaInicial vistaInicial = new VistaInicial();
-        	vistaInicial.mostrarVentana(true);
-        }
-        else {
-        	if (comando.equalsIgnoreCase("ENVIAR")) {
-        		this.conexion.getMessageManager().enviaMensaje(this.vistaChat.getTxtIngreseTextoAqui().getText());
-        		this.vistaChat.getTextArea().setText(this.vistaChat.getTextArea().getText()+"\n\t\t\t\t" +this.vistaChat.getTxtIngreseTextoAqui().getText()+"\n");
-        		
-        		this.vistaChat.getTxtIngreseTextoAqui().setText("");
-        	
-        	}
-        }
->>>>>>> main
 
 		if (comando.equalsIgnoreCase("ABANDONAR")) {
 
