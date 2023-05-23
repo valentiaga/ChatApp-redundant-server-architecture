@@ -39,20 +39,23 @@ public class ControladorVistaInicial implements ActionListener {
 
 					this.cliente = new Cliente(this.vistaInicial.getUser(),
 							Integer.parseInt(this.vistaInicial.getPuerto()), this.vistaInicial.getIP());
-					System.out.println("Antes de conectar");
-					this.cliente.conectarServer();
-					System.out.println("despues de conectar");
+				
+					//this.cliente.conectarServer();
+					this.cliente.creaConectionHandler();
+					this.cliente.setContInicial(this);
 					IVistaConecta vistaConecta = new vistaConecta(this.cliente.getNickname());
 
 					// creo controlador conecta
 					ControladorVistaConecta cont = new ControladorVistaConecta(vistaConecta);
 					cont.setVistaConecta(vistaConecta);
 					cont.setCliente(this.cliente);
-
+				
 					this.cliente.setContConecta(cont);
 					vistaConecta.setCont(cont);
-
-					System.out.println(cliente);
+					
+					this.cliente.conectarServer();
+					
+					//System.out.println(cliente);
 					this.vistaInicial.mostrarVentana(false);
 
 					vistaConecta.mostrarVentana(true);
@@ -65,6 +68,9 @@ public class ControladorVistaInicial implements ActionListener {
 			}
 		}
 
+	}
+	public void ventanaEmergente(String mensaje) {
+		JOptionPane.showMessageDialog(null, mensaje);
 	}
 
 }

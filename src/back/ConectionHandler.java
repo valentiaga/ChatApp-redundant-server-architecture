@@ -9,10 +9,12 @@ import java.net.SocketException;
 
 import controladores.ControladorVistaChat;
 import controladores.ControladorVistaConecta;
+import controladores.ControladorVistaInicial;
 
 public class ConectionHandler extends Thread {
 	ControladorVistaChat contChat = null;
 	ControladorVistaConecta contConecta = null;
+	ControladorVistaInicial contInicial = null;
 	final DataInputStream dis;
 	final DataOutputStream dos;
 	final Socket s;
@@ -50,7 +52,7 @@ public class ConectionHandler extends Thread {
 							this.contConecta.iniciaChat();
 							break;
 						case "NOREGISTRADO":
-							this.contConecta.ventanaEmergente("El usuario no se encuentra reistrado en el sistema.");
+							this.contConecta.ventanaEmergente("El usuario no se encuentra disponible.");
 							break;
 						case "FINALIZARCHAT":
 
@@ -58,7 +60,8 @@ public class ConectionHandler extends Thread {
 							this.contChat.abandonarChat();
 							break;
 						case "USERREGISTRADO":
-							this.contConecta.ventanaEmergente("El usuario ya se encuentra registrado en el sistema.");
+							this.contInicial.ventanaEmergente("El usuario ya se encuentra registrado en el sistema.");
+							// evitar que se habra la ventana de conecta
 							break;
 						}
 
@@ -108,4 +111,13 @@ public class ConectionHandler extends Thread {
 		this.contConecta = contConecta;
 	}
 
+	public ControladorVistaInicial getContInicial() {
+		return contInicial;
+	}
+
+	public void setContInicial(ControladorVistaInicial contInicial) {
+		this.contInicial = contInicial;
+	}
+
+	
 }

@@ -22,7 +22,7 @@ public class Prueba {
 		Socket s;
 		Socket s2;
 		
-		Cliente cliente = new Cliente("Juancho",123,"1321");
+		//Cliente cliente = new Cliente("Juancho",123,"1321");
 //		ObjectOutputStream dos = null;
 //		ObjectOutputStream dos2;
 		

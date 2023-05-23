@@ -110,7 +110,7 @@ public class Conection extends Thread {
 						}else {
 							if(bandera == '2') {
 								if ((mensaje.equals(this.dataCliente.getNickname())) == false
-										&& this.clientes.containsKey(mensaje)) {
+										&& this.clientes.containsKey(mensaje) && this.clientes.get(mensaje).getNicknameReceptor()==null) {
 									System.out.println(this.clientes);
 									this.dataCliente.setNicknameReceptor(mensaje);
 									this.clientes.get(mensaje).setNicknameReceptor(this.dataCliente.getNickname());

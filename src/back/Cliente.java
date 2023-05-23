@@ -9,6 +9,7 @@ import java.net.UnknownHostException;
 
 import controladores.ControladorVistaChat;
 import controladores.ControladorVistaConecta;
+import controladores.ControladorVistaInicial;
 import exception.CreaChatException;
 import exception.IniciarException;
 import exception.UserNotAvailableException;
@@ -23,7 +24,8 @@ public class Cliente {
 	private ConectionHandler conectionHandler = null;
 	private ControladorVistaConecta contConecta = null;
 	private ControladorVistaChat contChat = null;
-
+	private ControladorVistaInicial contInicial = null;
+	
 	private String nickname;
 	private int puerto;
 	private String iP;
@@ -37,21 +39,23 @@ public class Cliente {
 	public Cliente() {
 	}
 
-	public Cliente(String nickname, int puerto, String iP) {
+	public Cliente(String nickname, int puerto, String iP) throws IOException {
 		super();
 		this.nickname = nickname;
 		this.puerto = puerto;
 		this.iP = iP;
+		
+		socket = new Socket(this.iP, this.puerto);
+		dis = new DataInputStream(socket.getInputStream());
+		dos = new DataOutputStream(socket.getOutputStream());
 	}
 
 	public void conectarServer() throws IOException{
 
-		Socket s = new Socket(this.iP, this.puerto);
-		dis = new DataInputStream(s.getInputStream());
-		dos = new DataOutputStream(s.getOutputStream());
+//		Socket s = new Socket(this.iP, this.puerto);
+//		dis = new DataInputStream(s.getInputStream());
+//		dos = new DataOutputStream(s.getOutputStream());
 
-		
-		
 		dos.writeUTF("1" + this.nickname);
 	
 //		byte[] texto;
@@ -60,8 +64,8 @@ public class Cliente {
 //		texto = mensaje.getBytes();
 //    	dos.write(texto);
     	
-		this.messageManager = new MessageManager(s, dis, dos, this.vistaChat);
-		this.recibirMensajes();
+//		this.messageManager = new MessageManager(s, dis, dos, this.vistaChat);
+//		this.recibirMensajes();
 	}
 
 
@@ -112,6 +116,17 @@ public class Cliente {
 		this.conectionHandler.setContChat(cont);
 
 	}
+	
+	
+
+	public ControladorVistaInicial getContInicial() {
+		return contInicial;
+	}
+
+	public void setContInicial(ControladorVistaInicial contInicial) {
+		this.contInicial = contInicial;
+		this.conectionHandler.setContInicial(contInicial);
+	}
 
 	public void setConectionHandler(ConectionHandler conectionHandler) {
 		this.conectionHandler = conectionHandler;
@@ -119,6 +134,11 @@ public class Cliente {
 
 	public String getNickname() {
 		return nickname;
+	}
+	
+	public void creaConectionHandler() {
+		this.messageManager = new MessageManager(this.socket, dis, dos, this.vistaChat);
+		this.recibirMensajes();
 	}
 
 //------------------------------------------------------------------------------------------------------
