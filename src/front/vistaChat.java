@@ -28,7 +28,11 @@ import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
 import java.awt.FlowLayout;
 
+<<<<<<< HEAD
 public class vistaChat extends JFrame implements IVistaChat {
+=======
+public class VistaChat extends JFrame implements IVistaChat{
+>>>>>>> main
 
 	private JPanel contentPane;
 	private JTextField txtIngreseTextoAqui;
@@ -47,7 +51,7 @@ public class vistaChat extends JFrame implements IVistaChat {
 		EventQueue.invokeLater(new Runnable() {
 			public void run() {
 				try {
-					vistaChat frame = new vistaChat();
+					VistaChat frame = new VistaChat();
 					frame.setVisible(true);
 				} catch (Exception e) {
 					e.printStackTrace();
@@ -59,8 +63,13 @@ public class vistaChat extends JFrame implements IVistaChat {
 	/**
 	 * Create the frame.
 	 */
+<<<<<<< HEAD
 	public vistaChat() {
 		setTitle("CHAT");
+=======
+	public VistaChat() { 
+		setTitle("CHAT EN TIEMPO REAL");
+>>>>>>> main
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
