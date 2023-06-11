@@ -9,6 +9,7 @@ public interface IVistaServer {
 	void addActionListener(ActionListener actionListener);
 	void mostrarVentana(boolean cond);
 	JTextArea getTextArea();
+	JTextArea getTextAreaMensajes() ;
 	
 	
 }

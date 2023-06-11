@@ -50,4 +50,8 @@ public class ControladorVistaServer implements ActionListener{
 		this.vistaServer.getTextArea().append("\n" + dataCliente);
 	}
 	
+	public void appendMensajes (String mensaje) {
+		this.vistaServer.getTextAreaMensajes().append("\n" + mensaje);
+	}
+	
 }

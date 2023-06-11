@@ -19,6 +19,7 @@ public class VistaServer extends JFrame implements IVistaServer{
 	private ActionListener actionListener;
 	//ControladorVistaServer controlador;
 	JTextArea textAreaLista;
+	private JTextArea textAreaMensajes;
 	
 	//private Server server;
 	
@@ -56,33 +57,31 @@ public class VistaServer extends JFrame implements IVistaServer{
 		btnClose = new JButton("Cerrar servidor");
 		btnClose.setActionCommand("CLOSE_SERVER");
 		
-		JTextArea textAreaMensajes = new JTextArea();
+		textAreaMensajes = new JTextArea();
 		textAreaMensajes.setEditable(false);
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addContainerGap()
+							.addComponent(textAreaLista, GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE))
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addGap(144)
+							.addComponent(btnClose))
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(textAreaLista, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE)
-							.addGap(18)
-							.addComponent(textAreaMensajes, GroupLayout.DEFAULT_SIZE, 217, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(144)
-							.addComponent(btnClose)))
+							.addComponent(textAreaMensajes, GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)))
 					.addContainerGap())
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING, false)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(textAreaMensajes))
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-							.addGap(5)
-							.addComponent(textAreaLista, GroupLayout.PREFERRED_SIZE, 199, GroupLayout.PREFERRED_SIZE)))
+					.addContainerGap()
+					.addComponent(textAreaMensajes, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
+					.addPreferredGap(ComponentPlacement.RELATED)
+					.addComponent(textAreaLista, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
 					.addGap(18)
 					.addComponent(btnClose)
 					.addContainerGap(11, Short.MAX_VALUE))
@@ -97,6 +96,11 @@ public class VistaServer extends JFrame implements IVistaServer{
 	}
 	
 	
+	
+	public JTextArea getTextAreaMensajes() {
+		return textAreaMensajes;
+	}
+
 	@Override
 	public void addActionListener(ActionListener actionListener) {
 		this.actionListener = actionListener;

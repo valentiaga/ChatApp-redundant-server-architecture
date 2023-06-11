@@ -30,6 +30,7 @@ public class Server extends Thread {
 			e.printStackTrace();
 		}
 	}
+	
 
 	public void Registrar() throws IOException {
 
@@ -57,6 +58,7 @@ public class Server extends Thread {
 					this.lista.add(dataCliente);
 
 					Conection conection = new Conection(s, dataCliente, this.clientes, dis, dos);
+					conection.setCont(controlador);
 					conection.start();
 					dos.writeUTF("1REGISTRADOCORRECTAMENTE");
 					controlador.appendListaConectados(dataCliente.toString());

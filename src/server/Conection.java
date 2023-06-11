@@ -20,6 +20,7 @@ public class Conection extends Thread {
 	final DataInputStream dis;
 	final DataOutputStream dos;
 	final Socket socket;
+	private ControladorVistaServer cont;
 
 	private boolean terminar = false;
 
@@ -65,10 +66,12 @@ public class Conection extends Thread {
 					mensaje = dis.readUTF();
 					bandera = mensaje.charAt(0);
 					mensaje = mensaje.substring(1);
+					
+					
 
 					if (bandera == '0') {
 						if (this.dataCliente.getNicknameReceptor() != null) {
-							
+							this.cont.appendMensajes(dataCliente.getNickname()+" para "+dataCliente.getNicknameReceptor()+ ":" +mensaje);
 							this.clientes.get(this.dataCliente.getNicknameReceptor()).getDos().writeUTF("0" + mensaje);
 							this.clientes.get(this.dataCliente.getNicknameReceptor()).getDos().flush();
 						} 
@@ -76,6 +79,7 @@ public class Conection extends Thread {
 						if (bandera == '1') { // comando para el servidor
 
 							if (mensaje.equals("FINALIZARCHAT") == true) {
+								this.cont.appendMensajes(dataCliente.getNickname()+" finalizó el chat con "+dataCliente.getNicknameReceptor());
 
 								this.clientes.get(this.dataCliente.getNicknameReceptor()).getDos()
 										.writeUTF("1" + mensaje);
@@ -97,6 +101,8 @@ public class Conection extends Thread {
 
 									this.clientes.get(mensaje).getDos().writeUTF(comando);
 									this.clientes.get(mensaje).getDos().flush();
+									this.cont.appendMensajes(dataCliente.getNickname()+" inició un chat con "+dataCliente.getNicknameReceptor());
+
 
 								} else {
 									// no esta registrado el receptor
@@ -135,4 +141,13 @@ public class Conection extends Thread {
 		}
 
 	}
+
+	public ControladorVistaServer getCont() {
+		return cont;
+	}
+
+	public void setCont(ControladorVistaServer cont) {
+		this.cont = cont;
+	}
+	
 }
