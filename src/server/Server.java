@@ -14,10 +14,9 @@ public class Server extends Thread {
 	private ServerSocket serverSocket;
 	private int puerto = 5634;
 
-	DataCliente data = null;
 	private HashMap<String, DataCliente> clientes = new HashMap<>();
 	private HashMap<String, String> chats = new HashMap<>();
-	
+	private ArrayList<DataCliente> lista = new ArrayList<DataCliente>();
 	
 	private boolean terminar = false;
 
@@ -40,7 +39,7 @@ public class Server extends Thread {
 		char bandera;
 
 		try {
-			while (true) {
+			while (this.terminar == false) {
 				s = serverSocket.accept();
 
 				DataInputStream dis = new DataInputStream(s.getInputStream());
@@ -72,4 +71,9 @@ public class Server extends Thread {
 
 	}
 
+	public void closeServer() throws IOException {	// podriamos cerrar el socket de conexion con otros servidores tmb
+		this.terminar = true;
+		this.serverSocket.close();
+		
+	}
 }
