@@ -20,7 +20,7 @@ public class VistaServer extends JFrame implements IVistaServer{
 	//ControladorVistaServer controlador;
 	JTextArea textAreaLista;
 	private JTextArea textAreaMensajes;
-	
+	private static int nro = 0;
 	//private Server server;
 	
 	/**
@@ -43,7 +43,7 @@ public class VistaServer extends JFrame implements IVistaServer{
 	 * Create the frame.
 	 */
 	public VistaServer() {
-		setTitle("SERVIDOR");
+		this.setTitle();
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -111,5 +111,10 @@ public class VistaServer extends JFrame implements IVistaServer{
 	public void mostrarVentana(boolean cond) {
 		// TODO Auto-generated method stub
 		
+	}
+	
+	public void setTitle () {
+		nro++;
+		this.setTitle("SERVIDOR "+ nro);
 	}
 }
