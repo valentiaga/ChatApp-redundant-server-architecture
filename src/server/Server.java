@@ -13,8 +13,8 @@ import server.DataCliente;
 public class Server extends Thread {
 
 	private ServerSocket serverSocket;
-	private int puerto = 776;
-
+	private int puerto;
+	private static int nro = 0;
 	private HashMap<String, DataCliente> clientes = new HashMap<>();
 	private HashMap<String, String> chats = new HashMap<>();
 	private ArrayList<DataCliente> lista = new ArrayList<DataCliente>();
@@ -22,10 +22,24 @@ public class Server extends Thread {
 	
 	private boolean terminar = false;
 
+	
+	public Server(int puerto) {
+		super();
+		this.puerto = puerto + nro;
+		nro++;
+		System.out.println(nro);
+		try {
+			System.out.println(puerto);
+			this.serverSocket = new ServerSocket(puerto);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
 	public Server() {
 		super();
 		try {
-			this.serverSocket = new ServerSocket(this.puerto);
+			this.serverSocket = new ServerSocket(puerto);
 		} catch (IOException e) {
 			e.printStackTrace();
 		}

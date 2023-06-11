@@ -54,4 +54,7 @@ public class ControladorVistaServer implements ActionListener{
 		this.vistaServer.getTextAreaMensajes().append("\n" + mensaje);
 	}
 	
+	public int getNro() {
+		return VistaServer.nro;
+	}
 }

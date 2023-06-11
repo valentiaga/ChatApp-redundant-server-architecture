@@ -20,7 +20,7 @@ public class VistaServer extends JFrame implements IVistaServer{
 	//ControladorVistaServer controlador;
 	JTextArea textAreaLista;
 	private JTextArea textAreaMensajes;
-	private static int nro = 0;
+	public static int nro = 0;
 	//private Server server;
 	
 	/**
@@ -117,4 +117,27 @@ public class VistaServer extends JFrame implements IVistaServer{
 		nro++;
 		this.setTitle("SERVIDOR "+ nro);
 	}
+
+	public int getNro() {
+		return nro;
+	}
+
+
+	public JPanel getContentPane() {
+		return contentPane;
+	}
+
+	public JButton getBtnClose() {
+		return btnClose;
+	}
+
+	public ActionListener getActionListener() {
+		return actionListener;
+	}
+
+	public JTextArea getTextAreaLista() {
+		return textAreaLista;
+	}
+	
+	
 }

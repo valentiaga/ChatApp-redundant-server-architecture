@@ -5,19 +5,41 @@ import java.io.IOException;
 public class IniciarServer {
 
 	public static void main(String[] args) {
-		Server server = new Server();
-		IVistaServer vistaServer = new VistaServer();
+		int puerto1 = 306;
+		//int puerto2 = 206;
+	
+		Server server1 = new Server(puerto1);
 		
-		ControladorVistaServer controlador = new ControladorVistaServer(vistaServer);
-		controlador.setServer(server);
+		
+		IVistaServer vistaServer1 = new VistaServer();
+		
+		ControladorVistaServer controlador1 = new ControladorVistaServer(vistaServer1);
+		controlador1.setServer(server1);
 		//controlador.setListaConectados();
-		server.setControlador(controlador);
-		
+		server1.setControlador(controlador1);
 		try {
-			server.Registrar();			// el hilo se va a quedar aca
+			//System.out.println("oa");
+			server1.Registrar();		
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
+		
+	//---------------------------------------------------------------------------------------
+		
+		
+//		Server server2 = new Server(puerto2);
+//		IVistaServer vistaServer2 = new VistaServer();
+//		
+//		ControladorVistaServer controlador2 = new ControladorVistaServer(vistaServer2);
+//		controlador2.setServer(server2);
+//		//controlador.setListaConectados();
+//		server2.setControlador(controlador2);
+//		
+//		try {
+//			server2.Registrar();			
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 		
 	} 
 
