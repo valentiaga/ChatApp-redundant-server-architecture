@@ -3,6 +3,7 @@ package server;
 import java.awt.event.ActionListener;
 
 import javax.swing.JTextArea;
+import javax.swing.JTextField;
 
 public interface IVistaServer {
 	
@@ -10,6 +11,7 @@ public interface IVistaServer {
 	void mostrarVentana(boolean cond);
 	JTextArea getTextArea();
 	JTextArea getTextAreaMensajes() ;
+	JTextField getTextFieldPuerto();
 	
 	
 }

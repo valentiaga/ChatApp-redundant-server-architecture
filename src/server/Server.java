@@ -10,11 +10,11 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import server.DataCliente;
 
+
 public class Server extends Thread {
 
 	private ServerSocket serverSocket;
-	private int puerto;
-	private static int nro = 0;
+	public  int puerto;
 	private HashMap<String, DataCliente> clientes = new HashMap<>();
 	private HashMap<String, String> chats = new HashMap<>();
 	private ArrayList<DataCliente> lista = new ArrayList<DataCliente>();
@@ -23,31 +23,34 @@ public class Server extends Thread {
 	private boolean terminar = false;
 
 	
-	public Server(int puerto) {
-		super();
-		this.puerto = puerto + nro;
-		nro++;
-		System.out.println(nro);
-		try {
-			System.out.println(puerto);
-			this.serverSocket = new ServerSocket(puerto);
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
-	}
+//	public void iniciaServer(String text) {
+//		this.puerto = Integer.parseInt(text);
+//		try {
+//			this.serverSocket = new ServerSocket(puerto);
+//			this.controlador.setServer(this);
+//			this.Registrar();
+//		} catch (IOException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+//	}
 	
-	public Server() {
-		super();
+
+	public Server(String text, ControladorVistaServer cont) {
+		this.puerto = Integer.parseInt(text);
 		try {
 			this.serverSocket = new ServerSocket(puerto);
+			this.controlador=cont;
+			this.controlador.setServer(this);
+			
 		} catch (IOException e) {
+			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
 	
 
-	public void Registrar() throws IOException {
-
+	public void run(){
 		Socket s = null;
 		String nickname;
 		String nicknameReceptor;
@@ -89,6 +92,49 @@ public class Server extends Thread {
 		}
 
 	}
+//	public void Registrar() throws IOException {
+//
+//		Socket s = null;
+//		String nickname;
+//		String nicknameReceptor;
+//		DataCliente dataCliente;
+//		Object object;
+//		char bandera;
+//
+//		try {
+//			while (this.terminar == false) {
+//				s = serverSocket.accept();
+//
+//				DataInputStream dis = new DataInputStream(s.getInputStream());
+//				DataOutputStream dos = new DataOutputStream(s.getOutputStream());
+//
+//				nickname = dis.readUTF();
+//				bandera = nickname.charAt(0);
+//				nickname = nickname.substring(1);
+//
+//				if (this.clientes.containsKey(nickname) == false) {
+//					dataCliente = new DataCliente(s, nickname, dis, dos);
+//					this.clientes.put(nickname, dataCliente);
+//					this.lista.add(dataCliente);
+//
+//					Conection conection = new Conection(s, dataCliente, this.clientes, dis, dos);
+//					conection.setCont(controlador);
+//					conection.start();
+//					dos.writeUTF("1REGISTRADOCORRECTAMENTE");
+//					controlador.appendListaConectados(dataCliente.toString());
+//				} else {
+//
+//					dos.writeUTF("1USERREGISTRADO");
+//				}
+//			}
+//
+//		} catch (SocketException e) {
+//			e.printStackTrace();
+//		} catch (Exception e1) {
+//			e1.printStackTrace();
+//		}
+//
+//	}
 
 	public ArrayList<DataCliente> getLista() {
 		return lista;
@@ -111,5 +157,6 @@ public class Server extends Thread {
 	public void setControlador(ControladorVistaServer controlador) {
 		this.controlador = controlador;
 	}
+
 	
 }

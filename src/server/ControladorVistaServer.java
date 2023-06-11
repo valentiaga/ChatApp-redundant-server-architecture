@@ -31,6 +31,16 @@ public class ControladorVistaServer implements ActionListener{
 			this.vistaServer.getTextArea().append("Este servidor fue desconectado");
 			//aca podriamos cerrarla
 		}
+		else if (comando.equalsIgnoreCase("CREAR_SERVER")) {
+			this.server = new Server(this.vistaServer.getTextFieldPuerto().getText(), this);
+			this.server.start();
+//			try {
+//				this.server.Registrar();
+//			} catch (IOException e1) {
+//				// TODO Auto-generated catch block
+//				e1.printStackTrace();
+//			}
+		}
 		
 	}
 
