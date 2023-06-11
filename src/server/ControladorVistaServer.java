@@ -29,6 +29,7 @@ public class ControladorVistaServer implements ActionListener{
 				JOptionPane.showMessageDialog(null, e1.getMessage());
 			}
 			this.vistaServer.getTextArea().append("Este servidor fue desconectado");
+			//aca podriamos cerrarla
 		}
 		
 	}
@@ -42,7 +43,11 @@ public class ControladorVistaServer implements ActionListener{
 	}
 	
 	public void setListaConectados() {
-		this.vistaServer.getTextArea().append(this.server.getLista().toString());
+		this.vistaServer.getTextArea().setText(this.server.getLista().toString());  
+	}
+	
+	public void appendListaConectados (String dataCliente) {
+		this.vistaServer.getTextArea().append("\n" + dataCliente);
 	}
 	
 }

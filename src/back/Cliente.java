@@ -46,30 +46,35 @@ public class Cliente {
 		this.iP = iP;
 		
 		// esto va en Conexion
-		socket = new Socket(this.iP, this.puerto);
-		dis = new DataInputStream(socket.getInputStream());
-		dos = new DataOutputStream(socket.getOutputStream());
+		Conexion.getInstance().agregarSocket(iP, puerto);
+//		socket = new Socket(this.iP, this.puerto);
+//		dis = new DataInputStream(socket.getInputStream());
+//		dos = new DataOutputStream(socket.getOutputStream());
+		
 	}
 
 	public void conectarServer() throws IOException{
-
-		dos.writeUTF("1" + this.nickname);
-
+		
+		Conexion.getInstance().registrar(this.nickname);
+		//Conexion.getInstance().getDos().writeUTF("1" + this.nickname);
+//		dos.writeUTF("1" + this.nickname);
+		
 	}
 
 
 	public void recibirMensajes() {
-		Socket s = this.messageManager.getSocket();
-		DataInputStream dis = null;
-		DataOutputStream dos = null;
-		try {
-			dis = new DataInputStream(s.getInputStream());
-			dos = new DataOutputStream(s.getOutputStream());
-		} catch (IOException e) {
+//		Socket s = this.messageManager.getSocket();
+//		DataInputStream dis = null;
+//		DataOutputStream dos = null;
+//		try {
+//			dis = new DataInputStream(s.getInputStream());
+//			dos = new DataOutputStream(s.getOutputStream());
+//		} catch (IOException e) {
+//
+//		}
 
-		}
-
-		this.conectionHandler = new ReceiveMessage(s, dis, dos);
+		//this.conectionHandler = new ReceiveMessage(s, dis, dos);
+		this.conectionHandler = new ReceiveMessage();
 		this.conectionHandler.start();
 	}
 
@@ -87,9 +92,9 @@ public class Cliente {
 		this.vistaChat = v;
 	}
 
-	public Socket getsocket() {
-		return this.socket;
-	}
+//	public Socket getsocket() {
+//		return this.socket;
+//	}
 
 	public ReceiveMessage getConectionHandler() {
 		return conectionHandler;
@@ -105,7 +110,6 @@ public class Cliente {
 		this.conectionHandler.setContChat(cont);
 
 	}
-	
 	
 
 	public ControladorVistaInicial getContInicial() {
@@ -126,7 +130,8 @@ public class Cliente {
 	}
 	
 	public void creaConectionHandler() {
-		this.messageManager = new SendMessage(this.socket, dis, dos, this.vistaChat);
+		//this.messageManager = new SendMessage(this.socket, dis, dos, this.vistaChat);
+		this.messageManager = new SendMessage();
 		this.recibirMensajes();
 	}
 

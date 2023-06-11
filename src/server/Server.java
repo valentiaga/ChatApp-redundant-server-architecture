@@ -13,11 +13,12 @@ import server.DataCliente;
 public class Server extends Thread {
 
 	private ServerSocket serverSocket;
-	private int puerto = 5634;
+	private int puerto = 779;
 
 	private HashMap<String, DataCliente> clientes = new HashMap<>();
 	private HashMap<String, String> chats = new HashMap<>();
 	private ArrayList<DataCliente> lista = new ArrayList<DataCliente>();
+	private ControladorVistaServer controlador;
 	
 	private boolean terminar = false;
 
@@ -58,6 +59,7 @@ public class Server extends Thread {
 					Conection conection = new Conection(s, dataCliente, this.clientes, dis, dos);
 					conection.start();
 					dos.writeUTF("1REGISTRADOCORRECTAMENTE");
+					controlador.appendListaConectados(dataCliente.toString());
 				} else {
 
 					dos.writeUTF("1USERREGISTRADO");
@@ -85,4 +87,13 @@ public class Server extends Thread {
 		this.serverSocket.close();
 		
 	}
+
+	public ControladorVistaServer getControlador() {
+		return controlador;
+	}
+
+	public void setControlador(ControladorVistaServer controlador) {
+		this.controlador = controlador;
+	}
+	
 }

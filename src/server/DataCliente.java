@@ -64,6 +64,12 @@ public class DataCliente {
 	public DataOutputStream getDos() {
 		return this.dos;
 	}
+
+	@Override
+	public String toString() {
+		return nickname+socket.getLocalPort();
+	}
+	
 	
 	
 }
