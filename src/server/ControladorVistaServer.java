@@ -41,4 +41,8 @@ public class ControladorVistaServer implements ActionListener{
 		this.server = server;
 	}
 	
+	public void setListaConectados() {
+		this.vistaServer.getTextArea().append(this.server.getLista().toString());
+	}
+	
 }

@@ -8,6 +8,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
+import server.DataCliente;
 
 public class Server extends Thread {
 
@@ -69,6 +70,14 @@ public class Server extends Thread {
 			e1.printStackTrace();
 		}
 
+	}
+
+	public ArrayList<DataCliente> getLista() {
+		return lista;
+	}
+
+	public void setLista(ArrayList<DataCliente> lista) {
+		this.lista = lista;
 	}
 
 	public void closeServer() throws IOException {	// podriamos cerrar el socket de conexion con otros servidores tmb

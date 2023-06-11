@@ -9,6 +9,7 @@ public class IniciarServer {
 		IVistaServer vistaServer = new VistaServer();
 		ControladorVistaServer controlador = new ControladorVistaServer(vistaServer);
 		controlador.setServer(server);
+		controlador.setListaConectados();
 		
 		try {
 			server.Registrar();			// el hilo se va a quedar aca
