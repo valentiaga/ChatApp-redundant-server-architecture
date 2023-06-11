@@ -1,6 +1,7 @@
 package back;
 
 import java.io.DataInputStream;
+import java.io.DataOutput;
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.Socket;
@@ -48,7 +49,10 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 	
 		if(socket == null) {
 			socket = s;
+//			Socket s2 = new Socket(ip,puerto+1);	//hay al menos 2 servers
+//			this.sockets.add(s2);
 		}
+		System.out.println("Sockets: " + this.sockets);
 		this.sockets.add(s);
 	}
 
@@ -89,8 +93,11 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 		return outPut;
 	}
     
-	public void registrar() {
-		//registramos al cliente en todos los servers
+	public void registrar(String nickname) throws IOException { //registramos al cliente en todos los servers
+		
+		for(int i = 0; i < sockets.size();i++) {
+			((DataOutput) this.getDis()).writeUTF("1" + nickname);
+		}
 	}
 	
 	private void verificaServer() {

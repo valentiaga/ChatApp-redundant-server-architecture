@@ -55,8 +55,9 @@ public class Cliente {
 
 	public void conectarServer() throws IOException{
 
+		//Conexion.getInstance().registrar(this.nickname);
 		dos.writeUTF("1" + this.nickname);
-
+		
 	}
 
 
