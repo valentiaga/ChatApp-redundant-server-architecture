@@ -46,9 +46,11 @@ public class Cliente {
 		this.iP = iP;
 		
 		// esto va en Conexion
+		//Conexion.getInstance().agregarSocket(iP, puerto);
 		socket = new Socket(this.iP, this.puerto);
 		dis = new DataInputStream(socket.getInputStream());
 		dos = new DataOutputStream(socket.getOutputStream());
+		
 	}
 
 	public void conectarServer() throws IOException{

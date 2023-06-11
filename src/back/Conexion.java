@@ -2,57 +2,111 @@ package back;
 
 import java.io.DataInputStream;
 import java.io.DataOutputStream;
+import java.io.IOException;
 import java.net.Socket;
+import java.net.UnknownHostException;
+import java.util.ArrayList;
+
+import server.DataCliente;
 
 public class Conexion {
 	
 	public  static Conexion instance = null;
-	private static Socket s;
-	private static DataInputStream dis;
-	private static DataOutputStream dos;
+	private static Socket socket = null;
+//	private static DataInputStream dis = null;
+//	private static DataOutputStream dos = null;
 	
 	// esto puede ser un arreglo de sockets
-	private Socket s2;
-	private DataInputStream dis2;
-	private DataOutputStream dos2;
+	private int i = 1;
+	private ArrayList<Socket> sockets = new ArrayList<Socket>();
+//	private Socket s2;
+//	private DataInputStream dis2;
+//	private DataOutputStream dos2;
     
-	private Conexion(Socket s, DataInputStream dis, DataOutputStream dos) {
-	
-			super();
-			this.s = s;
-			this.dis = dis;
-			this.dos = dos;
-	}
+//	private Conexion(Socket s, DataInputStream dis, DataOutputStream dos) {
+//	
+//			super();
+//			this.s = s;
+//			this.dis = dis;
+//			this.dos = dos;
+//	}
 	
 	public static Conexion getInstance() {
 		
 		if(instance == null) {
-			s = s;
-			dis = dis;
-			dos = dos;
+			instance = new Conexion();
+//			s = s;
+//			dis = dis;
+//			dos = dos;
 		}
 			return instance;
 	}
+	
+public void agregarSocket(String ip, int puerto) throws IOException{
+		
+	Socket s = new Socket(ip,puerto);
+	
+		if(socket == null) {
+			socket = s;
+		}
+		this.sockets.add(s);
+	}
 
+	public void agregarSocket(Socket s) {
+		
+		if(socket == null) {
+			socket = s;
+		}
+		this.sockets.add(socket);
+	}
+	
 	public DataInputStream getDis() {
-		return dis;
+		DataInputStream inPut = null;
+		
+		this.verificaServer();
+		
+		try {
+			inPut = (DataInputStream) socket.getInputStream();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		return inPut;
 	}
 
 	public DataOutputStream getDos() {
+		DataOutputStream outPut = null;
+		
 		this.verificaServer();
-	
-		return dos;
+		
+		try {
+			outPut = (DataOutputStream) socket.getOutputStream();
+		} catch (IOException e) {
+			// TODO Auto-generated catch block
+			e.printStackTrace();
+		}
+		
+		return outPut;
 	}
     
-	private boolean verificaServer() {
+	public void registrar() {
+		//registramos al cliente en todos los servers
+	}
+	
+	private void verificaServer() {
 		//cosillas
-		return true;
+		if(socket.isBound() == false || socket.isConnected() == false) {	// no se cual de las 2 usar para saber si se cayo la conexion
+			this.cambiaServer();
+		}
+		
 	}
 	
 	private void cambiaServer() {
-		s = this.s2;
-		dis = this.dis2;
-		dos = this.dos2;
+		
+		if(sockets.size() > this.i) {		//chequear si esta bien esta condicion
+			socket = this.sockets.get(i);
+		}
+
 	}
 	
    
