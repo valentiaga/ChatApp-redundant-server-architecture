@@ -1,28 +1,24 @@
 package server;
 
 import java.io.DataInputStream;
-
 import java.io.DataOutputStream;
-import java.io.EOFException;
 import java.io.IOException;
-import java.io.ObjectInputStream;
-import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
 import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import java.util.Map;
 
 public class Server extends Thread {
 
 	private ServerSocket serverSocket;
 	private int puerto = 5634;
 
+	DataCliente data = null;
 	private HashMap<String, DataCliente> clientes = new HashMap<>();
 	private HashMap<String, String> chats = new HashMap<>();
-	private ArrayList<DataCliente> lista = new ArrayList<DataCliente>();
-
+	
+	
 	private boolean terminar = false;
 
 	public Server() {
