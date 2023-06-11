@@ -20,8 +20,8 @@ public class Cliente {
 	private IVistaChat vistaChat = null;
 	private Socket socket;
 	private ServerSocket serverSocket;
-	private MessageManager messageManager;
-	private ConectionHandler conectionHandler = null;
+	private SendMessage messageManager;
+	private ReceiveMessage conectionHandler = null;
 	private ControladorVistaConecta contConecta = null;
 	private ControladorVistaChat contChat = null;
 	private ControladorVistaInicial contInicial = null;
@@ -45,6 +45,7 @@ public class Cliente {
 		this.puerto = puerto;
 		this.iP = iP;
 		
+		// esto va en Conexion
 		socket = new Socket(this.iP, this.puerto);
 		dis = new DataInputStream(socket.getInputStream());
 		dos = new DataOutputStream(socket.getOutputStream());
@@ -68,7 +69,7 @@ public class Cliente {
 
 		}
 
-		this.conectionHandler = new ConectionHandler(s, dis, dos);
+		this.conectionHandler = new ReceiveMessage(s, dis, dos);
 		this.conectionHandler.start();
 	}
 
@@ -78,7 +79,7 @@ public class Cliente {
 		this.messageManager.enviaNickName(nickNameReceptor);
 	}
 
-	public MessageManager getMessageManager() {
+	public SendMessage getMessageManager() {
 		return this.messageManager;
 	}
 
@@ -90,7 +91,7 @@ public class Cliente {
 		return this.socket;
 	}
 
-	public ConectionHandler getConectionHandler() {
+	public ReceiveMessage getConectionHandler() {
 		return conectionHandler;
 	}
 
@@ -116,7 +117,7 @@ public class Cliente {
 		this.conectionHandler.setContInicial(contInicial);
 	}
 
-	public void setConectionHandler(ConectionHandler conectionHandler) {
+	public void setConectionHandler(ReceiveMessage conectionHandler) {
 		this.conectionHandler = conectionHandler;
 	}
 
@@ -125,7 +126,7 @@ public class Cliente {
 	}
 	
 	public void creaConectionHandler() {
-		this.messageManager = new MessageManager(this.socket, dis, dos, this.vistaChat);
+		this.messageManager = new SendMessage(this.socket, dis, dos, this.vistaChat);
 		this.recibirMensajes();
 	}
 

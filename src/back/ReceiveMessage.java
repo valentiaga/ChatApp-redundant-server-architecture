@@ -11,7 +11,7 @@ import controladores.ControladorVistaChat;
 import controladores.ControladorVistaConecta;
 import controladores.ControladorVistaInicial;
 
-public class ConectionHandler extends Thread {
+public class ReceiveMessage extends Thread {
 	ControladorVistaChat contChat = null;
 	ControladorVistaConecta contConecta = null;
 	ControladorVistaInicial contInicial = null;
@@ -21,7 +21,7 @@ public class ConectionHandler extends Thread {
 	private boolean terminar = false;
 	String receptor = "";
 
-	public ConectionHandler(Socket s, DataInputStream dis, DataOutputStream dos) {
+	public ReceiveMessage(Socket s, DataInputStream dis, DataOutputStream dos) {
 		super();
 		this.dis = dis;
 		this.dos = dos;
@@ -36,6 +36,7 @@ public class ConectionHandler extends Thread {
 
 		while (this.terminar == false) {
 			try {
+				//mensaje = Conexion.getInstance().getDis().readUTF();
 				mensaje = dis.readUTF();
 				comando = mensaje.charAt(0);
 				mensaje = mensaje.substring(1);

@@ -7,7 +7,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 
 import back.Cliente;
-import back.MessageManager;
+import back.SendMessage;
 import controladores.ControladorVistaChat;
 
 public interface IVistaChat 

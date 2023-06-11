@@ -9,14 +9,14 @@ import java.net.Socket;
 import front.IVistaChat;
 
 
-public class MessageManager {
+public class SendMessage {
 	
 	IVistaChat vista;
 	final DataInputStream dis;
     final DataOutputStream dos;
     final Socket s;
     
-	public MessageManager(Socket s,DataInputStream dis, DataOutputStream dos,IVistaChat vista) {
+	public SendMessage(Socket s,DataInputStream dis, DataOutputStream dos,IVistaChat vista) {
 		super();
 		this.vista = vista;
 		this.dis = dis;

@@ -22,7 +22,7 @@ import javax.swing.border.LineBorder;
 //import UI.IVistaChat;
 //import UI.vistaChat;
 import back.Cliente;
-import back.MessageManager;
+import back.SendMessage;
 import controladores.ControladorVistaChat;
 import javax.swing.JTextArea;
 import javax.swing.JScrollPane;
