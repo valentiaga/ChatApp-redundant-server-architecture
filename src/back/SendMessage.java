@@ -12,24 +12,26 @@ import front.IVistaChat;
 public class SendMessage {
 	
 	IVistaChat vista;
-	final DataInputStream dis;
-    final DataOutputStream dos;
-    final Socket s;
+//	final DataInputStream dis;
+//    final DataOutputStream dos;
+//    final Socket s;
     
-	public SendMessage(Socket s,DataInputStream dis, DataOutputStream dos,IVistaChat vista) {
-		super();
-		this.vista = vista;
-		this.dis = dis;
-		this.dos = dos;
-		this.s = s; 
-	}
+    
+//	public SendMessage(Socket s,DataInputStream dis, DataOutputStream dos,IVistaChat vista) {
+//		super();
+//		this.vista = vista;
+//		this.dis = dis;
+//		this.dos = dos;
+//		this.s = s; 
+//	}
      
     public void enviaMensaje(String mensaje) {
 
-    	if(this.s.isClosed() != true) {
+    	//if(this.s.isClosed() != true) {
+    	if(Conexion.getInstance().getSocket().isClosed() != true) {
     		try {
-    			
-    			this.dos.writeUTF("0"+Cifrado.encriptar(mensaje));
+    			Conexion.getInstance().getDos().writeUTF("0"+Cifrado.encriptar(mensaje));
+    			//this.dos.writeUTF("0"+Cifrado.encriptar(mensaje));
 
     		} catch (IOException e) { 
     			e.printStackTrace();
@@ -44,9 +46,11 @@ public class SendMessage {
     public void enviaComando(String mensaje) {
     	
     	
-    	if(this.s.isClosed() != true) {
+    	//if(this.s.isClosed() != true) {
+    	if(Conexion.getInstance().getSocket().isClosed() != true) {
     		try {
-    			this.dos.writeUTF("1"+mensaje);
+    			Conexion.getInstance().getDos().writeUTF("1"+mensaje);
+    			//this.dos.writeUTF("1"+mensaje);
     		} catch (IOException e) { 
     			e.printStackTrace();
     		} catch (Exception e) {
@@ -57,9 +61,11 @@ public class SendMessage {
     
     public void enviaNickName(String mensaje) {
    
-    	if(this.s.isClosed() != true) {
+    	//if(this.s.isClosed() != true) {
+    	if(Conexion.getInstance().getSocket().isClosed() != true) {
     		try {
-    			this.dos.writeUTF("2"+mensaje);
+    			Conexion.getInstance().getDos().writeUTF("2"+mensaje);
+    			//this.dos.writeUTF("2"+mensaje);
     		} catch (IOException e) { 
     			e.printStackTrace();
     		} catch (Exception e) {
@@ -70,7 +76,7 @@ public class SendMessage {
     }
     
     
-    Socket getSocket() {
-    	return this.s;
-    }
+//    Socket getSocket() {
+//    	return this.s;
+//    }
 }

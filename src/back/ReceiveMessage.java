@@ -15,18 +15,24 @@ public class ReceiveMessage extends Thread {
 	ControladorVistaChat contChat = null;
 	ControladorVistaConecta contConecta = null;
 	ControladorVistaInicial contInicial = null;
-	final DataInputStream dis;
-	final DataOutputStream dos;
-	final Socket s;
+//	final DataInputStream dis;
+//	final DataOutputStream dos;
+//	final Socket s;
 	private boolean terminar = false;
 	String receptor = "";
 
-	public ReceiveMessage(Socket s, DataInputStream dis, DataOutputStream dos) {
+	
+	public ReceiveMessage() {
 		super();
-		this.dis = dis;
-		this.dos = dos;
-		this.s = s;
+		
 	}
+	
+//	public ReceiveMessage(Socket s, DataInputStream dis, DataOutputStream dos) {
+//		super();
+//		this.dis = dis;
+//		this.dos = dos;
+//		this.s = s;
+//	}
 
 	public void run() {
 
@@ -36,8 +42,8 @@ public class ReceiveMessage extends Thread {
 
 		while (this.terminar == false) {
 			try {
-				//mensaje = Conexion.getInstance().getDis().readUTF();
-				mensaje = dis.readUTF();
+				mensaje = Conexion.getInstance().getDis().readUTF();
+//				mensaje = dis.readUTF();
 				comando = mensaje.charAt(0);
 				mensaje = mensaje.substring(1);
 
@@ -91,9 +97,13 @@ public class ReceiveMessage extends Thread {
 		this.terminar = true;
 
 		try {
-			this.dis.close();
-			this.dos.close();
-			this.s.close();
+			Conexion.getInstance().getDis().close();
+			Conexion.getInstance().getDos().close();
+			Conexion.getInstance().getSocket().close();
+			
+//			this.dis.close();
+//			this.dos.close();
+//			this.s.close();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
