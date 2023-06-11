@@ -84,8 +84,10 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 	
 	private void verificaServer() {
 		//cosillas
-		if(socket.isBound() == false || socket.isConnected() == false) {	// no se cual de las 2 usar para saber si se cayo la conexion
-			this.cambiaServer();
+		System.out.println(socket.isClosed());
+		if(socket.isClosed() == true) {	// no se cual de las 2 usar para saber si se cayo la conexion
+			System.out.println("Cambia server");
+			this.cambiaServer(); 
 		}
 		
 	}
@@ -93,7 +95,9 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 	private void cambiaServer() {
 		
 		if(sockets.size() > this.i) {		//chequear si esta bien esta condicion
+			//System.out.println("Socket: " + socket.getLocalPort());
 			socket = this.sockets.get(i);
+			System.out.println("Socket: " + socket.getPort());	
 			i++;
 		}
 
@@ -110,6 +114,7 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 		this.verificaServer();
 		
 		try {
+			System.out.println("Socket: " + socket.getPort());	
 			inPut = new DataInputStream(socket.getInputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block

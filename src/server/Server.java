@@ -17,7 +17,7 @@ public class Server extends Thread {
 	public  int puerto;
 	private HashMap<String, DataCliente> clientes = new HashMap<>();
 	private HashMap<String, String> chats = new HashMap<>();
-	private ArrayList<DataCliente> lista = new ArrayList<DataCliente>();
+	private ArrayList<DataCliente> listaClientes = new ArrayList<DataCliente>();
 	private ControladorVistaServer controlador;
 	
 	private boolean terminar = false;
@@ -72,7 +72,7 @@ public class Server extends Thread {
 				if (this.clientes.containsKey(nickname) == false) {
 					dataCliente = new DataCliente(s, nickname, dis, dos);
 					this.clientes.put(nickname, dataCliente);
-					this.lista.add(dataCliente);
+					this.listaClientes.add(dataCliente);
 
 					Conection conection = new Conection(s, dataCliente, this.clientes, dis, dos);
 					conection.setCont(controlador);
@@ -84,7 +84,8 @@ public class Server extends Thread {
 					dos.writeUTF("1USERREGISTRADO");
 				}
 			}
-
+//			System.out.println("Termina server");
+//			this.serverSocket.close();
 		} catch (SocketException e) {
 			e.printStackTrace();
 		} catch (Exception e1) {
@@ -137,16 +138,20 @@ public class Server extends Thread {
 //	}
 
 	public ArrayList<DataCliente> getLista() {
-		return lista;
+		return listaClientes;
 	}
 
 	public void setLista(ArrayList<DataCliente> lista) {
-		this.lista = lista;
+		this.listaClientes = lista;
 	}
 
 	public void closeServer() throws IOException {	// podriamos cerrar el socket de conexion con otros servidores tmb
 		this.terminar = true;
 		this.serverSocket.close();
+		
+		for(int i = 0; i < this.clientes.size(); i++) {
+			this.listaClientes.get(i).getSocket().close();
+		}
 		
 	}
 

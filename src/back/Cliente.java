@@ -47,6 +47,7 @@ public class Cliente {
 		
 		// esto va en Conexion
 		Conexion.getInstance().agregarSocket(iP, puerto);
+		Conexion.getInstance().agregarSocket(iP, puerto+1);
 //		socket = new Socket(this.iP, this.puerto);
 //		dis = new DataInputStream(socket.getInputStream());
 //		dos = new DataOutputStream(socket.getOutputStream());

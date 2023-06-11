@@ -28,7 +28,7 @@ public class SendMessage {
     public void enviaMensaje(String mensaje) {
 
     	//if(this.s.isClosed() != true) {
-    	if(Conexion.getInstance().getSocket().isClosed() != true) {
+    	//if(Conexion.getInstance().getSocket().isClosed() != true) {
     		try {
     			Conexion.getInstance().getDos().writeUTF("0"+Cifrado.encriptar(mensaje));
     			//this.dos.writeUTF("0"+Cifrado.encriptar(mensaje));
@@ -39,7 +39,7 @@ public class SendMessage {
 				
 				e.printStackTrace();
 			}
-    	}
+    	//}
     	
     }
     
@@ -47,7 +47,7 @@ public class SendMessage {
     	
     	
     	//if(this.s.isClosed() != true) {
-    	if(Conexion.getInstance().getSocket().isClosed() != true) {
+    	//if(Conexion.getInstance().getSocket().isClosed() != true) {
     		try {
     			Conexion.getInstance().getDos().writeUTF("1"+mensaje);
     			//this.dos.writeUTF("1"+mensaje);
@@ -56,13 +56,13 @@ public class SendMessage {
     		} catch (Exception e) {
 				e.printStackTrace();
 			}
-    	}
+    	//}
     }
     
     public void enviaNickName(String mensaje) {
    
     	//if(this.s.isClosed() != true) {
-    	if(Conexion.getInstance().getSocket().isClosed() != true) {
+    	//if(Conexion.getInstance().getSocket().isClosed() != true) {
     		try {
     			Conexion.getInstance().getDos().writeUTF("2"+mensaje);
     			//this.dos.writeUTF("2"+mensaje);
@@ -72,7 +72,7 @@ public class SendMessage {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
-    	}
+    	//}
     }
     
     
