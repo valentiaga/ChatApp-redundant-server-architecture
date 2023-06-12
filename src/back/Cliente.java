@@ -57,6 +57,9 @@ public class Cliente {
 	public void conectarServer() throws IOException{
 		
 		Conexion.getInstance().registrar(this.nickname);
+		PingEcho pingEcho = new PingEcho();
+		pingEcho.start();
+		
 		//Conexion.getInstance().getDos().writeUTF("1" + this.nickname);
 //		dos.writeUTF("1" + this.nickname);
 		

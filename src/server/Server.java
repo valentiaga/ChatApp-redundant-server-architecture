@@ -20,7 +20,7 @@ public class Server extends Thread {
 	private ArrayList<DataCliente> listaClientes = new ArrayList<DataCliente>();
 	private ControladorVistaServer controlador;
 	
-	private boolean terminar = false;
+	public static boolean terminar = false;
 
 	
 //	public void iniciaServer(String text) {
@@ -147,11 +147,11 @@ public class Server extends Thread {
 
 	public void closeServer() throws IOException {	// podriamos cerrar el socket de conexion con otros servidores tmb
 		this.terminar = true;
-		this.serverSocket.close();
+		//this.serverSocket.close();
 		
-		for(int i = 0; i < this.clientes.size(); i++) {
-			this.listaClientes.get(i).getSocket().close();
-		}
+//		for(int i = 0; i < this.clientes.size(); i++) {
+//			this.listaClientes.get(i).getSocket().close();
+//		}
 		
 	}
 

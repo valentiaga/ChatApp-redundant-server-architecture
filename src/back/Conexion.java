@@ -20,6 +20,8 @@ public class Conexion {
 	// esto puede ser un arreglo de sockets
 	private int i = 1;
 	private ArrayList<Socket> sockets = new ArrayList<Socket>();
+	private boolean echo = false;
+	private boolean cambiaServer = false;
 	
 //	private Socket s2;
 //	private DataInputStream dis2;
@@ -82,20 +84,22 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 		}
 	}
 	
-	private void verificaServer() {
-		//cosillas
-		System.out.println(socket.isClosed());
-		if(socket.isClosed() == true) {	// no se cual de las 2 usar para saber si se cayo la conexion
+	public void verificaServer() {
+	
+//		for(int i = 0; i < sockets.size();i++) {
+//			System.out.println("Socket" +i+": "+ sockets.get(i).isClosed());
+//		}
+		
+		if(Conexion.getInstance().getCambiaServer() == true) {
 			System.out.println("Cambia server");
 			this.cambiaServer(); 
 		}
 		
 	}
 	
-	private void cambiaServer() {
+	public void cambiaServer() {
 		
-		if(sockets.size() > this.i) {		//chequear si esta bien esta condicion
-			//System.out.println("Socket: " + socket.getLocalPort());
+		if(sockets.size() > this.i) {		
 			socket = this.sockets.get(i);
 			System.out.println("Socket: " + socket.getPort());	
 			i++;
@@ -114,7 +118,7 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 		this.verificaServer();
 		
 		try {
-			System.out.println("Socket: " + socket.getPort());	
+			//System.out.println("Socket: " + socket.getPort());	
 			inPut = new DataInputStream(socket.getInputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
@@ -137,5 +141,22 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 		
 		return outPut;
 	}
+
+	public boolean getEcho() {
+		return echo;
+	}
+
+	public void setEcho(boolean echo) {
+		this.echo = echo;
+	}
+
+	public boolean getCambiaServer() {
+		return cambiaServer;
+	}
+
+	public void setCambiaServer(boolean cambiaServer) {
+		this.cambiaServer = cambiaServer;
+	}
+	
 	
 }

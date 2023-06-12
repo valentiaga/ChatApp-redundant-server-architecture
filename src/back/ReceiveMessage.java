@@ -76,6 +76,11 @@ public class ReceiveMessage extends Thread {
 							break;
 						}
 
+					}else if(comando == '3') {
+						if(mensaje.equals("ECHO") == true) {
+							System.out.println("Recibimos ECHO");
+							Conexion.getInstance().setEcho(true);
+						}
 					}
 				}
 

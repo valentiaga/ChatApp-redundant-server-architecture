@@ -110,7 +110,10 @@ public class Conection extends Thread {
 									this.dataCliente.getDos().writeUTF(comando);
 
 								}
-							}
+							}else if(bandera == '3') {
+								if(mensaje.equals("PING")== true && Server.terminar == false)
+									this.dataCliente.getDos().writeUTF("3ECHO");
+							} 
 						}
 					}
 
