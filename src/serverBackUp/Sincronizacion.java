@@ -43,14 +43,15 @@ public class Sincronizacion extends Thread{
 		
 		while(true) {
 			try {
-				this.listaClientes = (ArrayList<DataCliente>) input.readObject();
-				this.clientes = (HashMap<String, DataCliente>) input.readObject();
+//				this.listaClientes = (ArrayList<DataCliente>) input.readObject();
+//				this.clientes = (HashMap<String, DataCliente>) input.readObject();
 				chats = (HashMap<String, String>) input.readObject();
+				
 				this.server.getControlador().appendMensajes("Sincronizando server respaaldo");
 				this.server.getControlador().appendMensajes(chats.toString());
 				this.seteaClientes();
 				
-				//System.out.println("backup: "+chats);
+				
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();

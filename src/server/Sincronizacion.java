@@ -30,8 +30,8 @@ public class Sincronizacion {
 			outPut = new ObjectOutputStream(socket.getOutputStream());
 			
 			outPut.writeObject(server.getChats());
-			outPut.writeObject(server.getClientes());
-			outPut.writeObject(server.getListaClientes());
+//			outPut.writeObject(server.getClientes());
+//			outPut.writeObject(server.getListaClientes());
 			
 			server.getControlador().appendMensajes("Sincronizando server respaldo");
 //			dis = new DataInputStream(socket.getInputStream());

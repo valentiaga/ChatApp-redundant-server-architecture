@@ -4,8 +4,10 @@ import java.io.IOException;
 
 public class PingEcho extends Thread {
 
-	private int tiempo = 7; // seconds
+	private int tiempo = 4; // seconds
 	private String mensaje = "PING";
+	private int intentos = 0;
+	private int intentosLimite = 2;
 	// private boolean bandera = true;
 
 	@Override
@@ -21,10 +23,14 @@ public class PingEcho extends Thread {
 						System.out.println("ECHO == true");
 						Conexion.getInstance().setEcho(false);
 					} else {
-						//Conexion.getInstance().setCambiaServer(true);
-						System.out.println("ECHO == false");
-						Conexion.getInstance().cambiaServer();
-						//Conexion.getInstance().verificaServer();
+						if (intentos < intentosLimite) {
+							intentos++;
+						}
+						else {
+							System.out.println("ECHO == false");
+							Conexion.getInstance().cambiaServer();
+						}
+						
 					}
 				} catch (IOException | InterruptedException e) {
 					// TODO Auto-generated catch block
