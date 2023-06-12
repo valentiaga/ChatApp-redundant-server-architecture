@@ -13,7 +13,7 @@ public class Sincronizacion {
 	
 	private static Socket socket;
 	private static String ip = "localhost";
-	private static int puerto = 100;
+	private static int puerto = 101;
 	//ObjectInputStream ois;
 	private static ObjectOutputStream outPut;
 	private static Server server;
@@ -29,6 +29,7 @@ public class Sincronizacion {
 			socket = new Socket(ip,puerto);
 			outPut = new ObjectOutputStream(socket.getOutputStream());
 			outPut.writeObject(server.getChats());
+			server.getControlador().appendMensajes("Sincronizando server respaldo");
 //			dis = new DataInputStream(socket.getInputStream());
 //			dos = new DataOutputStream(socket.getOutputStream());
 			

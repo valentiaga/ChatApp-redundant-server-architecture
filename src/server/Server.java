@@ -80,7 +80,7 @@ public class Server extends Thread {
 					conection.start();
 					dos.writeUTF("1REGISTRADOCORRECTAMENTE");
 					controlador.appendListaConectados(dataCliente.toString());
-					this.sincronizacion.sincronizarServer();
+					//this.sincronizacion.sincronizarServer();
 					
 				} else {
 

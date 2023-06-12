@@ -12,12 +12,15 @@ public class Sincronizacion extends Thread{
 	private HashMap<String, String> chats;
 	private ServerSocket serverSocket;
 	private Socket socket;
-	private int puerto = 100;
+	private int puerto = 101;
 	private ObjectInputStream input;
+	private Server server;
 	
-	public Sincronizacion(HashMap<String, String> chats) {
+	
+	public Sincronizacion(HashMap<String, String> chats, Server server) {
 		super();
 		this.chats = chats;
+		this.server = server;
 	}
 	
 	public void run(){
@@ -25,6 +28,7 @@ public class Sincronizacion extends Thread{
 		try {
 			serverSocket = new ServerSocket(puerto);
 			socket = serverSocket.accept();
+			this.server.getControlador().appendMensajes("Socket establecido");
 			input = new ObjectInputStream(socket.getInputStream());
 			
 		} catch (IOException e) {
@@ -35,6 +39,7 @@ public class Sincronizacion extends Thread{
 		while(true) {
 			try {
 				chats = (HashMap<String, String>) input.readObject();
+				this.server.getControlador().appendMensajes("Sincronizando server respaaldo");
 				System.out.println("backup: "+chats);
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block

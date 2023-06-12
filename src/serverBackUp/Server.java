@@ -20,8 +20,8 @@ public class Server extends Thread {
 	private HashMap<String, DataCliente> clientes = new HashMap<>();
 	private HashMap<String, String> chats = new HashMap<>();
 	private ArrayList<DataCliente> listaClientes = new ArrayList<DataCliente>();
-	private ControladorVistaServer controlador;
-	private Sincronizacion sincronizacion = new Sincronizacion(chats);
+	private ControladorVistaServerRespaldo controlador;
+	private Sincronizacion sincronizacion = new Sincronizacion(chats, this);
 	
 	public static boolean terminar = false;
 
@@ -39,7 +39,7 @@ public class Server extends Thread {
 //	}
 	
 
-	public Server(String text, ControladorVistaServer cont) {
+	public Server(String text, ControladorVistaServerRespaldo cont) {
 		this.puerto = Integer.parseInt(text);
 		try {
 			this.serverSocket = new ServerSocket(puerto);
@@ -159,11 +159,11 @@ public class Server extends Thread {
 		
 	}
 
-	public ControladorVistaServer getControlador() {
+	public ControladorVistaServerRespaldo getControlador() {
 		return controlador;
 	}
 
-	public void setControlador(ControladorVistaServer controlador) {
+	public void setControlador(ControladorVistaServerRespaldo controlador) {
 		this.controlador = controlador;
 	}
 

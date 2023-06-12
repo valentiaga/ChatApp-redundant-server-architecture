@@ -9,12 +9,12 @@ import javax.swing.JOptionPane;
 
 import front.IVistaInicial;
 
-public class ControladorVistaServer implements ActionListener{
+public class ControladorVistaServerRespaldo implements ActionListener{
 	
-	private IVistaServer vistaServer;
-	private Server server;
+	private static IVistaServer vistaServer;
+	private static Server server;
 	
-	public ControladorVistaServer(IVistaServer vista) {
+	public ControladorVistaServerRespaldo(IVistaServer vista) {
 		this.vistaServer = vista;
 		this.vistaServer.addActionListener(this);
 	}
@@ -53,8 +53,8 @@ public class ControladorVistaServer implements ActionListener{
 		this.server = server;
 	}
 	
-	public void setListaConectados() {
-		this.vistaServer.getTextArea().setText(this.server.getLista().toString());  
+	public static void setListaConectados() {
+		vistaServer.getTextArea().setText(server.getLista().toString());  
 	}
 	
 	public void appendListaConectados (String dataCliente) {

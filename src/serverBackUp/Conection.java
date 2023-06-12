@@ -21,7 +21,7 @@ public class Conection extends Thread {
 	final DataInputStream dis;
 	final DataOutputStream dos;
 	final Socket socket;
-	private ControladorVistaServer cont;
+	private ControladorVistaServerRespaldo cont;
 
 	private boolean terminar = false;
 
@@ -146,11 +146,11 @@ public class Conection extends Thread {
 
 	}
 
-	public ControladorVistaServer getCont() {
+	public ControladorVistaServerRespaldo getCont() {
 		return cont;
 	}
 
-	public void setCont(ControladorVistaServer cont) {
+	public void setCont(ControladorVistaServerRespaldo cont) {
 		this.cont = cont;
 	}
 	

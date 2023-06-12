@@ -20,7 +20,7 @@ public class VistaServer extends JFrame implements IVistaServer{
 	private JPanel contentPane;
 	private JButton btnClose;
 	private ActionListener actionListener;
-	ControladorVistaServer controlador;
+	ControladorVistaServerRespaldo controlador;
 	JTextArea textAreaLista;
 	private JTextArea textAreaMensajes;
 	public static int nro = 0;
@@ -48,7 +48,7 @@ public class VistaServer extends JFrame implements IVistaServer{
 	 * Create the frame.
 	 */
 	public VistaServer() {
-		this.setTitle("SERVIDOR");
+		this.setTitle("SERVIDOR RESPALDO");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
 		setBounds(100, 100, 450, 300);
 		contentPane = new JPanel();
@@ -110,7 +110,7 @@ public class VistaServer extends JFrame implements IVistaServer{
 					.addContainerGap(35, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
-		controlador = new ControladorVistaServer(this);
+		controlador = new ControladorVistaServerRespaldo(this);
 	}
 
 	
