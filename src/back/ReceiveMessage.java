@@ -47,7 +47,7 @@ public class ReceiveMessage extends Thread {
 				comando = mensaje.charAt(0);
 				mensaje = mensaje.substring(1);
 
-				// System.out.println(comando+" " +mensaje);
+				System.out.println(comando+" " +mensaje);
 
 				if (comando == '0') { // mensaje
 					

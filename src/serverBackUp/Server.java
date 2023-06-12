@@ -65,7 +65,7 @@ public class Server extends Thread {
 		try {
 			while (this.terminar == false) {
 				s = serverSocket.accept();
-
+				this.controlador.appendMensajes(s.getPort()+"");
 				DataInputStream dis = new DataInputStream(s.getInputStream());
 				DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 
@@ -82,7 +82,7 @@ public class Server extends Thread {
 					conection.setCont(controlador);
 					conection.start();
 					dos.writeUTF("1REGISTRADOCORRECTAMENTE");
-					controlador.appendListaConectados(dataCliente.toString());
+					controlador.appendListaConectados(dataCliente.toString()+" dos: "+dataCliente.getDos());
 				} else {
 
 					dos.writeUTF("1USERREGISTRADO");

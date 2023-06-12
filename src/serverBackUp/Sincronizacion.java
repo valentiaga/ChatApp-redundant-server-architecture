@@ -40,7 +40,10 @@ public class Sincronizacion extends Thread{
 			try {
 				chats = (HashMap<String, String>) input.readObject();
 				this.server.getControlador().appendMensajes("Sincronizando server respaaldo");
-				System.out.println("backup: "+chats);
+				this.server.getControlador().appendMensajes(chats.toString());
+				this.seteaClientes();
+				
+				//System.out.println("backup: "+chats);
 			} catch (ClassNotFoundException e) {
 				// TODO Auto-generated catch block
 				e.printStackTrace();
@@ -48,6 +51,13 @@ public class Sincronizacion extends Thread{
 				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
+		}
+	}
+	
+	private void seteaClientes() {
+		
+		for(int i = 0; i < this.chats.size();i++) {
+			this.server.getLista().get(i).setNicknameReceptor(this.chats.get(this.server.getLista().get(i).getNickname()));
 		}
 	}
 }

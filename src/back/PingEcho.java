@@ -4,7 +4,7 @@ import java.io.IOException;
 
 public class PingEcho extends Thread {
 
-	private int tiempo = 5; // seconds
+	private int tiempo = 7; // seconds
 	private String mensaje = "PING";
 	// private boolean bandera = true;
 

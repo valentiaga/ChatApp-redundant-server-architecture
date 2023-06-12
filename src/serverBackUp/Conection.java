@@ -113,6 +113,7 @@ public class Conection extends Thread {
 								}
 							}else if(bandera == '3') {
 								if(mensaje.equals("PING")== true && Server.terminar == false)
+									cont.appendMensajes(this.socket.getPort()+ " ECHOOOO");
 									this.dataCliente.getDos().writeUTF("3ECHO");
 							} 
 						}

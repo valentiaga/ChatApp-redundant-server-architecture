@@ -103,11 +103,12 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 			socket = this.sockets.get(i);
 			System.out.println("Socket: " + socket.getPort());	
 			i++;
+			Conexion.getInstance().setEcho(true);
 		}
 
 	}
 	
-	//--------------------------------------------------------------- GETTERS ---------------------------------------------------
+	//------------------------------------------------------ GETTERS ---------------------------------------------------
 	public  Socket getSocket() {
 		return socket;
 	}
