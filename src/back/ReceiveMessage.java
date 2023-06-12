@@ -27,11 +27,12 @@ public class ReceiveMessage extends Thread {
 		
 	}
 	
-//	public ReceiveMessage(Socket s, DataInputStream dis, DataOutputStream dos) {
-//		super();
-//		this.dis = dis;
-//		this.dos = dos;
-//		this.s = s;
+
+//	public ReceiveMessage(ControladorVistaInicial contInicial2, ControladorVistaChat contChat2,
+//			ControladorVistaConecta contConecta2) {
+//		this.contChat = contChat2;
+//		this.contConecta = contConecta2;
+//		this.contInicial = contInicial2;
 //	}
 
 	public void run() {
@@ -52,6 +53,7 @@ public class ReceiveMessage extends Thread {
 				if (comando == '0') { // mensaje
 					
 					this.contChat.appendTextArea(Cifrado.desencriptar(mensaje));
+					
 				} else {
 					if (comando == '1') {
 						switch (mensaje) {

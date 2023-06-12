@@ -140,5 +140,13 @@ public class Cliente {
 		this.recibirMensajes();
 	}
 
+	public ControladorVistaConecta getContConecta() {
+		return contConecta;
+	}
+
+	public ControladorVistaChat getContChat() {
+		return contChat;
+	}
+
 //------------------------------------------------------------------------------------------------------
 }

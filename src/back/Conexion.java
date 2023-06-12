@@ -110,9 +110,11 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 			i++;
 			Conexion.getInstance().setEcho(true);
 			
+			
+//			ReceiveMessage recibe = new ReceiveMessage(this.cliente.getContInicial(), this.cliente.getContChat(), this.cliente.getContConecta());
+//			recibe.start();
 			this.cliente.recibirMensajes();
-			//this.cliente.getReceiveMessage().currentThread().start();
-			//this.cliente.getReceiveMessage().resume();
+			
 			
 		}
 	}

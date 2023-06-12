@@ -14,6 +14,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
 
 public class VistaServer extends JFrame implements IVistaServer{
 
@@ -26,6 +27,7 @@ public class VistaServer extends JFrame implements IVistaServer{
 	public static int nro = 0;
 	private JTextField textFieldPuerto;
 	private JButton btnCreaNuevoServer;
+	private JScrollPane scrollPane;
 	//private Server server;
 	
 	/**
@@ -71,21 +73,25 @@ public class VistaServer extends JFrame implements IVistaServer{
 		 btnCreaNuevoServer = new JButton("Crear Servidor");
 		 btnCreaNuevoServer.setActionCommand("CREAR_SERVER");
 		btnCreaNuevoServer.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
+		
+		scrollPane = new JScrollPane();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(textAreaMensajes, GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addComponent(textAreaMensajes, GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 8, GroupLayout.PREFERRED_SIZE))
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addContainerGap()
-							.addComponent(textAreaLista, GroupLayout.DEFAULT_SIZE, 404, Short.MAX_VALUE))
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addComponent(textAreaLista, GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE))
+						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(20)
 							.addComponent(btnClose)
-							.addPreferredGap(ComponentPlacement.RELATED, 88, Short.MAX_VALUE)
+							.addPreferredGap(ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
 							.addComponent(btnCreaNuevoServer)
 							.addPreferredGap(ComponentPlacement.RELATED)
 							.addComponent(textFieldPuerto, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)))
@@ -95,23 +101,24 @@ public class VistaServer extends JFrame implements IVistaServer{
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(textAreaMensajes, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
-					.addGap(18)
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(textAreaMensajes, GroupLayout.PREFERRED_SIZE, 142, GroupLayout.PREFERRED_SIZE)
+						.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 143, GroupLayout.PREFERRED_SIZE))
+					.addGap(17)
 					.addComponent(textAreaLista, GroupLayout.PREFERRED_SIZE, 38, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
 							.addGap(18)
 							.addComponent(btnClose))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
-								.addComponent(textFieldPuerto, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnCreaNuevoServer, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))))
+						.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
+							.addComponent(textFieldPuerto, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
+							.addComponent(btnCreaNuevoServer, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE)))
 					.addContainerGap(GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
 		);
 		contentPane.setLayout(gl_contentPane);
 		controlador = new ControladorVistaServerRespaldo(this);
+		scrollPane.setViewportView(textAreaMensajes);
 	}
 
 	
