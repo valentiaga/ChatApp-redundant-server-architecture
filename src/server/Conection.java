@@ -102,6 +102,7 @@ public class Conection extends Thread {
 									this.chats.put(mensaje, this.dataCliente.getNickname());
 									Sincronizacion.sincronizarServer();
 									
+									
 									comando = "1INICIARCHAT";
 									this.dataCliente.getDos().writeUTF(comando);
 									this.dataCliente.getDos().flush();

@@ -21,7 +21,7 @@ public class Server extends Thread {
 	private HashMap<String, String> chats = new HashMap<>();
 	private ArrayList<DataCliente> listaClientes = new ArrayList<DataCliente>();
 	private ControladorVistaServerRespaldo controlador;
-	private Sincronizacion sincronizacion = new Sincronizacion(chats, this);
+	private Sincronizacion sincronizacion = new Sincronizacion(this);
 	
 	public static boolean terminar = false;
 
@@ -65,14 +65,14 @@ public class Server extends Thread {
 		try {
 			while (this.terminar == false) {
 				s = serverSocket.accept();
-				this.controlador.appendMensajes(s.getPort()+"");
 				DataInputStream dis = new DataInputStream(s.getInputStream());
 				DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 
 				nickname = dis.readUTF();
 				bandera = nickname.charAt(0);
 				nickname = nickname.substring(1);
-
+				//dos.writeUTF("4REGISTRADO");
+				
 				if (this.clientes.containsKey(nickname) == false) {
 					dataCliente = new DataCliente(s, nickname, dis, dos);
 					this.clientes.put(nickname, dataCliente);
@@ -165,6 +165,21 @@ public class Server extends Thread {
 
 	public void setControlador(ControladorVistaServerRespaldo controlador) {
 		this.controlador = controlador;
+	}
+
+
+	public HashMap<String, DataCliente> getClientes() {
+		return clientes;
+	}
+
+
+	public HashMap<String, String> getChats() {
+		return chats;
+	}
+
+
+	public ArrayList<DataCliente> getListaClientes() {
+		return listaClientes;
 	}
 
 	

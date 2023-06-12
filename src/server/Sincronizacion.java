@@ -28,7 +28,11 @@ public class Sincronizacion {
 		try {
 			socket = new Socket(ip,puerto);
 			outPut = new ObjectOutputStream(socket.getOutputStream());
+			
 			outPut.writeObject(server.getChats());
+			outPut.writeObject(server.getClientes());
+			outPut.writeObject(server.getListaClientes());
+			
 			server.getControlador().appendMensajes("Sincronizando server respaldo");
 //			dis = new DataInputStream(socket.getInputStream());
 //			dos = new DataOutputStream(socket.getOutputStream());

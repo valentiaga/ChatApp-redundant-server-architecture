@@ -16,7 +16,7 @@ public class Conexion {
 	private static Socket socket = null;
 //	private static DataInputStream dis = null;
 //	private static DataOutputStream dos = null;
-	
+	private Cliente cliente;
 	// esto puede ser un arreglo de sockets
 	private int i = 1;
 	private ArrayList<Socket> sockets = new ArrayList<Socket>();
@@ -82,6 +82,7 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 			outPut = new DataOutputStream (this.sockets.get(i).getOutputStream());
 			outPut.writeUTF("1" + nickname);
 		}
+		
 	}
 	
 	public void verificaServer() {
@@ -98,14 +99,22 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 	}
 	
 	public void cambiaServer() {
+		//this.cliente.getReceiveMessage().interrupt();
 		
+		
+		
+		this.cliente.getReceiveMessage().stop();
 		if(sockets.size() > this.i) {		
 			socket = this.sockets.get(i);
 			System.out.println("Socket: " + socket.getPort());	
 			i++;
 			Conexion.getInstance().setEcho(true);
+			
+			this.cliente.recibirMensajes();
+			//this.cliente.getReceiveMessage().currentThread().start();
+			//this.cliente.getReceiveMessage().resume();
+			
 		}
-
 	}
 	
 	//------------------------------------------------------ GETTERS ---------------------------------------------------
@@ -157,6 +166,14 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 
 	public void setCambiaServer(boolean cambiaServer) {
 		this.cambiaServer = cambiaServer;
+	}
+
+	public Cliente getCliente() {
+		return cliente;
+	}
+
+	public void setCliente(Cliente cliente) {
+		this.cliente = cliente;
 	}
 	
 	

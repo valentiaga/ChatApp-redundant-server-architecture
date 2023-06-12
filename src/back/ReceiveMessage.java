@@ -46,7 +46,7 @@ public class ReceiveMessage extends Thread {
 //				mensaje = dis.readUTF();
 				comando = mensaje.charAt(0);
 				mensaje = mensaje.substring(1);
-
+				
 				System.out.println(comando+" " +mensaje);
 
 				if (comando == '0') { // mensaje
@@ -81,7 +81,9 @@ public class ReceiveMessage extends Thread {
 							System.out.println("Recibimos ECHO");
 							Conexion.getInstance().setEcho(true);
 						}
-					}
+					}else
+						if(comando == '4')
+							System.out.println(mensaje);
 				}
 
 			} catch (EOFException e) {

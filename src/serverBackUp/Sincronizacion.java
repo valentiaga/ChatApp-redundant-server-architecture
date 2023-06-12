@@ -5,10 +5,13 @@ import java.io.ObjectInputStream;
 import java.net.ServerSocket;
 
 import java.net.Socket;
+import java.util.ArrayList;
 import java.util.HashMap;
 
 public class Sincronizacion extends Thread{
 	
+	private ArrayList<DataCliente> listaClientes;
+	private HashMap<String, DataCliente> clientes;
 	private HashMap<String, String> chats;
 	private ServerSocket serverSocket;
 	private Socket socket;
@@ -17,10 +20,12 @@ public class Sincronizacion extends Thread{
 	private Server server;
 	
 	
-	public Sincronizacion(HashMap<String, String> chats, Server server) {
+	public Sincronizacion(Server server) {
 		super();
-		this.chats = chats;
+		this.chats = server.getChats();
 		this.server = server;
+		this.clientes = server.getClientes();
+		this.listaClientes = server.getListaClientes();
 	}
 	
 	public void run(){
@@ -38,6 +43,8 @@ public class Sincronizacion extends Thread{
 		
 		while(true) {
 			try {
+				this.listaClientes = (ArrayList<DataCliente>) input.readObject();
+				this.clientes = (HashMap<String, DataCliente>) input.readObject();
 				chats = (HashMap<String, String>) input.readObject();
 				this.server.getControlador().appendMensajes("Sincronizando server respaaldo");
 				this.server.getControlador().appendMensajes(chats.toString());

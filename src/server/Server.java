@@ -177,5 +177,10 @@ public class Server extends Thread {
 		this.controlador = controlador;
 	}
 
+
+	public ArrayList<DataCliente> getListaClientes() {
+		return listaClientes;
+	}
+
 	
 }

@@ -20,8 +20,8 @@ public class Cliente {
 	private IVistaChat vistaChat = null;
 	private Socket socket;
 	private ServerSocket serverSocket;
-	private SendMessage messageManager;
-	private ReceiveMessage conectionHandler = null;
+	private SendMessage sendMessage;
+	private ReceiveMessage receiveMessage = null;
 	private ControladorVistaConecta contConecta = null;
 	private ControladorVistaChat contChat = null;
 	private ControladorVistaInicial contInicial = null;
@@ -46,6 +46,7 @@ public class Cliente {
 		this.iP = iP;
 		
 		// esto va en Conexion
+		Conexion.getInstance().setCliente(this);
 		Conexion.getInstance().agregarSocket(iP, puerto);
 		Conexion.getInstance().agregarSocket(iP, puerto+1);
 //		socket = new Socket(this.iP, this.puerto);
@@ -56,11 +57,11 @@ public class Cliente {
 
 	public void conectarServer() throws IOException{
 		
-		Conexion.getInstance().registrar(this.nickname);
+		Conexion.getInstance().getDos().writeUTF("1" + this.nickname);
+		//Conexion.getInstance().registrar(this.nickname);
 		PingEcho pingEcho = new PingEcho();
 		pingEcho.start();
 		
-		//Conexion.getInstance().getDos().writeUTF("1" + this.nickname);
 //		dos.writeUTF("1" + this.nickname);
 		
 	}
@@ -78,18 +79,18 @@ public class Cliente {
 //		}
 
 		//this.conectionHandler = new ReceiveMessage(s, dis, dos);
-		this.conectionHandler = new ReceiveMessage();
-		this.conectionHandler.start();
+		this.receiveMessage = new ReceiveMessage();
+		this.receiveMessage.start();
 	}
 
 	public void conectarReceptor(String nickNameReceptor)
 			throws IOException, UserNotAvailableException, CreaChatException {
 
-		this.messageManager.enviaNickName(nickNameReceptor);
+		this.sendMessage.enviaNickName(nickNameReceptor);
 	}
 
 	public SendMessage getMessageManager() {
-		return this.messageManager;
+		return this.sendMessage;
 	}
 
 	public void setVista(IVistaChat v) {
@@ -100,18 +101,18 @@ public class Cliente {
 //		return this.socket;
 //	}
 
-	public ReceiveMessage getConectionHandler() {
-		return conectionHandler;
+	public ReceiveMessage getReceiveMessage() {
+		return receiveMessage;
 	}
 
 	public void setContConecta(ControladorVistaConecta contConecta) {
 		this.contConecta = contConecta;
-		this.conectionHandler.setContConecta(contConecta);
+		this.receiveMessage.setContConecta(contConecta);
 	}
 
 	public void setContChat(ControladorVistaChat cont) {
 		this.contChat = contChat;
-		this.conectionHandler.setContChat(cont);
+		this.receiveMessage.setContChat(cont);
 
 	}
 	
@@ -122,11 +123,11 @@ public class Cliente {
 
 	public void setContInicial(ControladorVistaInicial contInicial) {
 		this.contInicial = contInicial;
-		this.conectionHandler.setContInicial(contInicial);
+		this.receiveMessage.setContInicial(contInicial);
 	}
 
-	public void setConectionHandler(ReceiveMessage conectionHandler) {
-		this.conectionHandler = conectionHandler;
+	public void setReceiveMessage(ReceiveMessage conectionHandler) {
+		this.receiveMessage = conectionHandler;
 	}
 
 	public String getNickname() {
@@ -135,7 +136,7 @@ public class Cliente {
 	
 	public void creaConectionHandler() {
 		//this.messageManager = new SendMessage(this.socket, dis, dos, this.vistaChat);
-		this.messageManager = new SendMessage();
+		this.sendMessage = new SendMessage();
 		this.recibirMensajes();
 	}
 
