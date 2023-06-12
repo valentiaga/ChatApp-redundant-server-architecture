@@ -66,6 +66,7 @@ public class Sincronizacion extends Thread{
 		
 		for(int i = 0; i < this.chats.size();i++) {
 			this.server.getLista().get(i).setNicknameReceptor(this.chats.get(this.server.getLista().get(i).getNickname()));
+			System.out.println(this.server.getLista().get(i).getNickname()+", "+  this.server.getLista().get(i).getNicknameReceptor());
 		}
 	}
 }
