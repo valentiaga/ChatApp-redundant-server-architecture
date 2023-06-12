@@ -22,6 +22,7 @@ public class PingEcho extends Thread {
 						Conexion.getInstance().setEcho(false);
 					} else {
 						//Conexion.getInstance().setCambiaServer(true);
+						System.out.println("ECHO == false");
 						Conexion.getInstance().cambiaServer();
 						//Conexion.getInstance().verificaServer();
 					}

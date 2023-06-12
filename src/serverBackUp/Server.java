@@ -1,6 +1,8 @@
-package server;
+package serverBackUp;
 
 import java.io.DataInputStream;
+
+
 import java.io.DataOutputStream;
 import java.io.IOException;
 import java.net.ServerSocket;
@@ -8,7 +10,7 @@ import java.net.Socket;
 import java.net.SocketException;
 import java.util.ArrayList;
 import java.util.HashMap;
-import server.DataCliente;
+import serverBackUp.DataCliente;
 
 
 public class Server extends Thread {
@@ -19,8 +21,8 @@ public class Server extends Thread {
 	private HashMap<String, String> chats = new HashMap<>();
 	private ArrayList<DataCliente> listaClientes = new ArrayList<DataCliente>();
 	private ControladorVistaServer controlador;
-	private Sincronizacion sincronizacion = null;
-
+	private Sincronizacion sincronizacion = new Sincronizacion(chats);
+	
 	public static boolean terminar = false;
 
 	
@@ -43,7 +45,8 @@ public class Server extends Thread {
 			this.serverSocket = new ServerSocket(puerto);
 			this.controlador=cont;
 			this.controlador.setServer(this);
-			this.sincronizacion = new Sincronizacion(this);
+			this.sincronizacion.start();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -75,13 +78,11 @@ public class Server extends Thread {
 					this.clientes.put(nickname, dataCliente);
 					this.listaClientes.add(dataCliente);
 
-					Conection conection = new Conection(s, dataCliente, this.clientes, dis, dos,this.chats);
+					Conection conection = new Conection(s, dataCliente, this.clientes, dis, dos);
 					conection.setCont(controlador);
 					conection.start();
 					dos.writeUTF("1REGISTRADOCORRECTAMENTE");
 					controlador.appendListaConectados(dataCliente.toString());
-					this.sincronizacion.sincronizarServer();
-					
 				} else {
 
 					dos.writeUTF("1USERREGISTRADO");
@@ -144,11 +145,6 @@ public class Server extends Thread {
 		return listaClientes;
 	}
 
-	public HashMap<String, DataCliente> getClientes() {
-		return clientes;
-	}
-
-
 	public void setLista(ArrayList<DataCliente> lista) {
 		this.listaClientes = lista;
 	}
@@ -162,12 +158,6 @@ public class Server extends Thread {
 //		}
 		
 	}
-
-	
-	public HashMap<String, String> getChats() {
-		return chats;
-	}
-
 
 	public ControladorVistaServer getControlador() {
 		return controlador;

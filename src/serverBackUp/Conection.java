@@ -1,6 +1,7 @@
-package server;
+package serverBackUp;
 
 import java.io.DataInputStream;
+
 import java.io.DataOutputStream;
 import java.io.EOFException;
 import java.io.IOException;
@@ -16,7 +17,7 @@ public class Conection extends Thread {
 
 	DataCliente dataCliente;
 	private HashMap<String, DataCliente> clientes;
-	private HashMap<String, String> chats;
+
 	final DataInputStream dis;
 	final DataOutputStream dos;
 	final Socket socket;
@@ -29,7 +30,6 @@ public class Conection extends Thread {
 		this.dis = dis;
 		this.dos = dos;
 		this.socket = s;
-		
 	}
 
 	public Conection(Socket s, DataCliente conexion, HashMap<String, DataCliente> clientes) throws IOException {
@@ -42,14 +42,13 @@ public class Conection extends Thread {
 	}
 
 	public Conection(Socket s, DataCliente conexion, HashMap<String, DataCliente> clientes, DataInputStream dis,
-			DataOutputStream dos,HashMap<String, String> chats) throws IOException {
+			DataOutputStream dos) throws IOException {
 		super();
 		this.dis = dis;
 		this.dos = dos;
 		this.socket = s;
 		this.dataCliente = conexion;
 		this.clientes = clientes;
-		this.chats = chats;
 	}
 
 	public void run() {
@@ -96,12 +95,7 @@ public class Conection extends Thread {
 								
 									this.dataCliente.setNicknameReceptor(mensaje);
 									this.clientes.get(mensaje).setNicknameReceptor(this.dataCliente.getNickname());
-									
-									//seteamos los chats
-									this.chats.put(this.dataCliente.getNickname(), mensaje);
-									this.chats.put(mensaje, this.dataCliente.getNickname());
-									Sincronizacion.sincronizarServer();
-									
+
 									comando = "1INICIARCHAT";
 									this.dataCliente.getDos().writeUTF(comando);
 									this.dataCliente.getDos().flush();
@@ -109,8 +103,8 @@ public class Conection extends Thread {
 									this.clientes.get(mensaje).getDos().writeUTF(comando);
 									this.clientes.get(mensaje).getDos().flush();
 									this.cont.appendMensajes(dataCliente.getNickname()+" inició un chat con "+dataCliente.getNicknameReceptor());
-									
-										
+
+
 								} else {
 									// no esta registrado el receptor
 									comando = "1NOREGISTRADO";
