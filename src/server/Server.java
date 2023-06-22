@@ -10,20 +10,18 @@ import java.util.ArrayList;
 import java.util.HashMap;
 import server.DataCliente;
 
-
 public class Server extends Thread {
 
-	private ServerSocket serverSocket;
-	public  int puerto;
+	private ServerSocket serverSocketCliente;
+	public int puerto;
 	private HashMap<String, DataCliente> clientes = new HashMap<>();
 	private HashMap<String, String> chats = new HashMap<>();
 	private ArrayList<DataCliente> listaClientes = new ArrayList<DataCliente>();
 	private ControladorVistaServer controlador;
-	private Sincronizacion sincronizacion = null;
+	//private SincronizacionIn sincronizacionIn = null;
 
 	public static boolean terminar = false;
 
-	
 //	public void iniciaServer(String text) {
 //		this.puerto = Integer.parseInt(text);
 //		try {
@@ -35,23 +33,30 @@ public class Server extends Thread {
 //			e.printStackTrace();
 //		}
 //	}
-	
 
 	public Server(String text, ControladorVistaServer cont) {
 		this.puerto = Integer.parseInt(text);
+
 		try {
-			this.serverSocket = new ServerSocket(puerto);
-			this.controlador=cont;
+			this.serverSocketCliente = new ServerSocket(puerto);
+			this.controlador = cont;
 			this.controlador.setServer(this);
-			this.sincronizacion = new Sincronizacion(this);
+			
+			SincronizacionOut.creaServerSocket(this.puerto);
+			SincronizacionOut.setServer(this);
+			SincronizacionOut.start();
+			
+			//this.sincronizacionIn = new SincronizacionIn(this);
+			//this.sincronizacionIn.creaServerSocket(puerto);
+			//this.sincronizacionIn.start();
+			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
-	
 
-	public void run(){
+	public void run() {
 		Socket s = null;
 		String nickname;
 		String nicknameReceptor;
@@ -61,7 +66,7 @@ public class Server extends Thread {
 
 		try {
 			while (this.terminar == false) {
-				s = serverSocket.accept();
+				s = serverSocketCliente.accept();
 
 				DataInputStream dis = new DataInputStream(s.getInputStream());
 				DataOutputStream dos = new DataOutputStream(s.getOutputStream());
@@ -75,13 +80,13 @@ public class Server extends Thread {
 					this.clientes.put(nickname, dataCliente);
 					this.listaClientes.add(dataCliente);
 
-					Conection conection = new Conection(s, dataCliente, this.clientes, dis, dos,this.chats);
+					Conection conection = new Conection(s, dataCliente, this.clientes, dis, dos, this.chats);
 					conection.setCont(controlador);
 					conection.start();
 					dos.writeUTF("1REGISTRADOCORRECTAMENTE");
 					controlador.appendListaConectados(dataCliente.toString());
-					//this.sincronizacion.sincronizarServer();
-					
+					// this.sincronizacion.sincronizarServer();
+
 				} else {
 
 					dos.writeUTF("1USERREGISTRADO");
@@ -148,26 +153,23 @@ public class Server extends Thread {
 		return clientes;
 	}
 
-
 	public void setLista(ArrayList<DataCliente> lista) {
 		this.listaClientes = lista;
 	}
 
-	public void closeServer() throws IOException {	// podriamos cerrar el socket de conexion con otros servidores tmb
+	public void closeServer() throws IOException { // podriamos cerrar el socket de conexion con otros servidores tmb
 		this.terminar = true;
-		//this.serverSocket.close();
-		
+		// this.serverSocket.close();
+
 //		for(int i = 0; i < this.clientes.size(); i++) {
 //			this.listaClientes.get(i).getSocket().close();
 //		}
-		
+
 	}
 
-	
 	public HashMap<String, String> getChats() {
 		return chats;
 	}
-
 
 	public ControladorVistaServer getControlador() {
 		return controlador;
@@ -177,10 +179,8 @@ public class Server extends Thread {
 		this.controlador = controlador;
 	}
 
-
 	public ArrayList<DataCliente> getListaClientes() {
 		return listaClientes;
 	}
 
-	
 }

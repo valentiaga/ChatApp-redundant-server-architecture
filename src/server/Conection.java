@@ -21,7 +21,8 @@ public class Conection extends Thread {
 	final DataOutputStream dos;
 	final Socket socket;
 	private ControladorVistaServer cont;
-
+	private SincronizacionOut sincronizacion;
+	
 	private boolean terminar = false;
 
 	public Conection(DataInputStream dis, DataOutputStream dos, Socket s) {
@@ -100,7 +101,8 @@ public class Conection extends Thread {
 									//seteamos los chats
 									this.chats.put(this.dataCliente.getNickname(), mensaje);
 									this.chats.put(mensaje, this.dataCliente.getNickname());
-									Sincronizacion.sincronizarServer();
+									//this.sincronizacion.sincronizarServer();
+									SincronizacionOut.sincronizarServer();
 									
 									
 									comando = "1INICIARCHAT";
