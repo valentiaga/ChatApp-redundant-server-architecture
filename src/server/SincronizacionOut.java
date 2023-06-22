@@ -18,12 +18,12 @@ public class SincronizacionOut{
 //	private static HashMap<String, DataCliente> clientes;
 //	private static HashMap<String, String> chats;
 
-	private static Socket socket;
+	private static Socket socketAnterior;
 	private static ServerSocket serverSocket;
 	private static String ip = "localhost";
 	
-	private static int puertoActual = 101;
-	private static int puertoAnterior = -1;		// chequear los numero de los puertos
+	private static int puertoActual = 201;
+	private static int puertoAnterior = 200;		// chequear los numero de los puertos
 	
 	private static ObjectOutputStream outPut;
 	private static ObjectInputStream input;
@@ -42,8 +42,8 @@ public class SincronizacionOut{
 
 		try {
 			if(puertoAnterior != -1) {	// si hay server anterior nos conectamos
-				socket = new Socket(ip, puertoAnterior);
-				outPut = new ObjectOutputStream(socket.getOutputStream());
+				socketAnterior = new Socket(ip, puertoAnterior);
+				outPut = new ObjectOutputStream(socketAnterior.getOutputStream());
 
 				outPut.writeObject(server.getChats());
 //				outPut.writeObject(server.getClientes());
@@ -61,26 +61,24 @@ public class SincronizacionOut{
 			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-
 	}
 
-	public static void creaServerSocket(int puerto) throws IOException {
-
-		serverSocket = new ServerSocket(puerto);
-		
+	public void creaServerSocket(int puerto) throws IOException {
+		serverSocket = new ServerSocket(puerto);	
 	}
 	
 	private static void conectaServerAnterior() throws IOException {
 	
-		socket = new Socket(ip,puertoAnterior);
+		if (puertoAnterior != -1)
+			socketAnterior = new Socket(ip,puertoAnterior);
 		
 	}
-
-	public static void setServer(Server server) {
-		SincronizacionOut.server = server;
-		sincronizacionIn = new SincronizacionIn(server);
-		sincronizacionIn.setServerSocket(serverSocket);
-	}
+//
+//	public static void setServer(Server server) {
+//		SincronizacionOut.server = server;
+//		sincronizacionIn = new SincronizacionIn(server);
+//		sincronizacionIn.setServerSocket(serverSocket);
+//	}
 
 	public static SincronizacionIn getSincronizacionIn() {
 		return sincronizacionIn;
@@ -88,10 +86,12 @@ public class SincronizacionOut{
 
 	
 	public static Socket getSocket() {
-		return socket;
+		return socketAnterior;
 	}
 
-	public static void start() {
+	public void start() {
+		sincronizacionIn = new SincronizacionIn(server);
+		sincronizacionIn.setServerSocket(serverSocket);
 		sincronizacionIn.start();
 	}
 	

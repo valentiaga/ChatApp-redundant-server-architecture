@@ -14,7 +14,7 @@ public class SincronizacionIn extends Thread {
 	private HashMap<String, DataCliente> clientes;
 	private HashMap<String, String> chats;
 
-	private Socket socket;
+	private Socket socketSiguiente;
 	private ServerSocket serverSocket;
 	private String ip = "localhost";
 
@@ -31,7 +31,7 @@ public class SincronizacionIn extends Thread {
 		this.chats = server.getChats();
 		this.clientes = server.getClientes();
 		this.listaClientes = server.getListaClientes();
-		this.socket = SincronizacionOut.getSocket();
+		//this.socket = socket;
 	}
 
 	private void seteaClientes() {
@@ -47,9 +47,9 @@ public class SincronizacionIn extends Thread {
 	public void run() {
 		try {
 			// serverSocket = new ServerSocket(puertoActual);
-			this.socket = this.serverSocket.accept();
+			this.socketSiguiente = this.serverSocket.accept();
 			this.server.getControlador().appendMensajes("Socket establecido");
-			this.input = new ObjectInputStream(socket.getInputStream());
+			this.input = new ObjectInputStream(socketSiguiente.getInputStream());
 
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
