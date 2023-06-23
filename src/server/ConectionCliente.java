@@ -12,7 +12,7 @@ import java.util.HashMap;
 
 import front.IVistaChat;
 
-public class Conection extends Thread {
+public class ConectionCliente extends Thread {
 
 	DataCliente dataCliente;
 	private HashMap<String, DataCliente> clientes;
@@ -21,11 +21,11 @@ public class Conection extends Thread {
 	final DataOutputStream dos;
 	final Socket socket;
 	private ControladorVistaServer cont;
-	private SincronizacionOut sincronizacion;
+	private Sincronizacion sincronizacion;
 	
 	private boolean terminar = false;
 
-	public Conection(DataInputStream dis, DataOutputStream dos, Socket s) {
+	public ConectionCliente(DataInputStream dis, DataOutputStream dos, Socket s) {
 		super();
 		this.dis = dis;
 		this.dos = dos;
@@ -33,7 +33,7 @@ public class Conection extends Thread {
 		
 	}
 
-	public Conection(Socket s, DataCliente conexion, HashMap<String, DataCliente> clientes) throws IOException {
+	public ConectionCliente(Socket s, DataCliente conexion, HashMap<String, DataCliente> clientes) throws IOException {
 		super();
 		this.dis = new DataInputStream(s.getInputStream());
 		this.dos = new DataOutputStream(s.getOutputStream());
@@ -42,8 +42,8 @@ public class Conection extends Thread {
 		this.clientes = clientes;
 	}
 
-	public Conection(Socket s, DataCliente conexion, HashMap<String, DataCliente> clientes, DataInputStream dis,
-			DataOutputStream dos,HashMap<String, String> chats) throws IOException {
+	public ConectionCliente(Socket s, DataCliente conexion, HashMap<String, DataCliente> clientes, DataInputStream dis,
+			DataOutputStream dos,HashMap<String, String> chats,Sincronizacion sincronizacion) throws IOException {
 		super();
 		this.dis = dis;
 		this.dos = dos;
@@ -51,6 +51,7 @@ public class Conection extends Thread {
 		this.dataCliente = conexion;
 		this.clientes = clientes;
 		this.chats = chats;
+		this.sincronizacion = sincronizacion;
 	}
 
 	public void run() {
@@ -101,8 +102,8 @@ public class Conection extends Thread {
 									//seteamos los chats
 									this.chats.put(this.dataCliente.getNickname(), mensaje);
 									this.chats.put(mensaje, this.dataCliente.getNickname());
-									//this.sincronizacion.sincronizarServer();
-									SincronizacionOut.sincronizarServer();
+									this.sincronizacion.sincronizaServers();
+									//SincronizacionOut.sincronizarServer();
 									
 									
 									comando = "1INICIARCHAT";
@@ -121,7 +122,7 @@ public class Conection extends Thread {
 
 								}
 							}else if(bandera == '3') {
-								if(mensaje.equals("PING")== true && Server.terminar == false)
+								if(mensaje.equals("PING")== true && Server.isTerminar() == false)
 									this.dataCliente.getDos().writeUTF("3ECHO");
 							} 
 						}

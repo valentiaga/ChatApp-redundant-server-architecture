@@ -30,7 +30,6 @@ public class PingEcho extends Thread {
 							System.out.println("ECHO == false");
 							Conexion.getInstance().cambiaServer();
 						}
-						
 					}
 				} catch (IOException | InterruptedException e) {
 					// TODO Auto-generated catch block

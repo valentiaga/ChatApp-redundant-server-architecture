@@ -91,7 +91,8 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 //			System.out.println("Socket" +i+": "+ sockets.get(i).isClosed());
 //		}
 		
-		if(Conexion.getInstance().getCambiaServer() == true) {
+//		if(Conexion.getInstance().getCambiaServer() == true) {
+		if(this.socket.isClosed() == true) {
 			System.out.println("Cambia server");
 			this.cambiaServer(); 
 		}
@@ -100,8 +101,6 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 	
 	public void cambiaServer() {
 		//this.cliente.getReceiveMessage().interrupt();
-		
-		
 		
 		this.cliente.getReceiveMessage().stop();
 		if(sockets.size() > this.i) {		

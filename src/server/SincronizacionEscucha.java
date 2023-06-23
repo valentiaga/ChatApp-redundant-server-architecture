@@ -27,7 +27,7 @@ public class SincronizacionEscucha extends Thread {
 	@Override
 	public void run() {
 		super.run();
-		while (true) {
+		while (Server.isTerminar() == false) {
 			try {
 //				this.sinc.getServer().getControlador().appendMensajes("LLegue hasta aca");
 //				System.out.println("LLegue hasta aca");
@@ -38,14 +38,11 @@ public class SincronizacionEscucha extends Thread {
 				this.seteaClientes();
 
 			} catch (ClassNotFoundException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			} catch (IOException e) {
-				// TODO Auto-generated catch block
 				e.printStackTrace();
 			}
 		}
-
 	}
 
 	private void seteaClientes() {

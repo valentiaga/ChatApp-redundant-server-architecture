@@ -18,8 +18,9 @@ public class Server extends Thread {
 	private HashMap<String, String> chats = new HashMap<>();
 	private ArrayList<DataCliente> listaClientes = new ArrayList<DataCliente>();
 	private ControladorVistaServer controlador;
-	public static boolean terminar = false;
-
+	private static boolean terminar = false;
+	private static boolean principal = false;
+	private Sincronizacion sincronizacion;
 
 	public Server(String text, ControladorVistaServer cont) {
 		this.puerto = Integer.parseInt(text);
@@ -28,11 +29,9 @@ public class Server extends Thread {
 			this.serverSocketCliente = new ServerSocket(puerto);
 			this.controlador = cont;
 			this.controlador.setServer(this);
-			
-			Sincronizacion sinc = new Sincronizacion (this);
+			this.sincronizacion = new Sincronizacion (this);
 			
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 	}
@@ -61,7 +60,8 @@ public class Server extends Thread {
 					this.clientes.put(nickname, dataCliente);
 					this.listaClientes.add(dataCliente);
 
-					Conection conection = new Conection(s, dataCliente, this.clientes, dis, dos, this.chats);
+					
+					ConectionCliente conection = new ConectionCliente(s, dataCliente, this.clientes, dis, dos, this.chats,this.sincronizacion);
 					conection.setCont(controlador);
 					conection.start();
 					dos.writeUTF("1REGISTRADOCORRECTAMENTE");
@@ -96,8 +96,8 @@ public class Server extends Thread {
 
 	public void closeServer() throws IOException { // podriamos cerrar el socket de conexion con otros servidores tmb
 		this.terminar = true;
-		
-
+		this.principal = false;
+		this.serverSocketCliente.close();
 	}
 
 	public HashMap<String, String> getChats() {
@@ -116,4 +116,46 @@ public class Server extends Thread {
 		return listaClientes;
 	}
 
+	public void setServerSocketCliente(ServerSocket serverSocketCliente) {
+		this.serverSocketCliente = serverSocketCliente;
+	}
+
+	public void setPuerto(int puerto) {
+		this.puerto = puerto;
+	}
+
+	public void setClientes(HashMap<String, DataCliente> clientes) {
+		this.clientes = clientes;
+	}
+
+	public void setChats(HashMap<String, String> chats) {
+		this.chats = chats;
+	}
+
+	public void setListaClientes(ArrayList<DataCliente> listaClientes) {
+		this.listaClientes = listaClientes;
+	}
+
+	public static void setTerminar(boolean terminar) {
+		Server.terminar = terminar;
+	}
+
+	public static void setPrincipal(boolean principal) {
+		Server.principal = principal;
+	}
+
+	public void setSincronizacion(Sincronizacion sincronizacion) {
+		this.sincronizacion = sincronizacion;
+	}
+
+	public static boolean isPrincipal() {
+		return principal;
+	}
+
+	public static boolean isTerminar() {
+		return terminar;
+	}
+
+	
+	
 }
