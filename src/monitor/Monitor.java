@@ -12,7 +12,7 @@ public class Monitor extends Thread {
 	private static Monitor instance = null;
 	private static ServerSocket serverSocket;
 	
-	private static int puertoMonitor = 11145;
+	private static int puertoMonitor = 11147;
 	private static int principal = 11001;
 	private static int nroSig = 0;
 	
@@ -40,39 +40,7 @@ public class Monitor extends Thread {
 		return instance;
 	}
 
-//	public static void main(String args[]) {
-//		try {
-//			serverSocket = new ServerSocket(puertoMonitor);
-//		} catch (IOException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
-//		while (true) {
-//			
-//			try {
-//				Socket socket = serverSocket.accept();
-//				
-//				DataInputStream dis = new DataInputStream(socket.getInputStream());
-//				DataOutputStream dos = new DataOutputStream (socket.getOutputStream());
-//				
-//				if (principal == 0) {
-//					String num = Integer.toString(4444);
-//					dos.writeUTF(num);
-//					principal = 1;
-//					System.out.println("principal: "+principal);
-//				}
-//				else {
-//					String num = Integer.toString(4445+nroSig);
-//					dos.writeUTF(num);
-//					System.out.println("puerto enviado secundario: "+4445+nroSig);
-//					nroSig++;
-//				}
-//				
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//	}
+
 	
 	public void agregarSocket(Socket s) throws IOException {
 

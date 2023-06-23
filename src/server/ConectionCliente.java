@@ -121,10 +121,11 @@ public class ConectionCliente extends Thread {
 									this.dataCliente.getDos().writeUTF(comando);
 
 								}
-							}else if(bandera == '3') {
-								if(mensaje.equals("PING")== true && Server.isTerminar() == false)
-									this.dataCliente.getDos().writeUTF("3ECHO");
-							} 
+							}
+//							else if(bandera == '3') {
+//								if(mensaje.equals("PING")== true && Server.isTerminar() == false)
+//									this.dataCliente.getDos().writeUTF("3ECHO");
+//							} 
 						}
 					}
 

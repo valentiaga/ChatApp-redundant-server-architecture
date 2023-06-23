@@ -27,10 +27,9 @@ public class SincronizacionEscucha extends Thread {
 	@Override
 	public void run() {
 		super.run();
-		while (Server.isTerminar() == false) {
+		while (Server.isTerminar() == false && Server.isPrincipal() == false) {
 			try {
-//				this.sinc.getServer().getControlador().appendMensajes("LLegue hasta aca");
-//				System.out.println("LLegue hasta aca");
+
 				this.chats = (HashMap<String, String>) this.input.readObject();
 				this.sinc.getServer().getControlador().appendMensajes("Sincronizando server respaaldo");
 //				this.server.getControlador().appendMensajes("Sincronizando server respaaldo");

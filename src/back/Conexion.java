@@ -85,7 +85,7 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 		
 	}
 	
-	public void verificaServer() {
+	public synchronized void verificaServer() {
 	
 //		for(int i = 0; i < sockets.size();i++) {
 //			System.out.println("Socket" +i+": "+ sockets.get(i).isClosed());
@@ -93,26 +93,26 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 		
 //		if(Conexion.getInstance().getCambiaServer() == true) {
 		if(this.socket.isClosed() == true) {
-			System.out.println("Cambia server");
+			System.out.println(socket.isClosed()+" "+socket.getPort());
 			this.cambiaServer(); 
 		}
 		
 	}
 	
-	public void cambiaServer() {
+	public synchronized void cambiaServer() {
 		//this.cliente.getReceiveMessage().interrupt();
 		
-		this.cliente.getReceiveMessage().stop();
+		//this.cliente.getReceiveMessage().stop();
 		if(sockets.size() > this.i) {		
 			socket = this.sockets.get(i);
 			System.out.println("Socket: " + socket.getPort());	
 			i++;
-			Conexion.getInstance().setEcho(true);
+			//Conexion.getInstance().setEcho(true);
 			
 			
 //			ReceiveMessage recibe = new ReceiveMessage(this.cliente.getContInicial(), this.cliente.getContChat(), this.cliente.getContConecta());
 //			recibe.start();
-			this.cliente.recibirMensajes();
+			//this.cliente.recibirMensajes();
 			
 			
 		}

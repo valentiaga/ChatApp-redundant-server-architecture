@@ -13,7 +13,7 @@ public class HeartBeatMonitor extends Thread {
 	private boolean terminar = false;
 	
 	private int tiempo = 5;
-	private int intentos = 2;
+	private int intentos = 0;
 	
 	
 	public void run() {
@@ -34,6 +34,7 @@ public class HeartBeatMonitor extends Thread {
 				this.socket = Monitor.getInstance().getSocketPrincipal();
 				dis = new DataInputStream(this.socket.getInputStream());
 				//dos = new DataOutputStream(this.socket.getOutputStream());
+				if (dis.available()>0)
 				comando = dis.readUTF();
 
 			} catch (IOException e) {
