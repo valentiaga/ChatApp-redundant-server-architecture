@@ -21,6 +21,7 @@ public class Server extends Thread {
 	private static boolean terminar = false;
 	private static boolean principal = false;
 	private Sincronizacion sincronizacion;
+	private Socket s = null;
 
 	public Server(String text, ControladorVistaServer cont) {
 		this.puerto = Integer.parseInt(text);
@@ -37,7 +38,6 @@ public class Server extends Thread {
 	}
 
 	public void run() {
-		Socket s = null;
 		String nickname;
 		String nicknameReceptor;
 		DataCliente dataCliente;
@@ -97,7 +97,7 @@ public class Server extends Thread {
 	public void closeServer() throws IOException { // podriamos cerrar el socket de conexion con otros servidores tmb
 		this.terminar = true;
 		this.principal = false;
-		this.serverSocketCliente.close();
+		this.s.close();
 	}
 
 	public HashMap<String, String> getChats() {

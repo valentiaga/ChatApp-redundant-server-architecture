@@ -59,8 +59,8 @@ public class Cliente {
 		
 //		Conexion.getInstance().getDos().writeUTF("1" + this.nickname);
 		Conexion.getInstance().registrar(this.nickname);
-		PingEcho pingEcho = new PingEcho();
-		pingEcho.start();
+//		PingEcho pingEcho = new PingEcho();
+//		pingEcho.start();
 		
 //		dos.writeUTF("1" + this.nickname);
 		

@@ -12,8 +12,8 @@ public class Monitor extends Thread {
 	private static Monitor instance = null;
 	private static ServerSocket serverSocket;
 	
-	private static int puertoMonitor = 11142;
-	private static int principal = 1100;
+	private static int puertoMonitor = 11145;
+	private static int principal = 11001;
 	private static int nroSig = 0;
 	
 	private ArrayList<Socket> listaSockets = new ArrayList<Socket>();
@@ -81,11 +81,13 @@ public class Monitor extends Thread {
 		// dos.writeUTF("PUERTO");
 		dos.writeUTF(Integer.toString(this.principal + this.nroSig++)); // PUERTO
 		// dos.writeUTF("IP");
+		//System.out.println("Puerto local: "+this.principal);
 		dos.writeUTF("localhost"); // IP server principal
 		//System.out.println("Socket server principal"+s.getLocalPort());
 		
 		dos.writeUTF(Integer.toString(this.principal)); // PUERTO server principal
-		
+		//System.out.println("Principal: "+this.principal);
+
 		if (this.socketPrincipal == null) {
 			
 			this.heartBeat.start();
@@ -95,7 +97,7 @@ public class Monitor extends Thread {
 		}else
 			dos.writeUTF("SECUNDARIO");
 		this.listaSockets.add(s);
-		
+		System.out.println(this.listaSockets);
 		//System.out.println("Socket server principal"+this.socketPrincipal.getPort());
 	}
 
@@ -112,7 +114,7 @@ public class Monitor extends Thread {
 
 	public void run() {
 
-		String comando = null;
+		String comando = "";
 		super.run();
 		Socket s;
 

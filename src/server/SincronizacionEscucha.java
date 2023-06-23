@@ -47,11 +47,13 @@ public class SincronizacionEscucha extends Thread {
 
 	private void seteaClientes() {
 		for (int i = 0; i < this.chats.size(); i++) {
+			
 			this.sinc.getServer().getLista().get(i)
 					.setNicknameReceptor(this.chats.get(this.sinc.getServer().getLista().get(i).getNickname()));
 			System.out.println(this.sinc.getServer().getLista().get(i).getNickname() + ", "
 					+ this.sinc.getServer().getLista().get(i).getNicknameReceptor());
 		}
+		
 	}
 
 }

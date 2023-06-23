@@ -18,7 +18,7 @@ public class Sincronizacion extends Thread {
 
 	private int puertoLocal;
 	private int puertoPrincipal;
-	private int puertoMonitor = 11142;
+	private int puertoMonitor = 11145;
 
 	private String ipMonitor = "localhost";
 	private String ipServerPrincipal;
@@ -31,30 +31,38 @@ public class Sincronizacion extends Thread {
 		this.conectaMonitor();
 	}
 
-	public void conectaMonitor() {
+	public void conectaMonitor(){
 		try {
 			socketMonitor = new Socket(ipMonitor, puertoMonitor);
 
+			System.out.println("Llegue 1");
 			this.conectionMonitor = new ConectionMonitor(socketMonitor); // escucha al MONITOR
-			this.conectionMonitor.start();
+			
+			System.out.println("Llegue 2");
 
 			DataInputStream dis = new DataInputStream(socketMonitor.getInputStream());
-			// DataOutputStream dos = new DataOutputStream
-			// (socketMonitor.getOutputStream());
+			
 
 			this.puertoLocal = Integer.valueOf(dis.readUTF());
+			System.out.println("Llegue 3");
 			this.ipServerPrincipal = dis.readUTF();
+			System.out.println("Llegue 4");
 			this.puertoPrincipal = Integer.valueOf(dis.readUTF());
 			this.rol = dis.readUTF();
+			System.out.println("Rol recibido: "+this.rol);
 
 			System.out.println("puerto recibido: " + puertoLocal);
 
-			this.ss = new ServerSocket(puertoLocal);
 
 			if (this.rol.equals("SECUNDARIO")) {
 				socketConPrincipal = new Socket(ipServerPrincipal, this.puertoPrincipal);
 				server.getControlador().appendMensajes("Sincronizando server respaldo");
+				System.out.println("llegue perra");
 				SincronizacionEscucha sinc = new SincronizacionEscucha(socketConPrincipal, this);
+			}
+			else {				
+				this.ss = new ServerSocket(puertoLocal);
+				this.start();
 			}
 
 ////			if (this.puerto != 4444) {
@@ -63,22 +71,22 @@ public class Sincronizacion extends Thread {
 //				SincronizacionEscucha sinc = new SincronizacionEscucha(socketConPrincipal, this);
 ////
 ////			}
-			this.start();
+			this.conectionMonitor.start();
 
 		} catch (IOException e) {
 			e.printStackTrace();
-		}
+		} 
 	}
 
 	public void run() {
 		Socket socket = null;
 
 		try {
-			while (true) {
+			while ( Server.isTerminar() == false) {
 				socket = ss.accept();
 				this.listaSocketsServers.add(socket);
 				System.out.println("Se creo el socket con el principal");
-				server.getControlador().appendMensajes("Sincronizando server respaldo");
+				server.getControlador().appendMensajes("Sincronizando server respaldoo");
 
 //				ObjectOutputStream dos = new ObjectOutputStream(socket.getOutputStream());		// como creamos todos los servidores al principio siempre estan vacios los chats
 //				dos.writeObject(this.server.getChats());
