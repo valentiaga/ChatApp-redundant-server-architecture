@@ -36,13 +36,12 @@ public class Sincronizacion extends Thread {
 			socketMonitor = new Socket(ipMonitor, puertoMonitor);
 
 			System.out.println("Llegue 1");
-			this.conectionMonitor = new ConectionMonitor(socketMonitor); // escucha al MONITOR
+			this.conectionMonitor = new ConectionMonitor(socketMonitor,this); // escucha al MONITOR
 			
 			System.out.println("Llegue 2");
 
 			DataInputStream dis = new DataInputStream(socketMonitor.getInputStream());
 			
-
 			this.puertoLocal = Integer.valueOf(dis.readUTF());
 			System.out.println("Llegue 3");
 			this.ipServerPrincipal = dis.readUTF();
@@ -58,19 +57,12 @@ public class Sincronizacion extends Thread {
 				socketConPrincipal = new Socket(ipServerPrincipal, this.puertoPrincipal);
 				server.getControlador().appendMensajes("Sincronizando server respaldo");
 				System.out.println("llegue perra");
-				SincronizacionEscucha sinc = new SincronizacionEscucha(socketConPrincipal, this);
+				SincronizacionEscucha sinc = new SincronizacionEscucha(this);
 			}
 			else {				
 				this.ss = new ServerSocket(puertoLocal);
 				this.start();
 			}
-
-////			if (this.puerto != 4444) {
-//				Socket socketConPrincipal = new Socket ("localhost", 4444);
-////				server.getControlador().appendMensajes("Sincronizando server respaldo");
-//				SincronizacionEscucha sinc = new SincronizacionEscucha(socketConPrincipal, this);
-////
-////			}
 			this.conectionMonitor.start();
 
 		} catch (IOException e) {
@@ -78,6 +70,19 @@ public class Sincronizacion extends Thread {
 		} 
 	}
 
+	
+	public void conectarConPrincipal() throws NumberFormatException, IOException {
+		
+		DataInputStream dis = new DataInputStream(socketMonitor.getInputStream());
+		
+		this.ipServerPrincipal = dis.readUTF();
+		this.puertoPrincipal = Integer.valueOf(dis.readUTF());
+		//this.rol = dis.readUTF();
+		
+		socketConPrincipal = new Socket(ipServerPrincipal, this.puertoPrincipal);
+		server.getControlador().appendMensajes("Conecta con server principal");
+	}
+	
 	public void run() {
 		Socket socket = null;
 
@@ -122,4 +127,13 @@ public class Sincronizacion extends Thread {
 		this.ss = ss;
 	}
 
+	public Socket getSocketConPrincipal() {
+		return socketConPrincipal;
+	}
+
+	public void setSocketConPrincipal(Socket socketConPrincipal) {
+		this.socketConPrincipal = socketConPrincipal;
+	}
+
+	
 }

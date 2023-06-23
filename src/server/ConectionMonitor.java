@@ -10,13 +10,12 @@ public class ConectionMonitor extends Thread {
 
 	private Socket socketMonitor;
 	private String comando;
+	Sincronizacion sincronizacion;
 	
-	
-	
-	public ConectionMonitor(Socket socketMonitor) {
+	public ConectionMonitor(Socket socketMonitor,Sincronizacion sincronizacion) {
 		this.socketMonitor = socketMonitor;
+		this.sincronizacion = sincronizacion;
 	}
-
 
 	public void run() {
 
@@ -33,9 +32,18 @@ public class ConectionMonitor extends Thread {
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
-			if(comando.equals("PRINCIPAL")) {
+			if (comando.equals("PRINCIPAL")) {
 				Server.setPrincipal(true);
+			} else if (comando.equals("NUEVO_PUERTO")) {
+				try {
+					this.sincronizacion.conectarConPrincipal();
+				} catch (NumberFormatException e) {
+					e.printStackTrace();
+				} catch (IOException e) {
+					e.printStackTrace();
+				}
 			}
+
 		}
 	}
 }

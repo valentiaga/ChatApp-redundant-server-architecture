@@ -61,7 +61,6 @@ public class Monitor extends Thread {
 			this.heartBeat.start();
 			this.socketPrincipal = s;
 			dos.writeUTF("PRINCIPAL");
-			
 		}else
 			dos.writeUTF("SECUNDARIO");
 		this.listaSockets.add(s);
@@ -80,6 +79,21 @@ public class Monitor extends Thread {
 		}
 	}
 
+	
+	public void conecta_a_Principal() throws IOException {
+		DataOutputStream dos ;
+		
+		for(int i=0; this.listaSockets.size()>0 ;i++ ) {
+			dos = new DataOutputStream(this.listaSockets.get(i).getOutputStream());
+			dos.writeUTF("NUEVO_PUERTO");
+			dos.writeUTF("localhost"); // IP server principal
+			dos.writeUTF(Integer.toString(this.socketPrincipal.getLocalPort())); // PUERTO server principal
+		}
+		
+		
+		
+	}
+	
 	public void run() {
 
 		String comando = "";

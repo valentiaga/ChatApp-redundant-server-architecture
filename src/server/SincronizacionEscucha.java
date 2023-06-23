@@ -8,7 +8,7 @@ import java.util.HashMap;
 
 public class SincronizacionEscucha extends Thread {
 
-	private Socket socket;
+	//private Socket socket;
 	private Sincronizacion sinc;
 	private ObjectInputStream input;
 
@@ -16,11 +16,11 @@ public class SincronizacionEscucha extends Thread {
 	private HashMap<String, DataCliente> clientes;
 	private HashMap<String, String> chats;
 
-	public SincronizacionEscucha(Socket socket, Sincronizacion sinc) throws IOException {
+	public SincronizacionEscucha(Sincronizacion sinc) throws IOException {
 		super();
-		this.socket = socket;
+		//this.socket = socket;
 		this.sinc = sinc;
-		this.input = new ObjectInputStream(socket.getInputStream());
+		//this.input = new ObjectInputStream(socket.getInputStream());
 		this.start();
 	}
 
@@ -29,7 +29,7 @@ public class SincronizacionEscucha extends Thread {
 		super.run();
 		while (Server.isTerminar() == false && Server.isPrincipal() == false) {
 			try {
-
+				input = new ObjectInputStream(sinc.getSocketConPrincipal().getInputStream());
 				this.chats = (HashMap<String, String>) this.input.readObject();
 				this.sinc.getServer().getControlador().appendMensajes("Sincronizando server respaaldo");
 //				this.server.getControlador().appendMensajes("Sincronizando server respaaldo");
