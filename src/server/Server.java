@@ -42,15 +42,7 @@ public class Server extends Thread {
 			this.controlador = cont;
 			this.controlador.setServer(this);
 			
-			SincronizacionOut sincronizacionOut = new SincronizacionOut(this);
-			
-			sincronizacionOut.creaServerSocket(this.puerto);
-//			SincronizacionOut.setServer(this);
-			sincronizacionOut.start();
-			
-			//this.sincronizacionIn = new SincronizacionIn(this);
-			//this.sincronizacionIn.creaServerSocket(puerto);
-			//this.sincronizacionIn.start();
+			Sincronizacion sinc = new Sincronizacion (this);
 			
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
