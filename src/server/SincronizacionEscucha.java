@@ -30,7 +30,7 @@ public class SincronizacionEscucha extends Thread {
 		while (true) {
 			try {
 //				this.sinc.getServer().getControlador().appendMensajes("LLegue hasta aca");
-System.out.println("LLegue hasta aca");
+//				System.out.println("LLegue hasta aca");
 				this.chats = (HashMap<String, String>) this.input.readObject();
 				this.sinc.getServer().getControlador().appendMensajes("Sincronizando server respaaldo");
 //				this.server.getControlador().appendMensajes("Sincronizando server respaaldo");

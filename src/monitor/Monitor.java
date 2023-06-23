@@ -13,10 +13,6 @@ public class Monitor extends Thread{
 	private static int principal = 0;
 	private static int nroSig=0;
 	
-//	public Monitor() throws IOException {
-//		this.serverSocket = new ServerSocket(this.puerto);
-//	}
-//	
 	public static void main(String args[]) {
 		try {
 			serverSocket = new ServerSocket(puerto);

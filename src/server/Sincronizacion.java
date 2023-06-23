@@ -30,7 +30,7 @@ public class Sincronizacion extends Thread{
 			this.ss = new ServerSocket (puerto);
 			if (this.puerto != 4444) {
 				Socket socketConPrincipal = new Socket ("localhost", 4444);
-				server.getControlador().appendMensajes("Sincronizando server respaldo");
+//				server.getControlador().appendMensajes("Sincronizando server respaldo");
 				SincronizacionEscucha sinc = new SincronizacionEscucha(socketConPrincipal, this);
 
 			}
