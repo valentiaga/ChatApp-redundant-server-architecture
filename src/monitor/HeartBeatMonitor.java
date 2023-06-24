@@ -11,11 +11,10 @@ public class HeartBeatMonitor extends Thread {
 	private DataInputStream dis = null;
 	private DataOutputStream dos = null;
 	private boolean terminar = false;
-	
+
 	private int tiempo = 5;
 	private int intentos = 0;
-	
-	
+
 	public void run() {
 
 		String comando = null;
@@ -33,40 +32,36 @@ public class HeartBeatMonitor extends Thread {
 			try {
 				this.socket = Monitor.getInstance().getSocketPrincipal();
 				dis = new DataInputStream(this.socket.getInputStream());
-				//dos = new DataOutputStream(this.socket.getOutputStream());
-				if (dis.available()>0)
-				comando = dis.readUTF();
+				// dos = new DataOutputStream(this.socket.getOutputStream());
+				if (dis.available() > 0)
+					comando = dis.readUTF();
 
 			} catch (IOException e) {
-				
+
 				e.printStackTrace();
 			}
 
-			// System.out.println(comando);
-
-			if (comando == "HEARTBEAT") { 
-				//ESPERAMOS
+			if (comando == "HEARTBEAT") {
+				// ESPERAMOS
 				try {
 					Thread.sleep(tiempo * 1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			} else {
-				
-				if(this.intentos == 0){ //CAMBIAMOS DE SERVER PRINCIPAL
-					
+
+				if (this.intentos == 0) { // CAMBIAMOS DE SERVER PRINCIPAL
+
 					try {
 						Monitor.getInstance().cambiaServerPrincipal();
+						Thread.sleep(tiempo * 1000);
 					} catch (IOException e) {
 						e.printStackTrace();
-					}
-					//ESPERAMOS PARA DAR TIEMPO A QUE SE CAMBIE
-					try {
-						Thread.sleep(tiempo * 1000);
-					} catch (InterruptedException e) {
+					} catch (InterruptedException e) { // ESPERAMOS PARA DAR TIEMPO A QUE SE CAMBIE
 						e.printStackTrace();
 					}
-				}else {
+
+				} else {
 					this.intentos--;
 					try {
 						Thread.sleep(tiempo * 1000);
@@ -75,16 +70,14 @@ public class HeartBeatMonitor extends Thread {
 						e.printStackTrace();
 					}
 				}
-				
+
 			}
 
 		}
 	}
 
-
 	public void setIntentos(int intentos) {
 		this.intentos = intentos;
 	}
-	
-	
+
 }

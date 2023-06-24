@@ -33,9 +33,11 @@ public class ConectionMonitor extends Thread {
 				e.printStackTrace();
 			}
 			if (comando.equals("PRINCIPAL")) {
+				System.out.println("Server principal recibido");
 				Server.setPrincipal(true);
 			} else if (comando.equals("NUEVO_PUERTO")) {
 				try {
+					System.out.println("nuevo puerto recibido");
 					this.sincronizacion.conectarConPrincipal();
 				} catch (NumberFormatException e) {
 					e.printStackTrace();

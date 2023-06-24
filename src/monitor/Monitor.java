@@ -18,7 +18,7 @@ public class Monitor extends Thread {
 	
 	private ArrayList<Socket> listaSockets = new ArrayList<Socket>();
 	private ArrayList<Socket> listaSocketsCaidos = new ArrayList<Socket>();
-	private Socket socketPrincipal = null;
+	private Socket socketPrincipal = null, socketSecundario =null;
 	
 	private HeartBeatMonitor heartBeat;
 	
@@ -46,52 +46,57 @@ public class Monitor extends Thread {
 
 		DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 
-		// dos.writeUTF("PUERTO");
 		dos.writeUTF(Integer.toString(this.principal + this.nroSig++)); // PUERTO
-		// dos.writeUTF("IP");
-		//System.out.println("Puerto local: "+this.principal);
 		dos.writeUTF("localhost"); // IP server principal
-		//System.out.println("Socket server principal"+s.getLocalPort());
-		
 		dos.writeUTF(Integer.toString(this.principal)); // PUERTO server principal
-		//System.out.println("Principal: "+this.principal);
 
 		if (this.socketPrincipal == null) {
-			
+	
 			this.heartBeat.start();
 			this.socketPrincipal = s;
 			dos.writeUTF("PRINCIPAL");
-		}else
+			
+		}else {
+			this.socketSecundario = s;
 			dos.writeUTF("SECUNDARIO");
-		this.listaSockets.add(s);
-		System.out.println(this.listaSockets);
-		//System.out.println("Socket server principal"+this.socketPrincipal.getPort());
+		}
+			
 	}
 
 	public void cambiaServerPrincipal() throws IOException {
 
-		if (this.listaSockets.size() > 0) {
-			this.socketPrincipal = this.listaSockets.get(0);
-			this.listaSocketsCaidos.add(socketPrincipal);		// preservamos el socket caido para recuperarlo mas tarde
-			this.listaSockets.remove(0);
-			DataOutputStream dos = new DataOutputStream(this.socketPrincipal.getOutputStream());
-			dos.writeUTF("PRINCIPAL");
-		}
-	}
+		try {
+				if (this.listaSockets.size() > 0) {
+					this.listaSocketsCaidos.add(socketPrincipal);		// preservamos el socket caido para recuperarlo mas tarde
+					this.socketPrincipal = this.listaSockets.get(0);
+					this.listaSockets.remove(0);
+					DataOutputStream dos = new DataOutputStream(this.socketPrincipal.getOutputStream());
+					dos.writeUTF("PRINCIPAL");
+					Thread.sleep(2000);
+					this.conecta_a_Principal();
+				}
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+}
+
 
 	
 	public void conecta_a_Principal() throws IOException {
 		DataOutputStream dos ;
 		
-		for(int i=0; this.listaSockets.size()>0 ;i++ ) {
+		for(int i=0; i < this.listaSockets.size() ;i++ ) {
 			dos = new DataOutputStream(this.listaSockets.get(i).getOutputStream());
 			dos.writeUTF("NUEVO_PUERTO");
 			dos.writeUTF("localhost"); // IP server principal
 			dos.writeUTF(Integer.toString(this.socketPrincipal.getLocalPort())); // PUERTO server principal
 		}
-		
-		
-		
+
+//		dos = new DataOutputStream(this.socketSecundario.getOutputStream());
+//		dos.writeUTF("NUEVO_PUERTO");
+//		dos.writeUTF("localhost"); // IP server principal
+//		dos.writeUTF(Integer.toString(this.socketPrincipal.getLocalPort())); // PUERTO server principal
+//		
 	}
 	
 	public void run() {

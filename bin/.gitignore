@@ -1,3 +1,6 @@
-/server/
+/controladores/
+/exception/
+/front/
 /monitor/
-/back/
+/prueba/
+/server/

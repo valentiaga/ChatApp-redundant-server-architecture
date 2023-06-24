@@ -76,9 +76,7 @@ public class Sincronizacion extends Thread {
 		DataInputStream dis = new DataInputStream(socketMonitor.getInputStream());
 		
 		this.ipServerPrincipal = dis.readUTF();
-		this.puertoPrincipal = Integer.valueOf(dis.readUTF());
-		//this.rol = dis.readUTF();
-		
+		this.puertoPrincipal = Integer.valueOf(dis.readUTF());		
 		socketConPrincipal = new Socket(ipServerPrincipal, this.puertoPrincipal);
 		server.getControlador().appendMensajes("Conecta con server principal");
 	}
