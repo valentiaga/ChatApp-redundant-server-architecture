@@ -40,8 +40,6 @@ public class Monitor extends Thread {
 		return instance;
 	}
 
-
-	
 	public void agregarSocket(Socket s) throws IOException {
 
 		DataOutputStream dos = new DataOutputStream(s.getOutputStream());
@@ -79,7 +77,6 @@ public class Monitor extends Thread {
 		}
 	}
 
-	
 	public void conecta_a_Principal() throws IOException {
 		DataOutputStream dos ;
 		
@@ -88,10 +85,7 @@ public class Monitor extends Thread {
 			dos.writeUTF("NUEVO_PUERTO");
 			dos.writeUTF("localhost"); // IP server principal
 			dos.writeUTF(Integer.toString(this.socketPrincipal.getLocalPort())); // PUERTO server principal
-		}
-		
-		
-		
+		}	
 	}
 	
 	public void run() {
@@ -129,29 +123,4 @@ public class Monitor extends Thread {
 	public ServerSocket getServerSocket() {
 		return serverSocket;
 	}
-
-//	public void run() {
-//		super.run();
-//		while (true) {
-//			try {
-//				Socket socket = serverSocket.accept();
-//				
-//				DataInputStream dis = new DataInputStream(socket.getInputStream());
-//				DataOutputStream dos = new DataOutputStream (socket.getOutputStream());
-//				
-//				if (this.principal == 0) {
-//					dos.write(4444);
-//				}
-//				else {
-//					dos.write(4445+nroSig);
-//					nroSig++;
-//				}
-//				
-//				
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		
-//	}
 }
