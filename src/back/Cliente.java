@@ -49,21 +49,15 @@ public class Cliente {
 		Conexion.getInstance().setCliente(this);
 		Conexion.getInstance().agregarSocket(iP, puerto);
 		Conexion.getInstance().agregarSocket(iP, puerto+1);
-//		socket = new Socket(this.iP, this.puerto);
-//		dis = new DataInputStream(socket.getInputStream());
-//		dos = new DataOutputStream(socket.getOutputStream());
 		
+
 	}
 
 	public void conectarServer() throws IOException{
 		
 //		Conexion.getInstance().getDos().writeUTF("1" + this.nickname);
 		Conexion.getInstance().registrar(this.nickname);
-//		PingEcho pingEcho = new PingEcho();
-//		pingEcho.start();
-		
-//		dos.writeUTF("1" + this.nickname);
-		
+
 	}
 
 

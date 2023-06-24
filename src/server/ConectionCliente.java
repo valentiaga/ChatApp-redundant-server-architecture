@@ -71,9 +71,8 @@ public class ConectionCliente extends Thread {
 					bandera = mensaje.charAt(0);
 					mensaje = mensaje.substring(1);
 					
-					
-
 					if (bandera == '0') {
+						this.cont.appendMensajes("receptor: "+this.dataCliente.getNicknameReceptor());
 						if (this.dataCliente.getNicknameReceptor() != null) {
 							this.cont.appendMensajes(dataCliente.getNickname()+" para "+dataCliente.getNicknameReceptor()+ ":" +mensaje);
 							this.clientes.get(this.dataCliente.getNicknameReceptor()).getDos().writeUTF("0" + mensaje);

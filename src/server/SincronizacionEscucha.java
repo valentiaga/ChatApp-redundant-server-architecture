@@ -20,6 +20,7 @@ public class SincronizacionEscucha extends Thread {
 		super();
 		//this.socket = socket;
 		this.sinc = sinc;
+		this.chats = sinc.getServer().getChats();
 		//this.input = new ObjectInputStream(socket.getInputStream());
 		this.start();
 	}
@@ -35,7 +36,7 @@ public class SincronizacionEscucha extends Thread {
 //				this.server.getControlador().appendMensajes("Sincronizando server respaaldo");
 				this.sinc.getServer().getControlador().appendMensajes(chats.toString());
 				this.seteaClientes();
-
+				System.out.println("clientes "+this.clientes);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
@@ -49,8 +50,8 @@ public class SincronizacionEscucha extends Thread {
 			
 			this.sinc.getServer().getLista().get(i)
 					.setNicknameReceptor(this.chats.get(this.sinc.getServer().getLista().get(i).getNickname()));
-			System.out.println(this.sinc.getServer().getLista().get(i).getNickname() + ", "
-					+ this.sinc.getServer().getLista().get(i).getNicknameReceptor());
+//			System.out.println(this.sinc.getServer().getLista().get(i).getNickname() + ", "
+//					+ this.sinc.getServer().getLista().get(i).getNicknameReceptor());
 		}
 		
 	}

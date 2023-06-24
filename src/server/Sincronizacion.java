@@ -102,7 +102,7 @@ public class Sincronizacion extends Thread {
 
 	public void sincronizaServers() throws IOException {
 
-		if (Server.isPrincipal() == true && Server.isTerminar() == false)
+		if (Server.isTerminar() == false)
 			for (int i = 0; i < this.listaSocketsServers.size(); i++) {
 				ObjectOutputStream dos = new ObjectOutputStream(this.listaSocketsServers.get(i).getOutputStream());
 				dos.writeObject(this.server.getChats());
