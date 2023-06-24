@@ -10,22 +10,27 @@ import java.util.ArrayList;
 public class Monitor extends Thread {
 
 	private static Monitor instance = null;
-	private static ServerSocket serverSocket;
-
-	private static int puertoMonitor = 11201;
+	private static ServerSocket serverSocketServidores;
+	private static ServerSocket serverSocketClientes;
+	
+	private static int puertoMonitorServidores = 11201;
+	private static int puertoMonitorClientes = 11201;
+	
 	private static int principal = 11001;
 	private static int nroSig = 0;
 
-	private ArrayList<Socket> listaSockets = new ArrayList<Socket>();
+	private ArrayList<Socket> listaSocketsServidores = new ArrayList<Socket>();
 	private ArrayList<Socket> listaSocketsCaidos = new ArrayList<Socket>();
 	private Socket socketPrincipal = null, socketSecundario = null;
-
+	
+	private ArrayList<Socket> listaSocketsClientes = new ArrayList<Socket>();
 	private HeartBeatMonitor heartBeat;
 
 	private Monitor() {
 
 		try {
-			this.serverSocket = new ServerSocket(this.puertoMonitor);
+			this.serverSocketServidores = new ServerSocket(this.puertoMonitorServidores);
+			this.serverSocketClientes = new ServerSocket(this.puertoMonitorClientes);
 			this.heartBeat = new HeartBeatMonitor();
 		} catch (IOException e) {
 			e.printStackTrace();
@@ -62,7 +67,7 @@ public class Monitor extends Thread {
 			this.heartBeat.start();
 
 		} else {
-			this.listaSockets.add(s);
+			this.listaSocketsServidores.add(s);
 			// this.socketSecundario = s;
 			dos.writeUTF("SECUNDARIO");
 		}
@@ -72,10 +77,10 @@ public class Monitor extends Thread {
 	public void cambiaServerPrincipal() throws IOException {
 
 		try {
-			if (this.listaSockets.size() > 0) {
+			if (this.listaSocketsServidores.size() > 0) {
 				this.listaSocketsCaidos.add(socketPrincipal); // preservamos el socket caido para recuperarlo mas tarde
-				this.socketPrincipal = this.listaSockets.get(0);
-				this.listaSockets.remove(0);
+				this.socketPrincipal = this.listaSocketsServidores.get(0);
+				this.listaSocketsServidores.remove(0);
 				DataOutputStream dos = new DataOutputStream(this.socketPrincipal.getOutputStream());
 				System.out.println("Cambia a server 2" + this.socketPrincipal.getLocalPort());
 				dos.writeUTF("PRINCIPAL");
@@ -90,8 +95,8 @@ public class Monitor extends Thread {
 	public void conecta_a_Principal() throws IOException {
 		DataOutputStream dos;
 
-		for (int i = 0; i < this.listaSockets.size(); i++) {
-			dos = new DataOutputStream(this.listaSockets.get(i).getOutputStream());
+		for (int i = 0; i < this.listaSocketsServidores.size(); i++) {
+			dos = new DataOutputStream(this.listaSocketsServidores.get(i).getOutputStream());
 			dos.writeUTF("NUEVO_PUERTO");
 			dos.writeUTF("localhost"); // IP server principal
 			dos.writeUTF(Integer.toString(this.socketPrincipal.getLocalPort())); // PUERTO server principal
@@ -108,14 +113,17 @@ public class Monitor extends Thread {
 
 		String comando = "";
 		super.run();
-		Socket s;
+		Socket socketServer;
+		Socket socketCliente;
 
 		while (true) {
 
 			try {
-				s = this.serverSocket.accept();
-				this.agregarSocket(s);
-
+				socketServer = this.serverSocketServidores.accept();
+				this.agregarSocket(socketServer);
+				socketCliente = this.serverSocketClientes.accept();
+				this.listaSocketsClientes.add(socketCliente);
+				
 			} catch (IOException e) {
 
 				e.printStackTrace();
@@ -125,7 +133,7 @@ public class Monitor extends Thread {
 	}
 
 	public int getPuertoMonitor() {
-		return puertoMonitor;
+		return puertoMonitorServidores;
 	}
 
 	public Socket getSocketPrincipal() {
@@ -133,11 +141,11 @@ public class Monitor extends Thread {
 	}
 
 	public ArrayList<Socket> getListaSockets() {
-		return listaSockets;
+		return listaSocketsServidores;
 	}
 
 	public ServerSocket getServerSocket() {
-		return serverSocket;
+		return serverSocketServidores;
 	}
 
 //	public void run() {

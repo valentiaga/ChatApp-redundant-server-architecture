@@ -13,7 +13,9 @@ import server.DataCliente;
 public class Conexion {
 	
 	private static Conexion instance = null;
-	private static Socket socket = null;
+	private static Socket socketServidor = null;
+	private static Socket socketMonitor = null;
+	
 	private static int nro = 0;
 //	private static DataInputStream dis = null;
 //	private static DataOutputStream dos = null;
@@ -87,15 +89,15 @@ public class Conexion {
 	
 	public void registrar(String nickname) throws IOException { //registramos al cliente en todos los servers
 		DataOutputStream outPut = null;
-		outPut = new DataOutputStream (socket.getOutputStream());
+		outPut = new DataOutputStream (socketServidor.getOutputStream());
 		outPut.writeUTF("1" + this.cliente.getNickname());
 	}
 	
 	public synchronized void verificaServer() {
 	
 //		if(Conexion.getInstance().getCambiaServer() == true) {
-		if(this.socket.isClosed() == true) {
-			System.out.println(socket.isClosed()+" "+socket.getPort());
+		if(this.socketServidor.isClosed() == true) {
+			System.out.println(socketServidor.isClosed()+" "+socketServidor.getPort());
 			this.cambiaServer(); 
 		}
 		
@@ -124,7 +126,7 @@ public class Conexion {
 		
 		try {
 			System.out.println("Hace socket con nuevo server");
-			socket = new Socket(this.cliente.getiP(),this.cliente.getPuerto()+nro);
+			socketServidor = new Socket(this.cliente.getiP(),this.cliente.getPuerto()+nro);
 			nro++;
 			this.registrar(this.cliente.getNickname());
 			
@@ -138,7 +140,7 @@ public class Conexion {
 	
 	//------------------------------------------------------ GETTERS ---------------------------------------------------
 	public  Socket getSocket() {
-		return socket;
+		return socketServidor;
 	}
 
 	public DataInputStream getDis() {
@@ -148,7 +150,7 @@ public class Conexion {
 		
 		try {
 			//System.out.println("Socket: " + socket.getPort());	
-			inPut = new DataInputStream(socket.getInputStream());
+			inPut = new DataInputStream(socketServidor.getInputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();
@@ -162,7 +164,7 @@ public class Conexion {
 		this.verificaServer();
 		
 		try {
-			outPut = new DataOutputStream (socket.getOutputStream());
+			outPut = new DataOutputStream (socketServidor.getOutputStream());
 		} catch (IOException e) {
 			// TODO Auto-generated catch block
 			e.printStackTrace();

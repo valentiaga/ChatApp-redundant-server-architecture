@@ -45,7 +45,7 @@ public class ControladorVistaInicial implements ActionListener {
 					this.cliente.creaConectionHandler();
 					this.cliente.setContInicial(this);
 
-					this.cliente.conectarServer();
+					this.cliente.conectarServeryMonitor();
 
 				}
 

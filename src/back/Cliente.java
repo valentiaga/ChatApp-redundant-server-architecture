@@ -53,13 +53,14 @@ public class Cliente {
 		
 	}
 
-	public void conectarServer() throws IOException{
+	public void conectarServeryMonitor() throws IOException{
 		
 //		Conexion.getInstance().getDos().writeUTF("1" + this.nickname);
 		Conexion.getInstance().registrar(this.nickname);
 
 	}
 
+	
 
 	public void recibirMensajes() {
 //		Socket s = this.messageManager.getSocket();
