@@ -10,7 +10,8 @@ public class ConectionMonitor extends Thread {
 
 	private Socket socketMonitor;
 	private String comando;
-	Sincronizacion sincronizacion;
+	private Sincronizacion sincronizacion;
+	private HeartBeatServer heartBeat;
 	
 	public ConectionMonitor(Socket socketMonitor,Sincronizacion sincronizacion) {
 		this.socketMonitor = socketMonitor;
@@ -34,6 +35,7 @@ public class ConectionMonitor extends Thread {
 			}
 			if (comando.equals("PRINCIPAL")) {
 				System.out.println("Server principal recibido");
+				this.iniciaHeartBeat();
 				Server.setPrincipal(true);
 			} else if (comando.equals("NUEVO_PUERTO")) {
 				try {
@@ -45,7 +47,12 @@ public class ConectionMonitor extends Thread {
 					e.printStackTrace();
 				}
 			}
-
 		}
+	}
+	
+	
+	public void iniciaHeartBeat() {
+		this.heartBeat = new HeartBeatServer(this.socketMonitor);
+		this.heartBeat.start();
 	}
 }

@@ -27,29 +27,33 @@ public class HeartBeatMonitor extends Thread {
 //			// TODO Auto-generated catch block
 //			e1.printStackTrace();
 //		}
+		System.out.println("Monitor");
 		while (this.terminar == false) {
 
 			try {
 				this.socket = Monitor.getInstance().getSocketPrincipal();
 				dis = new DataInputStream(this.socket.getInputStream());
 				// dos = new DataOutputStream(this.socket.getOutputStream());
-				if (dis.available() > 0)
+				if (dis.available() > 0) {
 					comando = dis.readUTF();
-
+					System.out.println("Monitor recibio: "+comando);
+				}
+				//System.out.println("Monitor recibio: "+comando);
 			} catch (IOException e) {
 
 				e.printStackTrace();
 			}
 
-			if (comando == "HEARTBEAT") {
+			if (comando.equals("HEARTBEAT")) {
 				// ESPERAMOS
+				comando = "No llego heartbeat";	
 				try {
 					Thread.sleep(tiempo * 1000);
 				} catch (InterruptedException e) {
 					e.printStackTrace();
 				}
 			} else {
-
+				System.out.println("Monitor: "+comando);
 				if (this.intentos == 0) { // CAMBIAMOS DE SERVER PRINCIPAL
 
 					try {

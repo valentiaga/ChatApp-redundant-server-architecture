@@ -18,14 +18,15 @@ public class Sincronizacion extends Thread {
 
 	private int puertoLocal;
 	private int puertoPrincipal;
-	private int puertoMonitor = 11147;
+	private int puertoMonitor = 11201;
 
 	private String ipMonitor = "localhost";
 	private String ipServerPrincipal;
 	private String rol; // PRINCIPAL o SECUNDARIO
 
 	private ConectionMonitor conectionMonitor = null;
-
+	//private HeartBeatServer heartBeat;
+	
 	public Sincronizacion(Server server) {
 		this.server = server;
 		this.conectaMonitor();
@@ -51,7 +52,7 @@ public class Sincronizacion extends Thread {
 			System.out.println("Rol recibido: "+this.rol);
 
 			System.out.println("puerto recibido: " + puertoLocal);
-
+			
 
 			if (this.rol.equals("SECUNDARIO")) {
 				socketConPrincipal = new Socket(ipServerPrincipal, this.puertoPrincipal);
@@ -61,6 +62,7 @@ public class Sincronizacion extends Thread {
 			}
 			else {				
 				this.ss = new ServerSocket(puertoLocal);
+				this.conectionMonitor.iniciaHeartBeat();
 				this.start();
 			}
 			this.conectionMonitor.start();
@@ -85,7 +87,7 @@ public class Sincronizacion extends Thread {
 		Socket socket = null;
 
 		try {
-			while ( Server.isTerminar() == false) {
+			while (Server.isTerminar() == false) {
 				socket = ss.accept();
 				this.listaSocketsServers.add(socket);
 				System.out.println("Se creo el socket con el principal");
