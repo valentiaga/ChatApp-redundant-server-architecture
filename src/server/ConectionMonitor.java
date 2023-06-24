@@ -30,6 +30,7 @@ public class ConectionMonitor extends Thread {
 		while (Server.isTerminar() == false) {
 			try {
 				comando = dis.readUTF();
+				System.out.println("Comando"+comando);
 			} catch (IOException e) {
 				e.printStackTrace();
 			}

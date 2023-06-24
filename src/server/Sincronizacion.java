@@ -36,17 +36,15 @@ public class Sincronizacion extends Thread {
 		try {
 			socketMonitor = new Socket(ipMonitor, puertoMonitor);
 
-			System.out.println("Llegue 1");
-			this.conectionMonitor = new ConectionMonitor(socketMonitor,this); // escucha al MONITOR
-			
-			System.out.println("Llegue 2");
 
+			this.conectionMonitor = new ConectionMonitor(socketMonitor,this); // escucha al MONITOR
+	
 			DataInputStream dis = new DataInputStream(socketMonitor.getInputStream());
 			
 			this.puertoLocal = Integer.valueOf(dis.readUTF());
-			System.out.println("Llegue 3");
+			
 			this.ipServerPrincipal = dis.readUTF();
-			System.out.println("Llegue 4");
+
 			this.puertoPrincipal = Integer.valueOf(dis.readUTF());
 			this.rol = dis.readUTF();
 			System.out.println("Rol recibido: "+this.rol);
