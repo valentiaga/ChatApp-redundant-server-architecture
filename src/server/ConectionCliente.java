@@ -146,13 +146,13 @@ public class ConectionCliente extends Thread {
 		
 		this.terminar = true;
 
-		try {
-			this.dis.close();
-			this.dos.close();
-			this.socket.close();
-		} catch (IOException e) {
-			e.printStackTrace();
-		}
+//		try {
+//			this.dis.close();
+//			this.dos.close();
+//			this.socket.close();
+//		} catch (IOException e) {
+//			e.printStackTrace();
+//		}
 
 	}
 

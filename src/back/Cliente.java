@@ -47,10 +47,10 @@ public class Cliente {
 		
 		// esto va en Conexion
 		Conexion.getInstance().setCliente(this);
-		Conexion.getInstance().agregarSocket(iP, puerto);
-		Conexion.getInstance().agregarSocket(iP, puerto+1);
+		Conexion.getInstance().cambiaServer();
+		//Conexion.getInstance().agregarSocket(iP, puerto);
+		//Conexion.getInstance().agregarSocket(iP, puerto+1);
 		
-
 	}
 
 	public void conectarServer() throws IOException{
@@ -141,6 +141,24 @@ public class Cliente {
 	public ControladorVistaChat getContChat() {
 		return contChat;
 	}
+
+	public int getPuerto() {
+		return puerto;
+	}
+
+	public void setPuerto(int puerto) {
+		this.puerto = puerto;
+	}
+
+	public String getiP() {
+		return iP;
+	}
+
+	public void setiP(String iP) {
+		this.iP = iP;
+	}
+	
+	
 
 //------------------------------------------------------------------------------------------------------
 }

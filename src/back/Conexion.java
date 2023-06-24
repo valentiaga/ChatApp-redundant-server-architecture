@@ -14,6 +14,7 @@ public class Conexion {
 	
 	private static Conexion instance = null;
 	private static Socket socket = null;
+	private static int nro = 0;
 //	private static DataInputStream dis = null;
 //	private static DataOutputStream dos = null;
 	private Cliente cliente;
@@ -50,47 +51,48 @@ public class Conexion {
 			return instance;
 	}
 	
-public void agregarSocket(String ip, int puerto) throws IOException{
-		
-	Socket s = new Socket(ip,puerto);
-	
-		if(socket == null) {
-			socket = s;
-//			Socket s2 = new Socket(ip,puerto+1);	//hay al menos 2 servers
-//			this.sockets.add(s2);
-		}
-		
-		this.sockets.add(s);
-		System.out.println("Sockets: " + this.sockets);
-		
-	}
-
-	public void agregarSocket(Socket s) {
-		
-		if(socket == null) {
-			socket = s;
-		}
-		this.sockets.add(socket);
-		System.out.println("Sockets: " + this.sockets);
-	}
+//public void agregarSocket(String ip, int puerto) throws IOException{
+//		
+//	Socket s = new Socket(ip,puerto);
+//	
+//		if(socket == null) {
+//			socket = s;
+////			Socket s2 = new Socket(ip,puerto+1);	//hay al menos 2 servers
+////			this.sockets.add(s2);
+//		}
+//		
+//		this.sockets.add(s);
+//		System.out.println("Sockets: " + this.sockets);
+//		
+//	}
+//
+//	public void agregarSocket(Socket s) {
+//		
+//		if(socket == null) {
+//			socket = s;
+//		}
+//		this.sockets.add(socket);
+//		System.out.println("Sockets: " + this.sockets);
+//	}
 	
     
+//	public void registrar(String nickname) throws IOException { //registramos al cliente en todos los servers
+//		DataOutputStream outPut = null;
+//		
+//		for(int i = 0; i < sockets.size();i++) {
+//			outPut = new DataOutputStream (this.sockets.get(i).getOutputStream());
+//			outPut.writeUTF("1" + nickname);
+//		}
+//	}
+	
 	public void registrar(String nickname) throws IOException { //registramos al cliente en todos los servers
 		DataOutputStream outPut = null;
-		
-		for(int i = 0; i < sockets.size();i++) {
-			outPut = new DataOutputStream (this.sockets.get(i).getOutputStream());
-			outPut.writeUTF("1" + nickname);
-		}
-		
+		outPut = new DataOutputStream (socket.getOutputStream());
+		outPut.writeUTF("1" + this.cliente.getNickname());
 	}
 	
 	public synchronized void verificaServer() {
 	
-//		for(int i = 0; i < sockets.size();i++) {
-//			System.out.println("Socket" +i+": "+ sockets.get(i).isClosed());
-//		}
-		
 //		if(Conexion.getInstance().getCambiaServer() == true) {
 		if(this.socket.isClosed() == true) {
 			System.out.println(socket.isClosed()+" "+socket.getPort());
@@ -99,22 +101,38 @@ public void agregarSocket(String ip, int puerto) throws IOException{
 		
 	}
 	
+//	public synchronized void cambiaServer() {
+//		//this.cliente.getReceiveMessage().interrupt();
+//		
+//		//this.cliente.getReceiveMessage().stop();
+//		if(sockets.size() > this.i) {		
+//			socket = this.sockets.get(i);
+//			System.out.println("Socket: " + socket.getPort());	
+//			i++;
+//			//Conexion.getInstance().setEcho(true);
+//			
+//			
+////			ReceiveMessage recibe = new ReceiveMessage(this.cliente.getContInicial(), this.cliente.getContChat(), this.cliente.getContConecta());
+////			recibe.start();
+//			//this.cliente.recibirMensajes();
+//			
+//			
+//		}
+//	}
+	
 	public synchronized void cambiaServer() {
-		//this.cliente.getReceiveMessage().interrupt();
 		
-		//this.cliente.getReceiveMessage().stop();
-		if(sockets.size() > this.i) {		
-			socket = this.sockets.get(i);
-			System.out.println("Socket: " + socket.getPort());	
-			i++;
-			//Conexion.getInstance().setEcho(true);
+		try {
+			System.out.println("Hace socket con nuevo server");
+			socket = new Socket(this.cliente.getiP(),this.cliente.getPuerto()+nro);
+			nro++;
+			this.registrar(this.cliente.getNickname());
 			
-			
-//			ReceiveMessage recibe = new ReceiveMessage(this.cliente.getContInicial(), this.cliente.getContChat(), this.cliente.getContConecta());
-//			recibe.start();
-			//this.cliente.recibirMensajes();
-			
-			
+			System.out.println("nro: "+nro);
+		} catch (UnknownHostException e) {
+			e.printStackTrace();
+		} catch (IOException e) {
+			e.printStackTrace();
 		}
 	}
 	
