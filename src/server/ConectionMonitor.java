@@ -50,9 +50,10 @@ public class ConectionMonitor extends Thread {
 		}
 	}
 	
-	
 	public void iniciaHeartBeat() {
 		this.heartBeat = new HeartBeatServer(this.socketMonitor);
 		this.heartBeat.start();
 	}
+	
+	
 }

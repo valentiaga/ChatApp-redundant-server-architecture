@@ -64,19 +64,15 @@ public class Monitor extends Thread {
 		} else {
 			this.listaSockets.add(s);
 			// this.socketSecundario = s;
-			// dos.writeUTF("SECUNDARIO");
+			dos.writeUTF("SECUNDARIO");
 		}
 
 	}
 
 	public void cambiaServerPrincipal() throws IOException {
 
-		// System.out.println("Cambia a server
-		// Principal"+this.socketPrincipal.getLocalPort());
-		System.out.println(this.listaSockets);
 		try {
 			if (this.listaSockets.size() > 0) {
-				System.out.println("Cambia a server 1" + this.socketPrincipal.getLocalPort());
 				this.listaSocketsCaidos.add(socketPrincipal); // preservamos el socket caido para recuperarlo mas tarde
 				this.socketPrincipal = this.listaSockets.get(0);
 				this.listaSockets.remove(0);
