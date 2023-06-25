@@ -89,13 +89,15 @@ public class Monitor extends Thread {
 				this.socketPrincipal = this.listaSocketsServidores.get(0);
 				this.listaSocketsServidores.remove(0);
 				dos = new DataOutputStream(this.socketPrincipal.getOutputStream());
-				System.out.println("Cambia a server 2" + this.socketPrincipal.getLocalPort());
+				System.out.println("Cambia a server" + this.socketPrincipal.getLocalPort());
 				dos.writeUTF("PRINCIPAL");
 				Thread.sleep(2000);
 				this.conecta_a_Principal();
+				System.out.println(this.listaSocketsClientes);
 				for(int i =0; i < this.listaSocketsClientes.size(); i++) {
 					dos = new DataOutputStream(this.listaSocketsClientes.get(i).getOutputStream());
 					dos.writeUTF("CAMBIAR_SERVER");
+					System.out.println("Envia CAMBIAR_SERVER");
 				}
 			}
 			

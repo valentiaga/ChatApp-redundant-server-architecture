@@ -109,6 +109,8 @@ public class Sincronizacion extends Thread {
 			}
 	}
 
+	
+	
 	public Server getServer() {
 		return server;
 	}

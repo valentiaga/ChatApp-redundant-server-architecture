@@ -59,6 +59,7 @@ public class Cliente {
 //		Conexion.getInstance().getDos().writeUTF("1" + this.nickname);
 		conexion.registrar(this.nickname);
 		conexion.conectaMonitor();
+		conexion.escuchaMonitor();
 	}
 
 	

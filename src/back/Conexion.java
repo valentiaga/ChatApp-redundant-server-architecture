@@ -11,13 +11,13 @@ import java.util.ArrayList;
 import server.DataCliente;
 
 public class Conexion {
-	
-	//private static Conexion instance = null;
+
+	// private static Conexion instance = null;
 	private static Socket socketServidor = null;
 	private static Socket socketMonitor = null;
-	
+
 	private static int puertoMonitorClientes = 11221;
-	
+
 	private static int nro = 0;
 //	private static DataInputStream dis = null;
 //	private static DataOutputStream dos = null;
@@ -27,15 +27,15 @@ public class Conexion {
 	private ArrayList<Socket> sockets = new ArrayList<Socket>();
 	private boolean echo = false;
 	private boolean cambiaServer = false;
-	
+
 //	private Socket s2;
 //	private DataInputStream dis2;
 //	private DataOutputStream dos2;
-    
-	public Conexion () {
-		
+
+	public Conexion() {
+
 	}
-	
+
 //	private Conexion(Socket s, DataInputStream dis, DataOutputStream dos) {
 //	
 //			super();
@@ -43,7 +43,7 @@ public class Conexion {
 //			this.dis = dis;
 //			this.dos = dos;
 //	}
-	
+
 //	public static Conexion getInstance() {
 //		
 //		if(instance == null) {
@@ -54,7 +54,7 @@ public class Conexion {
 //		}
 //			return instance;
 //	}
-	
+
 //public void agregarSocket(String ip, int puerto) throws IOException{
 //		
 //	Socket s = new Socket(ip,puerto);
@@ -78,8 +78,7 @@ public class Conexion {
 //		this.sockets.add(socket);
 //		System.out.println("Sockets: " + this.sockets);
 //	}
-	
-    
+
 //	public void registrar(String nickname) throws IOException { //registramos al cliente en todos los servers
 //		DataOutputStream outPut = null;
 //		
@@ -88,23 +87,23 @@ public class Conexion {
 //			outPut.writeUTF("1" + nickname);
 //		}
 //	}
-	
-	public void registrar(String nickname) throws IOException { //registramos al cliente en todos los servers
+
+	public void registrar(String nickname) throws IOException { // registramos al cliente en todos los servers
 		DataOutputStream outPut = null;
-		outPut = new DataOutputStream (socketServidor.getOutputStream());
+		outPut = new DataOutputStream(socketServidor.getOutputStream());
 		outPut.writeUTF("1" + this.cliente.getNickname());
 	}
-	
+
 	public synchronized void verificaServer() {
-	
+
 //		if(Conexion.getInstance().getCambiaServer() == true) {
-		if(this.socketServidor.isClosed() == true) {
-			System.out.println(socketServidor.isClosed()+" "+socketServidor.getPort());
-			this.cambiaServer(); 
+		if (this.socketServidor.isClosed() == true) {
+			System.out.println(socketServidor.isClosed() + " " + socketServidor.getPort());
+			this.cambiaServer();
 		}
-		
+
 	}
-	
+
 	public void escuchaMonitor() { // el monitor indica que hay un cambio de servidor
 		new Thread(() -> {
 			try {
@@ -112,25 +111,28 @@ public class Conexion {
 				int puerto;
 				String ip;
 				String comando;
-				if (dis.available() > 0) {
-					comando = dis.readUTF();
-					System.out.println(comando);
-					if(comando.equals("CAMBIAR_SERVER")) {
-						this.cambiaServer();
+
+				System.out.println("escuchaMonitor");
+				while (true) {
+					if (dis.available() > 0) {
+						comando = dis.readUTF();
+						System.out.println(comando);
+						if (comando.equals("CAMBIAR_SERVER")) {
+							this.cambiaServer();
+						}
+//						puerto = Integer.valueOf(dis.readUTF());
+//						ip = dis.readUTF();
 					}
-//					puerto = Integer.valueOf(dis.readUTF());
-//					ip = dis.readUTF();
-					
 				}
 			} catch (IOException e) {
 				e.printStackTrace();
 			}
 		}).start();
 	}
-	
+
 	public void conectaMonitor() throws IOException {
 		System.out.println("Conecta monitor");
-		this.socketMonitor = new Socket("localhost",this.puertoMonitorClientes);
+		this.socketMonitor = new Socket("localhost", this.puertoMonitorClientes);
 	}
 //	public synchronized void cambiaServer() {
 //		//this.cliente.getReceiveMessage().interrupt();
@@ -150,38 +152,38 @@ public class Conexion {
 //			
 //		}
 //	}
-	
+
 	public synchronized void cambiaServer() {
-		
+
 		try {
 			System.out.println("Hace socket con nuevo server");
-			socketServidor = new Socket(this.cliente.getiP(),this.cliente.getPuerto()+nro);
+			socketServidor = new Socket(this.cliente.getiP(), this.cliente.getPuerto() + nro);
 			nro++;
 			this.registrar(this.cliente.getNickname());
-			
-			System.out.println("nro: "+nro);
+
+			System.out.println("nro: " + nro);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
 	}
-	
-	//------------------------------------------------------ GETTERS ---------------------------------------------------
-	public  Socket getSocket() {
+
+	// ------------------------------------------------------ GETTERS
+	// ---------------------------------------------------
+	public Socket getSocket() {
 		return socketServidor;
 	}
 
 	public DataInputStream getDis() {
 		DataInputStream inPut = null;
-		
-		//this.verificaServer();
-		
+
+		// this.verificaServer();
+
 		try {
-			//System.out.println("Socket: " + socket.getPort());	
+			// System.out.println("Socket: " + socket.getPort());
 			inPut = new DataInputStream(socketServidor.getInputStream());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
 		return inPut;
@@ -189,16 +191,15 @@ public class Conexion {
 
 	public DataOutputStream getDos() {
 		DataOutputStream outPut = null;
-		
-		//this.verificaServer();
-		
+
+		// this.verificaServer();
+
 		try {
-			outPut = new DataOutputStream (socketServidor.getOutputStream());
+			outPut = new DataOutputStream(socketServidor.getOutputStream());
 		} catch (IOException e) {
-			// TODO Auto-generated catch block
 			e.printStackTrace();
 		}
-		
+
 		return outPut;
 	}
 
@@ -225,6 +226,5 @@ public class Conexion {
 	public void setCliente(Cliente cliente) {
 		this.cliente = cliente;
 	}
-	
-	
+
 }

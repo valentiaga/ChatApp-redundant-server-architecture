@@ -60,7 +60,6 @@ public class Server extends Thread {
 					this.clientes.put(nickname, dataCliente);
 					this.listaClientes.add(dataCliente);
 
-					
 					ConectionCliente conection = new ConectionCliente(s, dataCliente, this.clientes, dis, dos, this.chats,this.sincronizacion);
 					conection.setCont(controlador);
 					conection.start();
@@ -97,7 +96,7 @@ public class Server extends Thread {
 	public void closeServer() throws IOException { // podriamos cerrar el socket de conexion con otros servidores tmb
 		this.terminar = true;
 		this.principal = false;
-		this.s.close();
+//		this.s.close();
 	}
 
 	public HashMap<String, String> getChats() {
