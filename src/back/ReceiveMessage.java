@@ -48,6 +48,7 @@ public class ReceiveMessage extends Thread {
 
 		while (this.terminar == false) {
 			try {
+				System.out.println("LEgoooo");
 				mensaje = this.conexion.getDis().readUTF();
 //				mensaje = dis.readUTF();
 				comando = mensaje.charAt(0);
@@ -56,7 +57,7 @@ public class ReceiveMessage extends Thread {
 				System.out.println(comando+" " +mensaje);
 
 				if (comando == '0') { // mensaje
-					
+					System.out.println("Me llego el mensaje");
 					this.contChat.appendTextArea(Cifrado.desencriptar(mensaje));
 					
 				} else {

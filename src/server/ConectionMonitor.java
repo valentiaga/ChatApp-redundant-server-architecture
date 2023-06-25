@@ -37,6 +37,13 @@ public class ConectionMonitor extends Thread {
 				System.out.println("Server principal recibido");
 				this.iniciaHeartBeat();
 				Server.setPrincipal(true);
+				try {
+					Thread.sleep(5000);
+				} catch (InterruptedException e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
+				}
+				this.sincronizacion.getSinc().seteaClientes();
 			} else if (comando.equals("NUEVO_PUERTO")) {
 				try {
 					System.out.println("nuevo puerto recibido");

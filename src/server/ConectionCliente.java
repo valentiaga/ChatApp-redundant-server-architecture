@@ -42,16 +42,16 @@ public class ConectionCliente extends Thread {
 		this.clientes = clientes;
 	}
 
-	public ConectionCliente(Socket s, DataCliente conexion, HashMap<String, DataCliente> clientes, DataInputStream dis,
+	public ConectionCliente(Socket s, String nickname, HashMap<String, DataCliente> clientes, DataInputStream dis,
 			DataOutputStream dos,HashMap<String, String> chats,Sincronizacion sincronizacion) throws IOException {
 		super();
 		this.dis = dis;
 		this.dos = dos;
 		this.socket = s;
-		this.dataCliente = conexion;
 		this.clientes = clientes;
 		this.chats = chats;
 		this.sincronizacion = sincronizacion;
+		this.dataCliente = this.sincronizacion.getServer().getClientes().get(nickname);
 	}
 
 	public void run() {

@@ -134,24 +134,6 @@ public class Conexion {
 		System.out.println("Conecta monitor");
 		this.socketMonitor = new Socket("localhost", this.puertoMonitorClientes);
 	}
-//	public synchronized void cambiaServer() {
-//		//this.cliente.getReceiveMessage().interrupt();
-//		
-//		//this.cliente.getReceiveMessage().stop();
-//		if(sockets.size() > this.i) {		
-//			socket = this.sockets.get(i);
-//			System.out.println("Socket: " + socket.getPort());	
-//			i++;
-//			//Conexion.getInstance().setEcho(true);
-//			
-//			
-////			ReceiveMessage recibe = new ReceiveMessage(this.cliente.getContInicial(), this.cliente.getContChat(), this.cliente.getContConecta());
-////			recibe.start();
-//			//this.cliente.recibirMensajes();
-//			
-//			
-//		}
-//	}
 
 	public synchronized void cambiaServer() {
 
@@ -160,7 +142,7 @@ public class Conexion {
 			socketServidor = new Socket(this.cliente.getiP(), this.cliente.getPuerto() + nro);
 			nro++;
 			this.registrar(this.cliente.getNickname());
-
+			//this.cliente.recibirMensajes();
 			System.out.println("nro: " + nro);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
@@ -191,7 +173,7 @@ public class Conexion {
 
 	public DataOutputStream getDos() {
 		DataOutputStream outPut = null;
-
+ 
 		// this.verificaServer();
 
 		try {

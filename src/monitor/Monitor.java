@@ -98,7 +98,8 @@ public class Monitor extends Thread {
 					dos = new DataOutputStream(this.listaSocketsClientes.get(i).getOutputStream());
 					dos.writeUTF("CAMBIAR_SERVER");
 					System.out.println("Envia CAMBIAR_SERVER");
-				}
+				} 
+				
 			}
 			
 		} catch (InterruptedException e) {
@@ -234,28 +235,4 @@ public class Monitor extends Thread {
 		return serverSocketServidores;
 	}
 
-//	public void run() {
-//		super.run();
-//		while (true) {
-//			try {
-//				Socket socket = serverSocket.accept();
-//				
-//				DataInputStream dis = new DataInputStream(socket.getInputStream());
-//				DataOutputStream dos = new DataOutputStream (socket.getOutputStream());
-//				
-//				if (this.principal == 0) {
-//					dos.write(4444);
-//				}
-//				else {
-//					dos.write(4445+nroSig);
-//					nroSig++;
-//				}
-//				
-//				
-//			} catch (IOException e) {
-//				e.printStackTrace();
-//			}
-//		}
-//		
-//	}
 }

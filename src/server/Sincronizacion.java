@@ -23,6 +23,7 @@ public class Sincronizacion extends Thread {
 	private String ipMonitor = "localhost";
 	private String ipServerPrincipal;
 	private String rol; // PRINCIPAL o SECUNDARIO
+	private SincronizacionEscucha sinc;
 
 	private ConectionMonitor conectionMonitor = null;
 	//private HeartBeatServer heartBeat;
@@ -56,7 +57,7 @@ public class Sincronizacion extends Thread {
 				socketConPrincipal = new Socket(ipServerPrincipal, this.puertoPrincipal);
 				server.getControlador().appendMensajes("Sincronizando server respaldo");
 				System.out.println("llegue perra");
-				SincronizacionEscucha sinc = new SincronizacionEscucha(this);
+				sinc = new SincronizacionEscucha(this);
 			}
 			else {				
 				this.ss = new ServerSocket(puertoLocal);
@@ -79,6 +80,7 @@ public class Sincronizacion extends Thread {
 		this.puertoPrincipal = Integer.valueOf(dis.readUTF());		
 		socketConPrincipal = new Socket(ipServerPrincipal, this.puertoPrincipal);
 		server.getControlador().appendMensajes("Conecta con server principal");
+		//sinc = new SincronizacionEscucha(this); ???
 	}
 	
 	public void run() {
@@ -133,6 +135,14 @@ public class Sincronizacion extends Thread {
 
 	public void setSocketConPrincipal(Socket socketConPrincipal) {
 		this.socketConPrincipal = socketConPrincipal;
+	}
+
+	public SincronizacionEscucha getSinc() {
+		return sinc;
+	}
+
+	public void setSinc(SincronizacionEscucha sinc) {
+		this.sinc = sinc;
 	}
 
 	

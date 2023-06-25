@@ -43,11 +43,12 @@ public class Server extends Thread {
 		DataCliente dataCliente;
 		Object object;
 		char bandera;
+		
 
 		try {
 			while (this.terminar == false) {
 				s = serverSocketCliente.accept();
-
+				//i++;
 				DataInputStream dis = new DataInputStream(s.getInputStream());
 				DataOutputStream dos = new DataOutputStream(s.getOutputStream());
 
@@ -56,16 +57,23 @@ public class Server extends Thread {
 				nickname = nickname.substring(1);
 
 				if (this.clientes.containsKey(nickname) == false) {
+					//System.out.println("Se hace nuevo data cliente: "+nickname);
 					dataCliente = new DataCliente(s, nickname, dis, dos);
 					this.clientes.put(nickname, dataCliente);
 					this.listaClientes.add(dataCliente);
-
-					ConectionCliente conection = new ConectionCliente(s, dataCliente, this.clientes, dis, dos, this.chats,this.sincronizacion);
+					
+//					if (i>0) {
+//						this.sincronizacion.getSinc().seteaClientes();
+//					}
+					//System.out.println("Lista Clientes: "+this.listaClientes.toString());
+					ConectionCliente conection = new ConectionCliente(s, dataCliente.getNickname(), this.clientes, dis, dos, this.chats,this.sincronizacion);
 					conection.setCont(controlador);
 					conection.start();
 					dos.writeUTF("1REGISTRADOCORRECTAMENTE");
 					controlador.appendListaConectados(dataCliente.toString());
 					// this.sincronizacion.sincronizarServer();
+//					if (this.sincronizacion.getSinc()!=null)
+//					this.sincronizacion.getSinc().seteaClientes();
 
 				} else {
 

@@ -52,7 +52,7 @@ public class Cliente {
 		// Conexion.getInstance().agregarSocket(iP, puerto);
 		// Conexion.getInstance().agregarSocket(iP, puerto+1);
 
-	}
+	} 
 
 	public void conectarServeryMonitor() throws IOException {
 
@@ -65,17 +65,7 @@ public class Cliente {
 	
 	
 	public void recibirMensajes() {
-//		Socket s = this.messageManager.getSocket();
-//		DataInputStream dis = null;
-//		DataOutputStream dos = null;
-//		try {
-//			dis = new DataInputStream(s.getInputStream());
-//			dos = new DataOutputStream(s.getOutputStream());
-//		} catch (IOException e) {
-//
-//		}
 
-		// this.conectionHandler = new ReceiveMessage(s, dis, dos);
 		this.receiveMessage = new ReceiveMessage(this.conexion);
 		this.receiveMessage.start();
 	}
@@ -131,7 +121,6 @@ public class Cliente {
 	}
 
 	public void creaConectionHandler() {
-		// this.messageManager = new SendMessage(this.socket, dis, dos, this.vistaChat);
 		this.sendMessage = new SendMessage(this.conexion);
 		this.recibirMensajes();
 	}
