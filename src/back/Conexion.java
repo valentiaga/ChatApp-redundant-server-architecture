@@ -16,7 +16,7 @@ public class Conexion {
 	private static Socket socketServidor = null;
 	private static Socket socketMonitor = null;
 
-	private static int puertoMonitorClientes = 11221;
+	private static int puertoMonitorClientes = 11222;
 
 	private static int nro = 0;
 //	private static DataInputStream dis = null;
@@ -143,6 +143,9 @@ public class Conexion {
 			socketServidor = new Socket(this.cliente.getiP(), this.cliente.getPuerto() + nro);
 			nro++;
 			this.registrar(this.cliente.getNickname());
+			if(this.cliente.getReceiveMessage() != null)
+				this.cliente.getReceiveMessage().recibirMensajes();
+			//this.cliente.getReceiveMessage().s
 			System.out.println("nro: " + nro);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();

@@ -67,7 +67,8 @@ public class Cliente {
 	public void recibirMensajes() {
 
 		this.receiveMessage = new ReceiveMessage(this.conexion);
-		this.receiveMessage.start();
+		this.receiveMessage.recibirMensajes();
+		//this.receiveMessage.start();
 	}
 
 	public void conectarReceptor(String nickNameReceptor)

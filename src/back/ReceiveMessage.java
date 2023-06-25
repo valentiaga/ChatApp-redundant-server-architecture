@@ -40,72 +40,139 @@ public class ReceiveMessage extends Thread {
 	}
 
 
-	public void run() {
+	public void recibirMensajes() {
+		new Thread(() -> {
+			String mensaje;
+			char comando;
+			super.run();
 
-		String mensaje;
-		char comando;
-		super.run();
-
-		while (this.terminar == false) {
-			try {
-				System.out.println("LEgoooo");
-				mensaje = this.conexion.getDis().readUTF();
-//				mensaje = dis.readUTF();
-				comando = mensaje.charAt(0);
-				mensaje = mensaje.substring(1);
-				
-				System.out.println(comando+" " +mensaje);
-
-				if (comando == '0') { // mensaje
-					System.out.println("Me llego el mensaje");
-					this.contChat.appendTextArea(Cifrado.desencriptar(mensaje));
+			while (this.terminar == false) {
+				try {
+					System.out.println("LEgoooo");
+					mensaje = this.conexion.getDis().readUTF();
+//					mensaje = dis.readUTF();
+					comando = mensaje.charAt(0);
+					mensaje = mensaje.substring(1);
 					
-				} else {
-					if (comando == '1') {
-						switch (mensaje) {
-						case "INICIARCHAT":
-							this.contConecta.iniciaChat();
-							break;
-						case "NOREGISTRADO":
-							this.contConecta.ventanaEmergente("El usuario no se encuentra disponible.");
-							break;
-						case "FINALIZARCHAT":
+					System.out.println(comando+" " +mensaje);
 
-							this.contConecta.ventanaEmergente("El chat fue finalizado por el otro usuario");
-							this.contChat.abandonarChat();
-							break;
-						case "USERREGISTRADO":
-							this.contInicial.ventanaEmergente("El usuario ya se encuentra registrado en el sistema.");
-							// evitar que se habra la ventana de conecta
-							//this.contInicial.setRegistrado(false);
-							break;
-						case "REGISTRADOCORRECTAMENTE":
-							this.contInicial.vistaSiguiente();
-							break;
-						}
+					if (comando == '0') { // mensaje
+						System.out.println("Me llego el mensaje");
+						this.contChat.appendTextArea(Cifrado.desencriptar(mensaje));
+						
+					} else {
+						if (comando == '1') {
+							switch (mensaje) {
+							case "INICIARCHAT":
+								this.contConecta.iniciaChat();
+								break;
+							case "NOREGISTRADO":
+								this.contConecta.ventanaEmergente("El usuario no se encuentra disponible.");
+								break;
+							case "FINALIZARCHAT":
 
-					}else if(comando == '3') {
-						if(mensaje.equals("ECHO") == true) {
-							System.out.println("Recibimos ECHO");
-							this.conexion.setEcho(true);
-						}
-					}else
-						if(comando == '4')
-							System.out.println(mensaje);
+								this.contConecta.ventanaEmergente("El chat fue finalizado por el otro usuario");
+								this.contChat.abandonarChat();
+								break;
+							case "USERREGISTRADO":
+								this.contInicial.ventanaEmergente("El usuario ya se encuentra registrado en el sistema.");
+								// evitar que se habra la ventana de conecta
+								//this.contInicial.setRegistrado(false);
+								break;
+							case "REGISTRADOCORRECTAMENTE":
+								this.contInicial.vistaSiguiente();
+								break;
+							}
+
+						}else if(comando == '3') {
+							if(mensaje.equals("ECHO") == true) {
+								System.out.println("Recibimos ECHO");
+								this.conexion.setEcho(true);
+							}
+						}else
+							if(comando == '4')
+								System.out.println(mensaje);
+					}
+
+				} catch (EOFException e) {
+					this.terminarRecibirMensajes();
+				} catch (SocketException e1) {
+					this.terminarRecibirMensajes();
+				} catch (IOException e2) {
+					e2.printStackTrace();
+				} catch (Exception e) {
+					// TODO Auto-generated catch block
+					e.printStackTrace();
 				}
-
-			} catch (EOFException e) {
-				this.terminarRecibirMensajes();
-			} catch (SocketException e1) {
-				this.terminarRecibirMensajes();
-			} catch (IOException e2) {
-				e2.printStackTrace();
-			} catch (Exception e) {
-				// TODO Auto-generated catch block
-				e.printStackTrace();
 			}
-		}
+		}).start();
 	}
+//	public void run() {
+//
+//		String mensaje;
+//		char comando;
+//		super.run();
+//
+//		while (this.terminar == false) {
+//			try {
+//				System.out.println("LEgoooo");
+//				mensaje = this.conexion.getDis().readUTF();
+////				mensaje = dis.readUTF();
+//				comando = mensaje.charAt(0);
+//				mensaje = mensaje.substring(1);
+//				
+//				System.out.println(comando+" " +mensaje);
+//
+//				if (comando == '0') { // mensaje
+//					System.out.println("Me llego el mensaje");
+//					this.contChat.appendTextArea(Cifrado.desencriptar(mensaje));
+//					
+//				} else {
+//					if (comando == '1') {
+//						switch (mensaje) {
+//						case "INICIARCHAT":
+//							this.contConecta.iniciaChat();
+//							break;
+//						case "NOREGISTRADO":
+//							this.contConecta.ventanaEmergente("El usuario no se encuentra disponible.");
+//							break;
+//						case "FINALIZARCHAT":
+//
+//							this.contConecta.ventanaEmergente("El chat fue finalizado por el otro usuario");
+//							this.contChat.abandonarChat();
+//							break;
+//						case "USERREGISTRADO":
+//							this.contInicial.ventanaEmergente("El usuario ya se encuentra registrado en el sistema.");
+//							// evitar que se habra la ventana de conecta
+//							//this.contInicial.setRegistrado(false);
+//							break;
+//						case "REGISTRADOCORRECTAMENTE":
+//							this.contInicial.vistaSiguiente();
+//							break;
+//						}
+//
+//					}else if(comando == '3') {
+//						if(mensaje.equals("ECHO") == true) {
+//							System.out.println("Recibimos ECHO");
+//							this.conexion.setEcho(true);
+//						}
+//					}else
+//						if(comando == '4')
+//							System.out.println(mensaje);
+//				}
+//
+//			} catch (EOFException e) {
+//				this.terminarRecibirMensajes();
+//			} catch (SocketException e1) {
+//				this.terminarRecibirMensajes();
+//			} catch (IOException e2) {
+//				e2.printStackTrace();
+//			} catch (Exception e) {
+//				// TODO Auto-generated catch block
+//				e.printStackTrace();
+//			}
+//		}
+//	}
 
 	public void terminarRecibirMensajes() {
 
