@@ -26,7 +26,7 @@ public class Cliente {
 	private ControladorVistaChat contChat = null;
 	private ControladorVistaInicial contInicial = null;
 	private Conexion conexion;
-	
+
 	private String nickname;
 	private int puerto;
 	private String iP;
@@ -49,20 +49,20 @@ public class Cliente {
 		// esto va en Conexion
 		conexion.setCliente(this);
 		conexion.cambiaServer();
-		//Conexion.getInstance().agregarSocket(iP, puerto);
-		//Conexion.getInstance().agregarSocket(iP, puerto+1);
-		
+		// Conexion.getInstance().agregarSocket(iP, puerto);
+		// Conexion.getInstance().agregarSocket(iP, puerto+1);
+
 	}
 
-	public void conectarServeryMonitor() throws IOException{
-		
+	public void conectarServeryMonitor() throws IOException {
+
 //		Conexion.getInstance().getDos().writeUTF("1" + this.nickname);
 		conexion.registrar(this.nickname);
-
+		conexion.conectaMonitor();
 	}
 
 	
-
+	
 	public void recibirMensajes() {
 //		Socket s = this.messageManager.getSocket();
 //		DataInputStream dis = null;
@@ -74,7 +74,7 @@ public class Cliente {
 //
 //		}
 
-		//this.conectionHandler = new ReceiveMessage(s, dis, dos);
+		// this.conectionHandler = new ReceiveMessage(s, dis, dos);
 		this.receiveMessage = new ReceiveMessage(this.conexion);
 		this.receiveMessage.start();
 	}
@@ -111,7 +111,6 @@ public class Cliente {
 		this.receiveMessage.setContChat(cont);
 
 	}
-	
 
 	public ControladorVistaInicial getContInicial() {
 		return contInicial;
@@ -129,9 +128,9 @@ public class Cliente {
 	public String getNickname() {
 		return nickname;
 	}
-	
+
 	public void creaConectionHandler() {
-		//this.messageManager = new SendMessage(this.socket, dis, dos, this.vistaChat);
+		// this.messageManager = new SendMessage(this.socket, dis, dos, this.vistaChat);
 		this.sendMessage = new SendMessage(this.conexion);
 		this.recibirMensajes();
 	}
@@ -159,8 +158,6 @@ public class Cliente {
 	public void setiP(String iP) {
 		this.iP = iP;
 	}
-	
-	
 
 //------------------------------------------------------------------------------------------------------
 }

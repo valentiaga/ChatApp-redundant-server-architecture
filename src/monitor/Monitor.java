@@ -12,26 +12,31 @@ public class Monitor extends Thread {
 	private static Monitor instance = null;
 	private static ServerSocket serverSocketServidores;
 	private static ServerSocket serverSocketClientes;
-	
-	private static int puertoMonitorServidores = 11300;
-	private static int puertoMonitorClientes = 11220;
-	
+
+	private static int puertoMonitorServidores = 11302;
+	private static int puertoMonitorClientes = 11221;
+
 	private static int principal = 11001;
 	private static int nroSig = 0;
 
 	private ArrayList<Socket> listaSocketsServidores = new ArrayList<Socket>();
 	private ArrayList<Socket> listaSocketsCaidos = new ArrayList<Socket>();
 	private Socket socketPrincipal = null, socketSecundario = null;
-	
+
 	private ArrayList<Socket> listaSocketsClientes = new ArrayList<Socket>();
-	private HeartBeatMonitor heartBeat;
+	//private HeartBeatMonitor heartBeat;
+
+	private boolean terminar = false;
+	private int tiempo = 5;
+	private int intentos = 0;
 
 	private Monitor() {
 
 		try {
 			this.serverSocketServidores = new ServerSocket(this.puertoMonitorServidores);
 			this.serverSocketClientes = new ServerSocket(this.puertoMonitorClientes);
-			this.heartBeat = new HeartBeatMonitor();
+			conectarConClientes();
+			//this.heartBeat = new HeartBeatMonitor();
 		} catch (IOException e) {
 			e.printStackTrace();
 		}
@@ -63,8 +68,8 @@ public class Monitor extends Thread {
 			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
-
-			this.heartBeat.start();
+			recibirHeartBeat();
+			//this.heartBeat.start();
 
 		} else {
 			this.listaSocketsServidores.add(s);
@@ -78,15 +83,22 @@ public class Monitor extends Thread {
 
 		try {
 			if (this.listaSocketsServidores.size() > 0) {
+				DataOutputStream dos;
+				
 				this.listaSocketsCaidos.add(socketPrincipal); // preservamos el socket caido para recuperarlo mas tarde
 				this.socketPrincipal = this.listaSocketsServidores.get(0);
 				this.listaSocketsServidores.remove(0);
-				DataOutputStream dos = new DataOutputStream(this.socketPrincipal.getOutputStream());
+				dos = new DataOutputStream(this.socketPrincipal.getOutputStream());
 				System.out.println("Cambia a server 2" + this.socketPrincipal.getLocalPort());
 				dos.writeUTF("PRINCIPAL");
 				Thread.sleep(2000);
 				this.conecta_a_Principal();
+				for(int i =0; i < this.listaSocketsClientes.size(); i++) {
+					dos = new DataOutputStream(this.listaSocketsClientes.get(i).getOutputStream());
+					dos.writeUTF("CAMBIAR_SERVER");
+				}
 			}
+			
 		} catch (InterruptedException e) {
 			e.printStackTrace();
 		}
@@ -121,15 +133,87 @@ public class Monitor extends Thread {
 			try {
 				socketServer = this.serverSocketServidores.accept();
 				this.agregarSocket(socketServer);
-				socketCliente = this.serverSocketClientes.accept();
-				this.listaSocketsClientes.add(socketCliente);
-				
+//				socketCliente = this.serverSocketClientes.accept();
+//				this.listaSocketsClientes.add(socketCliente);
+
 			} catch (IOException e) {
 
 				e.printStackTrace();
 			}
 
 		}
+	}
+
+	public void conectarConClientes() {
+		new Thread(() -> {
+			try {
+				//ServerSocket serverCliente = new ServerSocket(this.puertoMonitorClientes);
+				while (!serverSocketClientes.isClosed()) {
+					Socket socket = serverSocketClientes.accept();
+					System.out.println("Conecta con cliente");
+					this.listaSocketsClientes.add(socket);
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}).start();
+	}
+
+	public void recibirHeartBeat() {
+		new Thread(() -> {
+			String comando = null;
+			DataInputStream dis = null;
+
+			System.out.println("Monitor");
+			while (this.terminar == false) {
+
+				try {
+					// this.socket = Monitor.getInstance().getSocketPrincipal();
+					dis = new DataInputStream(this.socketPrincipal.getInputStream());
+					if (dis.available() > 0) {
+						comando = dis.readUTF();
+						System.out.println("Monitor recibio: " + comando);
+					}
+				} catch (IOException e) {
+
+					e.printStackTrace();
+				}
+
+				if (comando.equals("HEARTBEAT")) {
+					// ESPERAMOS
+					comando = "No llego heartbeat";
+					try {
+						Thread.sleep(tiempo * 1000);
+					} catch (InterruptedException e) {
+						e.printStackTrace();
+					}
+				} else {
+					System.out.println("Monitor: " + comando);
+					if (this.intentos == 0) { // CAMBIAMOS DE SERVER PRINCIPAL
+
+						try {
+							cambiaServerPrincipal();
+							Thread.sleep(tiempo * 1000);
+						} catch (IOException e) {
+							e.printStackTrace();
+						} catch (InterruptedException e) { // ESPERAMOS PARA DAR TIEMPO A QUE SE CAMBIE
+							e.printStackTrace();
+						}
+
+					} else {
+						this.intentos--;
+						try {
+							Thread.sleep(tiempo * 1000);
+						} catch (InterruptedException e) {
+							// TODO Auto-generated catch block
+							e.printStackTrace();
+						}
+					}
+
+				}
+
+			}
+		}).start();
 	}
 
 	public int getPuertoMonitor() {

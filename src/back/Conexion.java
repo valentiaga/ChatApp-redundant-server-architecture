@@ -16,6 +16,8 @@ public class Conexion {
 	private static Socket socketServidor = null;
 	private static Socket socketMonitor = null;
 	
+	private static int puertoMonitorClientes = 11221;
+	
 	private static int nro = 0;
 //	private static DataInputStream dis = null;
 //	private static DataOutputStream dos = null;
@@ -103,6 +105,33 @@ public class Conexion {
 		
 	}
 	
+	public void escuchaMonitor() { // el monitor indica que hay un cambio de servidor
+		new Thread(() -> {
+			try {
+				DataInputStream dis = new DataInputStream(this.socketMonitor.getInputStream());
+				int puerto;
+				String ip;
+				String comando;
+				if (dis.available() > 0) {
+					comando = dis.readUTF();
+					System.out.println(comando);
+					if(comando.equals("CAMBIAR_SERVER")) {
+						this.cambiaServer();
+					}
+//					puerto = Integer.valueOf(dis.readUTF());
+//					ip = dis.readUTF();
+					
+				}
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}).start();
+	}
+	
+	public void conectaMonitor() throws IOException {
+		System.out.println("Conecta monitor");
+		this.socketMonitor = new Socket("localhost",this.puertoMonitorClientes);
+	}
 //	public synchronized void cambiaServer() {
 //		//this.cliente.getReceiveMessage().interrupt();
 //		
@@ -146,7 +175,7 @@ public class Conexion {
 	public DataInputStream getDis() {
 		DataInputStream inPut = null;
 		
-		this.verificaServer();
+		//this.verificaServer();
 		
 		try {
 			//System.out.println("Socket: " + socket.getPort());	
@@ -161,7 +190,7 @@ public class Conexion {
 	public DataOutputStream getDos() {
 		DataOutputStream outPut = null;
 		
-		this.verificaServer();
+		//this.verificaServer();
 		
 		try {
 			outPut = new DataOutputStream (socketServidor.getOutputStream());
