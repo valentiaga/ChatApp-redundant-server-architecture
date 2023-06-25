@@ -21,12 +21,11 @@ public class ReceiveMessage extends Thread {
 	private boolean terminar = false;
 	String receptor = "";
 	private Conexion conexion;
-	
+
 	public ReceiveMessage() {
 		super();
-		
+
 	}
-	
 
 //	public ReceiveMessage(ControladorVistaInicial contInicial2, ControladorVistaChat contChat2,
 //			ControladorVistaConecta contConecta2) {
@@ -38,7 +37,6 @@ public class ReceiveMessage extends Thread {
 	public ReceiveMessage(Conexion conexion) {
 		this.conexion = conexion;
 	}
-
 
 	public void recibirMensajes() {
 		new Thread(() -> {
@@ -53,13 +51,13 @@ public class ReceiveMessage extends Thread {
 //					mensaje = dis.readUTF();
 					comando = mensaje.charAt(0);
 					mensaje = mensaje.substring(1);
-					
-					System.out.println(comando+" " +mensaje);
+
+					System.out.println(comando + " " + mensaje);
 
 					if (comando == '0') { // mensaje
 						System.out.println("Me llego el mensaje");
 						this.contChat.appendTextArea(Cifrado.desencriptar(mensaje));
-						
+
 					} else {
 						if (comando == '1') {
 							switch (mensaje) {
@@ -75,23 +73,23 @@ public class ReceiveMessage extends Thread {
 								this.contChat.abandonarChat();
 								break;
 							case "USERREGISTRADO":
-								this.contInicial.ventanaEmergente("El usuario ya se encuentra registrado en el sistema.");
+								this.contInicial
+										.ventanaEmergente("El usuario ya se encuentra registrado en el sistema.");
 								// evitar que se habra la ventana de conecta
-								//this.contInicial.setRegistrado(false);
+								// this.contInicial.setRegistrado(false);
 								break;
 							case "REGISTRADOCORRECTAMENTE":
 								this.contInicial.vistaSiguiente();
 								break;
 							}
 
-						}else if(comando == '3') {
-							if(mensaje.equals("ECHO") == true) {
+						} else if (comando == '3') {
+							if (mensaje.equals("ECHO") == true) {
 								System.out.println("Recibimos ECHO");
 								this.conexion.setEcho(true);
 							}
-						}else
-							if(comando == '4')
-								System.out.println(mensaje);
+						} else if (comando == '4')
+							System.out.println(mensaje);
 					}
 
 				} catch (EOFException e) {
@@ -182,7 +180,7 @@ public class ReceiveMessage extends Thread {
 			this.conexion.getDis().close();
 			this.conexion.getDos().close();
 			this.conexion.getSocket().close();
-			
+
 //			this.dis.close();
 //			this.dos.close();
 //			this.s.close();
@@ -216,5 +214,4 @@ public class ReceiveMessage extends Thread {
 		this.contInicial = contInicial;
 	}
 
-	
 }

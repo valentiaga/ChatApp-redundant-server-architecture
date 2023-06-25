@@ -20,7 +20,7 @@ public class ControladorVistaInicial implements ActionListener {
 	private IVistaConecta vistaConecta = null;
 	private Cliente cliente = null;
 	private boolean registrado = true;
-
+	private int condicion = 0;
 	public ControladorVistaInicial(IVistaInicial vista) {
 		this.vistaInicial = vista;
 		this.vistaInicial.addActionListener(this);
@@ -71,15 +71,19 @@ public class ControladorVistaInicial implements ActionListener {
 	}
 
 	public void vistaSiguiente() {
-		vistaConecta = new vistaConecta(this.cliente.getNickname());
-		ControladorVistaConecta cont = new ControladorVistaConecta(vistaConecta);
-		cont.setVistaConecta(vistaConecta);
-		cont.setCliente(this.cliente);
+		if(this.condicion == 0) {
+			vistaConecta = new vistaConecta(this.cliente.getNickname());
+			ControladorVistaConecta cont = new ControladorVistaConecta(vistaConecta);
+			cont.setVistaConecta(vistaConecta);
+			cont.setCliente(this.cliente);
 
-		this.cliente.setContConecta(cont);
-		vistaConecta.setCont(cont);
+			this.cliente.setContConecta(cont);
+			vistaConecta.setCont(cont);
 
-		this.vistaInicial.mostrarVentana(false);
-		vistaConecta.mostrarVentana(true);
+			this.vistaInicial.mostrarVentana(false);
+			vistaConecta.mostrarVentana(true);
+			this.condicion++;
+		}
+		
 	}
 }
