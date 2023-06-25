@@ -13,6 +13,7 @@ import javax.swing.JTextArea;
 import javax.swing.JTextField;
 import javax.swing.LayoutStyle.ComponentPlacement;
 import javax.swing.border.EmptyBorder;
+import javax.swing.JScrollPane;
 
 public class VistaServer extends JFrame implements IVistaServer{
 
@@ -20,11 +21,12 @@ public class VistaServer extends JFrame implements IVistaServer{
 	private JButton btnClose;
 	private ActionListener actionListener;
 	ControladorVistaServer controlador;
-	JTextArea textAreaLista;
-	private JTextArea textAreaMensajes;
 	public static int nro = 0;
 	private JTextField textFieldPuerto;
 	private JButton btnCreaNuevoServer;
+	private JButton btnNewButton;
+	private JTextArea textAreaLista;
+	private JTextArea textAreaMensajes;
 	//private Server server;
 	
 	/**
@@ -55,14 +57,8 @@ public class VistaServer extends JFrame implements IVistaServer{
 		this.setVisible(true);
 		setContentPane(contentPane);
 		
-		textAreaLista = new JTextArea();
-		textAreaLista.setEditable(false);
-		
 		btnClose = new JButton("Cerrar servidor");
 		btnClose.setActionCommand("CLOSE_SERVER");
-		
-		textAreaMensajes = new JTextArea();
-		textAreaMensajes.setEditable(false);
 		
 		textFieldPuerto = new JTextField();
 		textFieldPuerto.setColumns(10);
@@ -70,44 +66,62 @@ public class VistaServer extends JFrame implements IVistaServer{
 		 btnCreaNuevoServer = new JButton("Crear Servidor");
 		 btnCreaNuevoServer.setActionCommand("CREAR_SERVER");
 		btnCreaNuevoServer.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
+		
+		btnNewButton = new JButton("Reiniciar");
+		btnNewButton.setActionCommand("REINICIAR");
+		
+		JScrollPane scrollPane = new JScrollPane();
+		
+		JScrollPane scrollPane_1 = new JScrollPane();
 		GroupLayout gl_contentPane = new GroupLayout(contentPane);
 		gl_contentPane.setHorizontalGroup(
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(textAreaLista, GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addContainerGap()
-							.addComponent(textAreaMensajes, GroupLayout.DEFAULT_SIZE, 428, Short.MAX_VALUE))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(20)
-							.addComponent(btnClose)
-							.addPreferredGap(ComponentPlacement.RELATED, 57, Short.MAX_VALUE)
+					.addContainerGap()
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
+						.addComponent(scrollPane_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
+							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+								.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
+								.addGroup(gl_contentPane.createSequentialGroup()
+									.addGap(6)
+									.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)))
+							.addGap(92)
 							.addComponent(btnCreaNuevoServer)
 							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(textFieldPuerto, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)))
-					.addContainerGap())
+							.addComponent(textFieldPuerto, GroupLayout.PREFERRED_SIZE, 92, GroupLayout.PREFERRED_SIZE)
+							.addGap(7)))
+					.addGap(6))
 		);
 		gl_contentPane.setVerticalGroup(
 			gl_contentPane.createParallelGroup(Alignment.LEADING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addComponent(textAreaMensajes, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)
+					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
-					.addComponent(textAreaLista, GroupLayout.PREFERRED_SIZE, 90, GroupLayout.PREFERRED_SIZE)
+					.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(18)
-							.addComponent(btnClose))
-						.addGroup(gl_contentPane.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.RELATED)
+							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(textFieldPuerto, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnCreaNuevoServer, GroupLayout.DEFAULT_SIZE, 29, Short.MAX_VALUE))))
-					.addContainerGap(35, Short.MAX_VALUE))
+								.addComponent(btnCreaNuevoServer, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addGap(2)
+							.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
+							.addPreferredGap(ComponentPlacement.RELATED)
+							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
+					.addGap(2))
 		);
+		
+		textAreaLista = new JTextArea();
+		textAreaLista.setEditable(false);
+		scrollPane_1.setViewportView(textAreaLista);
+		
+		textAreaMensajes = new JTextArea();
+		textAreaMensajes.setEditable(false);
+		scrollPane.setViewportView(textAreaMensajes);
 		contentPane.setLayout(gl_contentPane);
 		controlador = new ControladorVistaServer(this);
 	}
@@ -170,6 +184,4 @@ public class VistaServer extends JFrame implements IVistaServer{
 	public void setTextFieldPuerto(JTextField textFieldPuerto) {
 		this.textFieldPuerto = textFieldPuerto;
 	}
-	
-	
 }
