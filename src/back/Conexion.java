@@ -92,6 +92,7 @@ public class Conexion {
 		DataOutputStream outPut = null;
 		outPut = new DataOutputStream(socketServidor.getOutputStream());
 		outPut.writeUTF("1" + this.cliente.getNickname());
+		//this.cliente.recibirMensajes();
 	}
 
 	public synchronized void verificaServer() {
@@ -142,7 +143,6 @@ public class Conexion {
 			socketServidor = new Socket(this.cliente.getiP(), this.cliente.getPuerto() + nro);
 			nro++;
 			this.registrar(this.cliente.getNickname());
-			//this.cliente.recibirMensajes();
 			System.out.println("nro: " + nro);
 		} catch (UnknownHostException e) {
 			e.printStackTrace();
