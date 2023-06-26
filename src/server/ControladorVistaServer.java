@@ -34,12 +34,9 @@ public class ControladorVistaServer implements ActionListener{
 		else if (comando.equalsIgnoreCase("CREAR_SERVER")) {
 			this.server = new Server(this.vistaServer.getTextFieldPuerto().getText(), this);
 			this.server.start();
-//			try {
-//				this.server.Registrar();
-//			} catch (IOException e1) {
-//				// TODO Auto-generated catch block
-//				e1.printStackTrace();
-//			}
+		}
+		else if (comando.equalsIgnoreCase("REINICIAR")) {
+			//reinicialo capo
 		}
 		
 	}
