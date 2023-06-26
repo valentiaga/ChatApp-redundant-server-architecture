@@ -12,6 +12,7 @@ public class Monitor extends Thread {
 	private static Monitor instance = null;
 	private static ServerSocket serverSocketServidores;
 	private static ServerSocket serverSocketClientes;
+	private ControladorMonitor cont;
 
 	private static int puertoMonitorServidores = 11304;
 	private static int puertoMonitorClientes = 11222;
@@ -77,7 +78,7 @@ public class Monitor extends Thread {
 			dos.writeUTF("SECUNDARIO");
 		}
 
-	}
+	} 
 
 	public void cambiaServerPrincipal() throws IOException {
 
@@ -175,7 +176,8 @@ public class Monitor extends Thread {
 					dis = new DataInputStream(this.socketPrincipal.getInputStream());
 					if (dis.available() > 0) {
 						comando = dis.readUTF();
-						System.out.println("Monitor recibio: " + comando);
+						this.cont.getIniciaMonitor().getTextArea().append("Monitor recibio: " + comando+"\n");
+						//System.out.println("Monitor recibio: " + comando);
 					}
 				} catch (IOException e) {
 
@@ -191,7 +193,8 @@ public class Monitor extends Thread {
 						e.printStackTrace();
 					}
 				} else {
-					System.out.println("Monitor: " + comando);
+					this.cont.getIniciaMonitor().getTextArea().append("Monitor: " + comando+"\n");
+					//System.out.println("Monitor: " + comando);
 					if (this.intentos == 0) { // CAMBIAMOS DE SERVER PRINCIPAL
 
 						try {
@@ -233,6 +236,14 @@ public class Monitor extends Thread {
 
 	public ServerSocket getServerSocket() {
 		return serverSocketServidores;
+	}
+
+//	public ControladorMonitor getCont() {
+//		return cont;
+//	}
+
+	public void setCont(ControladorMonitor cont) {
+		this.cont = cont;
 	}
 
 }

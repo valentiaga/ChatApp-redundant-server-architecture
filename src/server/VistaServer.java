@@ -24,7 +24,6 @@ public class VistaServer extends JFrame implements IVistaServer{
 	public static int nro = 0;
 	private JTextField textFieldPuerto;
 	private JButton btnCreaNuevoServer;
-	private JButton btnNewButton;
 	private JTextArea textAreaLista;
 	private JTextArea textAreaMensajes;
 	//private Server server;
@@ -67,9 +66,6 @@ public class VistaServer extends JFrame implements IVistaServer{
 		 btnCreaNuevoServer.setActionCommand("CREAR_SERVER");
 		btnCreaNuevoServer.setFont(new Font("Lucida Grande", Font.PLAIN, 11));
 		
-		btnNewButton = new JButton("Reiniciar");
-		btnNewButton.setActionCommand("REINICIAR");
-		
 		JScrollPane scrollPane = new JScrollPane();
 		
 		JScrollPane scrollPane_1 = new JScrollPane();
@@ -78,15 +74,11 @@ public class VistaServer extends JFrame implements IVistaServer{
 			gl_contentPane.createParallelGroup(Alignment.TRAILING)
 				.addGroup(gl_contentPane.createSequentialGroup()
 					.addContainerGap()
-					.addGroup(gl_contentPane.createParallelGroup(Alignment.TRAILING)
-						.addComponent(scrollPane_1, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-						.addComponent(scrollPane, Alignment.LEADING, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
-						.addGroup(Alignment.LEADING, gl_contentPane.createSequentialGroup()
-							.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
-								.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
-								.addGroup(gl_contentPane.createSequentialGroup()
-									.addGap(6)
-									.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 102, GroupLayout.PREFERRED_SIZE)))
+					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
+						.addComponent(scrollPane_1, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+						.addComponent(scrollPane, GroupLayout.DEFAULT_SIZE, 438, Short.MAX_VALUE)
+						.addGroup(gl_contentPane.createSequentialGroup()
+							.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 119, GroupLayout.PREFERRED_SIZE)
 							.addGap(92)
 							.addComponent(btnCreaNuevoServer)
 							.addPreferredGap(ComponentPlacement.RELATED)
@@ -101,18 +93,16 @@ public class VistaServer extends JFrame implements IVistaServer{
 					.addComponent(scrollPane, GroupLayout.PREFERRED_SIZE, 99, GroupLayout.PREFERRED_SIZE)
 					.addPreferredGap(ComponentPlacement.RELATED)
 					.addComponent(scrollPane_1, GroupLayout.PREFERRED_SIZE, 94, GroupLayout.PREFERRED_SIZE)
+					.addGap(18)
 					.addGroup(gl_contentPane.createParallelGroup(Alignment.LEADING)
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addPreferredGap(ComponentPlacement.UNRELATED)
 							.addGroup(gl_contentPane.createParallelGroup(Alignment.BASELINE)
 								.addComponent(textFieldPuerto, GroupLayout.PREFERRED_SIZE, 22, GroupLayout.PREFERRED_SIZE)
-								.addComponent(btnCreaNuevoServer, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)))
+								.addComponent(btnCreaNuevoServer, GroupLayout.DEFAULT_SIZE, GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE))
+							.addGap(16))
 						.addGroup(gl_contentPane.createSequentialGroup()
-							.addGap(2)
 							.addComponent(btnClose, GroupLayout.PREFERRED_SIZE, 24, GroupLayout.PREFERRED_SIZE)
-							.addPreferredGap(ComponentPlacement.RELATED)
-							.addComponent(btnNewButton, GroupLayout.PREFERRED_SIZE, 23, GroupLayout.PREFERRED_SIZE)))
-					.addGap(2))
+							.addContainerGap())))
 		);
 		
 		textAreaLista = new JTextArea();
