@@ -1,4 +1,4 @@
-# Grupo1-Chat
+# ChatApp redundant server architecture
  Análisis y Diseño de Sistemas
 
 # Instrucciones de Instalación y Configuración
