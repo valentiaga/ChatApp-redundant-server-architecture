@@ -92,6 +92,7 @@ public class Monitor extends Thread {
 				dos = new DataOutputStream(this.socketPrincipal.getOutputStream());
 				System.out.println("Cambia a server" + this.socketPrincipal.getLocalPort());
 				dos.writeUTF("PRINCIPAL");
+				
 				Thread.sleep(2000);
 				this.conecta_a_Principal();
 				System.out.println(this.listaSocketsClientes);

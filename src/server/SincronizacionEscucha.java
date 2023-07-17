@@ -30,17 +30,25 @@ public class SincronizacionEscucha extends Thread {
 		super.run();
 		while (Server.isTerminar() == false && Server.isPrincipal() == false) {
 			try {
+				Thread.sleep(5000);
 				input = new ObjectInputStream(sinc.getSocketConPrincipal().getInputStream());
+				// if(input.available() > 0) {
+
 				this.chats = (HashMap<String, String>) this.input.readObject();
+				this.sinc.getServer().getControlador().appendMensajes(chats.toString());
+				// }
+
 				// this.sinc.getServer().getControlador().appendMensajes("Sincronizando server
 				// respaaldo");
 //				this.server.getControlador().appendMensajes("Sincronizando server respaaldo");
-				this.sinc.getServer().getControlador().appendMensajes(chats.toString());
+
 				// this.seteaClientes();
 				// System.out.println("clientes "+this.clientes);
 			} catch (ClassNotFoundException e) {
 				e.printStackTrace();
 			} catch (IOException e) {
+				e.printStackTrace();
+			} catch (InterruptedException e) {
 				e.printStackTrace();
 			}
 		}
@@ -49,10 +57,9 @@ public class SincronizacionEscucha extends Thread {
 	public void seteaClientes() {
 		for (int i = 0; i < this.chats.size(); i++) {
 //			System.out.println("Lista de server: " + this.sinc.getServer().getLista());
-
+			
 			this.sinc.getServer().getLista().get(i)
 					.setNicknameReceptor(this.chats.get(this.sinc.getServer().getLista().get(i).getNickname()));
-
 
 //			System.out.println(this.sinc.getServer().getLista().get(i).getNickname() + ", "
 //					+ this.sinc.getServer().getLista().get(i).getNicknameReceptor());

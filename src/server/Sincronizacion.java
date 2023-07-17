@@ -1,6 +1,7 @@
 package server;
 
 import java.io.DataInputStream;
+import java.io.DataOutputStream;
 import java.io.IOException;
 import java.io.ObjectOutputStream;
 import java.net.ServerSocket;
@@ -20,47 +21,44 @@ public class Sincronizacion extends Thread {
 	private int puertoPrincipal;
 	private int puertoMonitor = 11304;
 
-	
 	private String ipMonitor = "localhost";
 	private String ipServerPrincipal;
 	private String rol; // PRINCIPAL o SECUNDARIO
 	private SincronizacionEscucha sinc;
 
 	private ConectionMonitor conectionMonitor = null;
-	//private HeartBeatServer heartBeat;
-	
+	// private HeartBeatServer heartBeat;
+
 	public Sincronizacion(Server server) {
 		this.server = server;
 		this.conectaMonitor();
 	}
 
-	public void conectaMonitor(){
+	public void conectaMonitor() {
 		try {
 			socketMonitor = new Socket(ipMonitor, puertoMonitor);
 
+			this.conectionMonitor = new ConectionMonitor(socketMonitor, this); // escucha al MONITOR
 
-			this.conectionMonitor = new ConectionMonitor(socketMonitor,this); // escucha al MONITOR
-	
 			DataInputStream dis = new DataInputStream(socketMonitor.getInputStream());
-			
+
 			this.puertoLocal = Integer.valueOf(dis.readUTF());
-			
+
 			this.ipServerPrincipal = dis.readUTF();
 
 			this.puertoPrincipal = Integer.valueOf(dis.readUTF());
 			this.rol = dis.readUTF();
-			System.out.println("Rol recibido: "+this.rol);
+			System.out.println("Rol recibido: " + this.rol);
 
-			System.out.println("puerto recibido: " + puertoLocal);
+			System.out.println("Puerto local recibido: " + puertoLocal);
+			System.out.println("Puerto Principal recibido: " + puertoPrincipal);
 			
-
 			if (this.rol.equals("SECUNDARIO")) {
 				socketConPrincipal = new Socket(ipServerPrincipal, this.puertoPrincipal);
 				server.getControlador().appendMensajes("Sincronizando server respaldo");
-				System.out.println("llegue perra");
 				sinc = new SincronizacionEscucha(this);
-			}
-			else {				
+				sinc.start();
+			} else {
 				this.ss = new ServerSocket(puertoLocal);
 				this.conectionMonitor.iniciaHeartBeat();
 				this.start();
@@ -69,21 +67,20 @@ public class Sincronizacion extends Thread {
 
 		} catch (IOException e) {
 			e.printStackTrace();
-		} 
+		}
 	}
 
-	
 	public void conectarConPrincipal() throws NumberFormatException, IOException {
-		
+
 		DataInputStream dis = new DataInputStream(socketMonitor.getInputStream());
-		
+
 		this.ipServerPrincipal = dis.readUTF();
-		this.puertoPrincipal = Integer.valueOf(dis.readUTF());		
+		this.puertoPrincipal = Integer.valueOf(dis.readUTF());
 		socketConPrincipal = new Socket(ipServerPrincipal, this.puertoPrincipal);
 		server.getControlador().appendMensajes("Conecta con server principal");
-		//sinc = new SincronizacionEscucha(this); ???
+		// sinc = new SincronizacionEscucha(this); ???
 	}
-	
+
 	public void run() {
 		Socket socket = null;
 
@@ -103,17 +100,29 @@ public class Sincronizacion extends Thread {
 		}
 	}
 
-	public void sincronizaServers() throws IOException {
-
-		if (Server.isTerminar() == false)
-			for (int i = 0; i < this.listaSocketsServers.size(); i++) {
-				ObjectOutputStream dos = new ObjectOutputStream(this.listaSocketsServers.get(i).getOutputStream());
-				dos.writeObject(this.server.getChats());
+	public synchronized void sincronizaServers() {
+		new Thread(() -> {
+			try {
+				Thread.sleep(10000);
+				while (true) {
+					// this.sinc.seteaClientes();
+					if (Server.isTerminar() == false)
+						System.out.println(this.listaSocketsServers);
+						for (int i = 0; i < this.listaSocketsServers.size(); i++) {
+							ObjectOutputStream dos = new ObjectOutputStream(
+									this.listaSocketsServers.get(i).getOutputStream());
+							dos.writeObject(this.server.getChats());
+						}
+					Thread.sleep(10000);
+				}
+			} catch (InterruptedException | IOException e) {
+				e.printStackTrace();
 			}
+
+		}).start();
+
 	}
 
-	
-	
 	public Server getServer() {
 		return server;
 	}
@@ -146,5 +155,4 @@ public class Sincronizacion extends Thread {
 		this.sinc = sinc;
 	}
 
-	
 }

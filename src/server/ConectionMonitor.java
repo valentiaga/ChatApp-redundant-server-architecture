@@ -21,6 +21,7 @@ public class ConectionMonitor extends Thread {
 	public void run() {
 
 		DataInputStream dis = null;
+		//String comando;
 		try {
 			dis = new DataInputStream(socketMonitor.getInputStream());
 		} catch (IOException e) {
@@ -59,7 +60,9 @@ public class ConectionMonitor extends Thread {
 	
 	public void iniciaHeartBeat() {
 		this.heartBeat = new HeartBeatServer(this.socketMonitor);
-		this.heartBeat.start();
+		this.heartBeat.iniciarHilo();
+		this.sincronizacion.sincronizaServers();
+		//this.heartBeat.start();
 	}
 	
 	
